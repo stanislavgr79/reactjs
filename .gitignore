@@ -1,0 +1,14 @@
+# Test-mock
+/__mock__
+
+# IDE
+/.idea
+
+# Bundleanalyze
+/coverage
+
+# Distribution
+/dist
+
+# Node Modules
+/node_modules
