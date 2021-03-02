@@ -1,25 +1,20 @@
 import React from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
-
-import initialState from './initialState';
+import { Provider } from 'react-redux';
+import { rootReducer } from '../../redux/redux-store';
 
 import Intro from '../../pages/Intro';
-import '../../styles/main.less';
+import './App.scss';
 
 const App = () => {
-  const { time, message } = initialState;
-
   return (
     <HashRouter>
-      <Switch>
-        <Route
-          exact
-          key="Intro"
-          path="/"
-          render={(props) => <Intro {...props} message={message} time={time} />}
-        />
-        <Redirect key="RedirectIntro" to="/" />
-      </Switch>
+      <Provider store={rootReducer}>
+        <Switch>
+          <Route exact key="Intro" path="/" render={() => <Intro />} />
+          <Redirect key="RedirectIntro" to="/" />
+        </Switch>
+      </Provider>
     </HashRouter>
   );
 };

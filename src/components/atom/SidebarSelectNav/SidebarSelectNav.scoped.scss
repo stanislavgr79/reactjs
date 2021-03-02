@@ -1,0 +1,21 @@
+.sidebar-select-nav {
+    padding-left: 15px;
+    .side-sort-select {
+        width: 120px;
+        border: none;
+        font-weight: 600;
+        background: none;
+        color: #FFFFFF;
+        background-color: #232323;
+        &>option {
+            font-weight: 600;
+        }
+        &:hover {
+            color: #F65261;
+            cursor: pointer;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+}

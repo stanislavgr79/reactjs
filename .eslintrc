@@ -8,6 +8,9 @@
             "version": "detect"
         }
     },
+    "overrides": [{
+        "files": ["src/**/*.*"]
+    }],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "plugin:react-hooks/recommended",
@@ -41,11 +44,13 @@
         "@typescript-eslint/ban-types": "off",
         "prettier/prettier": ["error", { "endOfLine": "auto" }],
         "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-var-requires": 0,
         "no-debugger": "off",
         "no-console": 1,
         "no-var": "error",
+        "code": 0,
         "semi": "error",
-        "indent": "error",
+        "indent": 0,
         "no-multi-spaces": "error",
         "space-in-parens": "error",
         "no-multiple-empty-lines": "error",

@@ -1,20 +1,13 @@
 import React from 'react';
+import Header from '../../components/structure/Header';
+import ContentIntro from '../../components/structure/ContentIntro';
+import Footer from '../../components/structure/Footer';
 
-import './Intro.less';
-
-interface IntroProps {
-  message: string;
-  time: string;
-}
-
-const Intro = ({ message, time }: IntroProps): JSX.Element => (
+const Intro = () => (
   <>
-    <div className="message">
-      <h1>{message}</h1>
-    </div>
-    <div id="time">
-      <h1>{time}</h1>
-    </div>
+    <Header />
+    <ContentIntro />
+    <Footer />
   </>
 );
 

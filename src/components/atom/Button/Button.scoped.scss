@@ -1,0 +1,22 @@
+.btn {
+    border-radius: 5px;
+    font-size: 20px;
+    border-style: none;
+}
+
+.btn_addMovie {
+    color: #F65261;
+    padding: 0.375rem 0.876rem;
+    background: rgba(85, 85, 85, 0.5);
+    font-weight: 600;
+    &:hover {
+        color: #FFFFFF;
+    }
+}
+
+.btn_search {
+    color: #FFFFFF;
+    background-color: #F65261;
+    font-weight: 500;
+    padding: 0.475rem 3.476rem;
+}

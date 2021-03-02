@@ -1,11 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
   output: {
-    filename: 'js/bundle.js',
+    filename: 'js/[name].[chunkhash].js',
+    chunkFilename: 'js/[name].[chunkhash].chunk.js',
     path: path.resolve(__dirname, '..', 'dist'),
     publicPath: '/',
   },
@@ -23,18 +24,62 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c|le)ss$/,
+        test: /\.css$/,
         use: [
           'style-loader',
           {
-            loader: 'css-loader',
+            loader: 'css-loader?url=false',
             options: {
-              url: false,
+              import: true,
+              sourceMap: true,
+              url: true,
+              importLoaders: 2,
             },
           },
+          { loader: 'postcss-loader' },
+          { loader: 'scoped-css-loader' },
+        ],
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: [
+          'style-loader',
           {
-            loader: 'less-loader',
+            loader: 'css-loader?url=false',
+            options: {
+              import: true,
+              sourceMap: true,
+              url: true,
+              importLoaders: 3,
+            },
           },
+          { loader: 'postcss-loader' },
+          { loader: 'scoped-css-loader' },
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          { loader: 'sass-loader' },
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader?url=false',
+            options: {
+              import: true,
+              sourceMap: true,
+              url: true,
+              importLoaders: 3,
+            },
+          },
+          { loader: 'postcss-loader' },
+          { loader: 'scoped-css-loader' },
+          { loader: 'less-loader' },
         ],
       },
     ],
@@ -43,8 +88,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
 
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: 'css/[name].[chunkhash].css',
+      chunkFilename: 'css/[id].[chunkhash].css',
     }),
   ],
 };
