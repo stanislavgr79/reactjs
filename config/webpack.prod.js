@@ -20,8 +20,57 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c|le)ss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              import: true,
+              sourceMap: true,
+              url: true,
+              importLoaders: 2,
+            },
+          },
+          { loader: 'postcss-loader' },
+          { loader: 'scoped-css-loader' },
+        ],
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              import: true,
+              sourceMap: true,
+              url: true,
+              importLoaders: 3,
+            },
+          },
+          { loader: 'postcss-loader' },
+          { loader: 'scoped-css-loader' },
+          { loader: 'sass-loader' },
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              import: true,
+              sourceMap: true,
+              url: true,
+              importLoaders: 3,
+            },
+          },
+          { loader: 'postcss-loader' },
+          { loader: 'scoped-css-loader' },
+          { loader: 'less-loader' },
+        ],
       },
     ],
   },

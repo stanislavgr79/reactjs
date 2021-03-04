@@ -18,12 +18,14 @@ module.exports = {
       '.svg',
       '.ttf',
       '.woff',
+      '.png',
+      '.jpg',
     ],
     alias: {
-      '~components': path.resolve(path.join(__dirname, '..', 'src', 'components')),
-      '~pages': path.resolve(path.join(__dirname, '..', 'src', 'pages')),
-      '~resources': path.resolve(path.join(__dirname, '..', 'src', 'resources')),
-      '~plugins': path.resolve(path.join(__dirname, '..', 'src', 'plugins')),
+      '@components': path.resolve(path.join(__dirname, '..', 'src', 'components')),
+      '@pages': path.resolve(path.join(__dirname, '..', 'src', 'pages')),
+      '@resources': path.resolve(path.join(__dirname, '..', 'src', 'resources')),
+      '@plugins': path.resolve(path.join(__dirname, '..', 'src', 'plugins')),
     },
   },
   module: {
@@ -39,7 +41,7 @@ module.exports = {
         enforce: 'pre',
       },
       {
-        test: /\.(ico|jpg|jpeg|png|gif|webp)(\?.*)?$/,
+        test: /\.(ico|jpg|jpeg|png|gif|webp|png)(\?.*)?$/,
         use: {
           loader: 'file-loader',
           options: {

@@ -1,0 +1,36 @@
+{
+    "sort": [{
+            "value": "TITLE",
+            "label": "TITLE"
+        },
+        {
+            "value": "RELEASE",
+            "label": "RELEASE"
+        },
+        {
+            "value": "RUNTIME",
+            "label": "RUNTIME"
+        }
+    ],
+    "genre": [{
+            "value": "ALL",
+            "label": "ALL"
+        },
+        {
+            "value": "DOCUMENTARY",
+            "label": "DOCUMENTARY"
+        },
+        {
+            "value": "COMEDY",
+            "label": "COMEDY"
+        },
+        {
+            "value": "HORROR",
+            "label": "HORROR"
+        },
+        {
+            "value": "CRIME",
+            "label": "CRIME"
+        }
+    ]
+}

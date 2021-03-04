@@ -1,0 +1,55 @@
+[{
+        "title": "Ricky and Morty",
+        "releaseDate": "12.10.2020",
+        "movieUrl": "#",
+        "genre": "Documentary",
+        "overview": "Biography",
+        "runtime": 90,
+        "image": "Ricky and Morty.jpg"
+    },
+    {
+        "title": "Pulp Fiction",
+        "releaseDate": "22.06.2004",
+        "movieUrl": "#",
+        "genre": "Action & Adventure",
+        "overview": "Tarantino films",
+        "runtime": 97,
+        "image": "Pulp Fiction.jpg"
+    },
+    {
+        "title": "Kill Bill: Vol 2",
+        "releaseDate": "05.07.1994",
+        "movieUrl": "#",
+        "genre": "Oscar winning Movie",
+        "overview": "Tarantino films",
+        "runtime": 102,
+        "image": "Kill Bill.jpg"
+    },
+    {
+        "title": "Avengers: War of Infinity",
+        "releaseDate": "27.04.2004",
+        "movieUrl": "#",
+        "genre": "Action & Adventure",
+        "overview": "Marvel films",
+        "runtime": 123,
+        "image": "Avengers.jpg"
+    },
+    {
+        "title": "Inception",
+        "releaseDate": "16.07.2003",
+        "movieUrl": "#",
+        "genre": "Action & Adventure",
+        "overview": "Fiction films",
+        "runtime": 123,
+        "image": "Inception.jpg"
+    },
+    {
+        "title": "Reservoir Dogs",
+        "releaseDate": "10.01.1994",
+        "movieUrl": "#",
+        "genre": "Oscar winning Movie",
+        "overview": "Tarantino films",
+        "runtime": 96,
+        "image": "Reservoir Dogs.jpg"
+    }
+]
