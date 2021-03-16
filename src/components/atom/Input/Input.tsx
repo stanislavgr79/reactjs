@@ -24,7 +24,7 @@ export const Input = ({
   onBlur,
   onFocus,
   value,
-}: InputProps) => (
+}: InputProps): JSX.Element => (
   <input
     className={`input${className ? ` ${className}` : ''}`}
     id={id}
@@ -38,44 +38,3 @@ export const Input = ({
     value={value}
   />
 );
-
-// class Input extends Component {
-//   render() {
-//     const { name, onChange } = this.props;
-//     return (
-//       <div className="row">
-//         <div className="input-field col s12">
-//           <input
-//             id={name}
-//             type="text"
-//             className="validate flow-text"
-//             onChange={this.props.onChange}
-//           />
-//           <label htmlFor={name}>Name of Recipe</label>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// function Input() {
-//   /* Define local state hook to store the "user input" data */
-//   const [userInput, setUserInput] = React.useState('');
-
-//   const onClick = (e: { preventDefault: () => void }) => {
-//     /* Prevent button click's default behavior */
-//     e.preventDefault();
-//     /* Call the state's "setter" method to update "userInput" state */
-//     setUserInput('Test');
-//   };
-
-//   /* Render both input and button in a <> fragment */
-//   return (
-//     <>
-//       <input value={this.state.userInput} name="sampleInput" />
-//       <button onClick={onClick}>Click me</button>
-//     </>
-//   );
-// }
-
-// export default Input;

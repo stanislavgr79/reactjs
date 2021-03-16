@@ -1,58 +1,61 @@
-import React from 'react';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import AddMoviePopap from '../../container/AddMoviePopap';
 
 import Button from '../../atom/Button';
 import SiteName from '../../atom/SiteName';
 import Input from '../../atom/Input';
-import * as actions from '../../../redux/actions/search-actions';
+import { updateSearchValue } from '../../../redux/actions/search-actions';
+import { updateShowPopup } from '../../../redux/actions/movies-actions';
 
 import './Header.scoped.less';
 
-interface Props {
-  classNameBtnAdd: string;
-  classNameBtnSearch: string;
-  btnAddLabel: string;
-  btnSearchLabel: string;
-  searchTitle: string;
-  search?: string;
-}
+const Header = (): JSX.Element => {
+  const [searchValue, setSearchValue] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const dispatch = useDispatch();
 
-const defaultProps: Props = {
-  classNameBtnAdd: 'btn_addMovie',
-  classNameBtnSearch: 'btn_search',
-  btnAddLabel: '+ ADD MOVIE',
-  btnSearchLabel: 'SEARCH',
-  searchTitle: 'FIND YOUR MOVIE',
-};
+  useEffect(() => {
+    dispatch(updateShowPopup(showPopup));
+  }, [dispatch, showPopup]);
 
-const Header = (props: { updateSearchValue: ((e: unknown) => void) | undefined }): JSX.Element => {
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  const handleChange = (e: any) => {
+    setSearchValue(e.currentTarget.value);
+  };
+
+  const onClick = () => {
+    dispatch(updateSearchValue(searchValue));
+  };
+
   return (
     <div className="header">
       <section className="header_top">
         <SiteName />
         <Button
-          buttonType="submit"
-          className={defaultProps.classNameBtnAdd}
-          label={defaultProps.btnAddLabel}
+          onClick={() => togglePopup()}
+          buttonType="button"
+          className="btn_addMovie"
+          label="+ ADD MOVIE"
         />
+        {showPopup ? <AddMoviePopap closePopup={togglePopup} /> : null}
       </section>
       <section className="header_search">
-        <div className="search_title">{defaultProps.searchTitle}</div>
+        <div className="search_title">FIND YOUR MOVIE</div>
         <form onSubmit={(event) => event.preventDefault()}>
           <div className="search_wraper">
             <Input
               name="search"
               placeholder="What do you want to watch?"
               autoComplete="off"
+              value={searchValue}
               id="search"
+              onChange={handleChange}
             />
-            <Button
-              buttonType="submit"
-              onClick={props.updateSearchValue}
-              className={defaultProps.classNameBtnSearch}
-              label={defaultProps.btnSearchLabel}
-            />
+            <Button buttonType="submit" onClick={onClick} className="btn_search" label="SEARCH" />
           </div>
         </form>
       </section>
@@ -60,19 +63,4 @@ const Header = (props: { updateSearchValue: ((e: unknown) => void) | undefined }
   );
 };
 
-const mapStateToProps = (store: { search: string }) => ({
-  search: store.search,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-  const { updateSearchValueAc } = bindActionCreators(actions, dispatch);
-
-  return {
-    updateSearchValue: () => {
-      const newValue = document.querySelector('#search').value;
-      updateSearchValueAc(newValue);
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

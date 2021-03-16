@@ -1,0 +1,40 @@
+.movie-card {
+    padding-bottom: 20px;
+}
+
+.movie-image {
+    max-inline-size: fit-content;
+    padding-bottom: 10px;
+}
+
+.movie-props {
+    .movie-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: #bbbbbb;
+        padding-bottom: 5px;
+        font-size: 18px;
+        .movie-releaseDate {
+            border-radius: 5px;
+            font-size: 15px;
+            border: 0.5px solid #bbbbbb;
+            padding-left: 7.9px;
+            padding-right: 7.9px;
+            height: 25px;
+            text-align: center;
+            width: 50px;
+        }
+    }
+    .movie-genre {
+        font-size: 16px;
+        color: #555555;
+        padding-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .movie-props .movie-info .movie-releaseDate {
+        margin-right: 2%;
+    }
+}
