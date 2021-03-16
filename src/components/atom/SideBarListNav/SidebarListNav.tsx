@@ -12,48 +12,38 @@ interface SideGenreProps {
   label: string;
 }
 
-function SideGenreList({
+const SidebarListNav = ({
   sideGenre,
   defaultValue,
   updateCurrentGenre,
-}: SideGenreListProps): JSX.Element {
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
-  const handleChange = (e: any) => {
-    setSelectedValue(e.value);
+}: SideGenreListProps): JSX.Element => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleChange = (e) => {
+    setSelectedIndex(e.target.id);
     updateCurrentGenre(e.target.value);
   };
 
   return (
-    <>
+    <div className="sidebar-list-nav">
       <form
         className="side-genre-list"
         onChange={(event) => event.preventDefault()}
-        defaultValue={sideGenre.find((obj: any) => obj.value === selectedValue)}
+        defaultValue={defaultValue}
       >
-        {sideGenre.map((el: SideGenreProps) => (
-          <option id={el.value} key={el.value} onClick={(e) => handleChange(e)}>
+        {sideGenre.map((el: SideGenreProps, index: number) => (
+          <option
+            className={selectedIndex == index ? 'selected' : ''}
+            id={'' + index}
+            key={index}
+            onClick={(e) => handleChange(e)}
+          >
             {el.value}
           </option>
         ))}
       </form>
-    </>
-  );
-}
-
-function SidebarListNav(props: {
-  sideGenre: [],
-  genre: string,
-  updateCurrentGenre: (e: string) => void,
-}) {
-  return (
-    <div className="sidebar-list-nav">
-      <SideGenreList
-        sideGenre={props.sideGenre}
-        defaultValue={props.genre}
-        updateCurrentGenre={props.updateCurrentGenre}
-      />
     </div>
   );
-}
+};
 
 export default SidebarListNav;

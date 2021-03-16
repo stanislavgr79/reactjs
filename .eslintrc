@@ -17,19 +17,20 @@
         "plugin:react/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:import/typescript",
         "google",
         "plugin:prettier/recommended",
         "prettier",
         "prettier/react",
-        "prettier/@typescript-eslint"
+        "prettier/@typescript-eslint",
+        "plugin:import/typescript"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "modules": true
         },
-        "ecmaVersion": 12,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "plugins": [
@@ -42,13 +43,21 @@
         "require-jsdoc": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/ban-types": "off",
-        "prettier/prettier": ["error", { "endOfLine": "auto" }],
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-var-requires": 0,
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "import/no-unresolved": [
+            0,
+            { "caseSensitive": false }
+        ],
         "no-debugger": "off",
+        "react/display-name": "off",
+        "react/jsx-uses-vars": 1,
         "no-console": 1,
         "no-var": "error",
         "code": 0,
+        "comma-dangle": 0,
+        "no-unused-vars": "warn",
         "semi": "error",
         "indent": 0,
         "no-multi-spaces": "error",
@@ -56,6 +65,11 @@
         "no-multiple-empty-lines": "error",
         "prefer-const": "error",
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"]
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "camelcase": 0,
+        "max-len": [1, { "code": 100 }],
+        "prettier/prettier": ["error", { "endOfLine": "auto" }, {
+            "usePrettierrc": true
+        }]
     }
 }

@@ -3,10 +3,10 @@ export const SORT_BY = 'SORT_BY';
 
 const initialState = {
   genre: 'ALL',
-  sort: 'TITLE',
+  sortBy: 'TITLE',
 };
 
-const reducersSideBar = (state = initialState, action: { type: string, payload: Object }) => {
+export const reducerSideBar = (state = initialState, action: { type: string, payload: Object }) => {
   switch (action.type) {
     case SELECT_GENRE:
       return {
@@ -16,11 +16,9 @@ const reducersSideBar = (state = initialState, action: { type: string, payload: 
     case SORT_BY:
       return {
         ...state,
-        sort: action.payload,
+        sortBy: action.payload,
       };
     default:
       return state;
   }
 };
-
-export default reducersSideBar;

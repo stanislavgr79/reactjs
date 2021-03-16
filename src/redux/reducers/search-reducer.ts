@@ -6,7 +6,10 @@ const initialState = {
   },
 };
 
-const reducerSearch = (state = initialState.search, action: { type: string, payload: string }) => {
+export const reducerSearch = (
+  state = initialState.search,
+  action: { type: string, payload: string },
+) => {
   switch (action.type) {
     case SEARCH:
       return {
@@ -17,5 +20,3 @@ const reducerSearch = (state = initialState.search, action: { type: string, payl
       return state;
   }
 };
-
-export default reducerSearch;

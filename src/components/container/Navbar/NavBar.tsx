@@ -1,64 +1,39 @@
 import React from 'react';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import SidebarSelectNav from '../../atom/SidebarSelectNav';
+import { useDispatch, useSelector } from 'react-redux';
 import SidebarListNav from '../../atom/SideBarListNav';
-import * as actions from '../../../redux/actions/sidebar-actions';
+import SidebarSelectNav from '../../atom/SidebarSelectNav';
 
+import { updateCurrentGenre, updateCurrentSortBy } from '../../../redux/actions/sidebar-actions';
 import './NavBar.scoped.scss';
-
 const initialState = require('../../../resources/sidebar.json');
 
-const sideGenre: [] = initialState.genre;
-const sideSortBy: [] = initialState.sort;
+const NavBar = (): JSX.Element => {
+  const sidebar = useSelector(
+    (store: { sidebar: { genre: string, sortBy: string } }) => store.sidebar,
+  );
+  const sideGenre: [] = initialState.genre;
+  const sideSortBy: [] = initialState.sort;
+  const dispatch = useDispatch();
 
-const NavBar = (props: {
-  updateCurrentGenre: (e: string) => void,
-  updateCurrentSortBy: (e: string) => void,
-  genre: string,
-  sort: string,
-  sideGenre: [],
-  sideSortBy: [],
-}): JSX.Element => {
   return (
     <div className="nav-bar">
       <div className="side-genre">
         <SidebarListNav
-          sideGenre={props.sideGenre}
-          genre={props.genre}
-          updateCurrentGenre={props.updateCurrentGenre}
+          sideGenre={sideGenre}
+          defaultValue={sidebar.genre}
+          updateCurrentGenre={(e) => dispatch(updateCurrentGenre(e))}
         />
       </div>
       <div className="side-sort ">
         <label>SORT BY</label>
         <SidebarSelectNav
-          sideSortBy={props.sideSortBy}
-          sort={props.sort}
-          updateCurrentSortBy={props.updateCurrentSortBy}
+          sideSortBy={sideSortBy}
+          defaultValue={sidebar.sortBy}
+          updateCurrentSortBy={(e) => dispatch(updateCurrentSortBy(e))}
         />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (store: { sidebar: { genre: string, sort: string } }) => ({
-  genre: store.sidebar.genre,
-  sort: store.sidebar.sort,
-  sideGenre,
-  sideSortBy,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-  const { updateCurrentGenreAc, updateCurrentSortByAc } = bindActionCreators(actions, dispatch);
-
-  return {
-    updateCurrentGenre: (genre: string) => {
-      updateCurrentGenreAc(genre);
-    },
-    updateCurrentSortBy: (sort: string) => {
-      updateCurrentSortByAc(sort);
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default NavBar;

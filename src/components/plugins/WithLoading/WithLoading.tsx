@@ -4,7 +4,7 @@ interface WithLoadingProps {
   isLoading: boolean;
 }
 
-function WithLoading(Component: any) {
+const WithLoading = (Component: React.FC) => {
   const LoadingIndication = (): JSX.Element => <h2>Just a moment... Almost there</h2>;
 
   return function WithLoadingComponent({
@@ -14,6 +14,6 @@ function WithLoading(Component: any) {
     if (!isLoading) return <Component {...props} />;
     return <LoadingIndication />;
   };
-}
+};
 
 export default WithLoading;
