@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './SidebarListNav.scoped.scss';
 
-interface SideGenreListProps {
+interface IProps {
   sideGenre: [];
   defaultValue: string;
   updateCurrentGenre: (e: string) => void;
@@ -12,17 +12,20 @@ interface SideGenreProps {
   label: string;
 }
 
-const SidebarListNav = ({
+export default function SidebarListNav({
   sideGenre,
   defaultValue,
   updateCurrentGenre,
-}: SideGenreListProps): JSX.Element => {
+}: IProps): JSX.Element {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleChange = (e) => {
-    setSelectedIndex(e.target.id);
-    updateCurrentGenre(e.target.value);
-  };
+  const handleChange = useCallback(
+    (event: any) => {
+      setSelectedIndex(event.target.id);
+      updateCurrentGenre(event.target.value);
+    },
+    [updateCurrentGenre],
+  );
 
   return (
     <div className="sidebar-list-nav">
@@ -44,6 +47,4 @@ const SidebarListNav = ({
       </form>
     </div>
   );
-};
-
-export default SidebarListNav;
+}

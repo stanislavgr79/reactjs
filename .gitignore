@@ -12,3 +12,4 @@
 
 # Node Modules
 /node_modules
+/src/temp/

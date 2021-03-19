@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface InputProps {
+interface IProps {
   type?: string;
   id?: string;
   placeholder?: string;
@@ -11,6 +11,7 @@ interface InputProps {
   onBlur?: (event: unknown) => void;
   onFocus?: (event: unknown) => void;
   value?: string | number | string[];
+  readonly?: boolean;
 }
 
 export const Input = ({
@@ -24,7 +25,8 @@ export const Input = ({
   onBlur,
   onFocus,
   value,
-}: InputProps): JSX.Element => (
+  readonly,
+}: IProps): JSX.Element => (
   <input
     className={`input${className ? ` ${className}` : ''}`}
     id={id}
@@ -36,5 +38,6 @@ export const Input = ({
     onBlur={onBlur}
     onFocus={onFocus}
     value={value}
+    readOnly={readonly}
   />
 );

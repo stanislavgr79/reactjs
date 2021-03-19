@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../redux/redux-store';
+
 import NavBar from '../../container/Navbar';
 import MoviesList from '../../container/MoviesList';
 import ErrorBoundary from '../../../components/plugins/ErrorBoundary';
 import withLoading from '../../../components/plugins/WithLoading';
-import { useSelector } from 'react-redux';
 
 import './ContentIntro.scoped.scss';
 
 const MovieListWithLoading = withLoading(MoviesList);
 
-const ContentIntro = () => {
-  const [isLoading, setIsloading] = useState(
-    useSelector(
-      (store: { moviesStore: { moviesIsLoading: boolean } }) => store.moviesStore.moviesIsLoading,
-    ),
-  );
+export default function ContentIntro(): JSX.Element {
+  const store = useSelector((store: AppState) => {
+    return {
+      moviesIsLoading: store.moviesStore.moviesIsLoading,
+    };
+  });
+  const [isLoading, setIsloading] = useState(store.moviesIsLoading);
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -34,6 +37,4 @@ const ContentIntro = () => {
       </ErrorBoundary>
     </div>
   );
-};
-
-export default ContentIntro;
+}

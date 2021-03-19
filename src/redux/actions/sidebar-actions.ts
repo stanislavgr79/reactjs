@@ -1,10 +1,14 @@
-import { SELECT_GENRE, SORT_BY } from '../reducers/sidebar-reducer';
+import {
+  SidebarActionTypes,
+  UPDATE_SELECT_GENRE,
+  UPDATE_SORT_BY,
+} from '../types/sidebar-reducer-types';
 
-export const updateCurrentGenre = (payload: string) => ({
-  type: SELECT_GENRE,
-  payload,
+export const updateCurrentGenre = (genre: string): SidebarActionTypes => ({
+  type: UPDATE_SELECT_GENRE,
+  payload: genre,
 });
-export const updateCurrentSortBy = (payload: string) => ({
-  type: SORT_BY,
-  payload,
+export const updateCurrentSortBy = (sortBy: string): SidebarActionTypes => ({
+  type: UPDATE_SORT_BY,
+  payload: sortBy,
 });

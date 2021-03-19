@@ -4,7 +4,7 @@ import { reducerMovies } from './reducers/movies-reducer';
 import { reducerSideBar } from './reducers/sidebar-reducer';
 
 const reducers = combineReducers({
-  search: reducerSearch,
+  searchStore: reducerSearch,
   moviesStore: reducerMovies,
   sidebar: reducerSideBar,
 });
@@ -18,10 +18,11 @@ const isReduxDevtoolsExtenstionExist = (arg: Window | WindowWithDevTools) => {
 };
 
 /* eslint-disable no-underscore-dangle */
-export const store = createStore(
+const store = createStore(
   reducers,
   isReduxDevtoolsExtenstionExist(window) ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined,
 );
-/* eslint-enable */
 
-// export const rootReducer = createStore(reducers);
+export default store;
+
+export type AppState = ReturnType<typeof reducers>;

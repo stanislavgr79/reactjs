@@ -1,23 +1,27 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../redux/redux-store';
+
 import Header from '../../components/structure/Header';
 import ContentIntro from '../../components/structure/ContentIntro';
 import Footer from '../../components/structure/Footer';
-import { useSelector } from 'react-redux';
+import DetailMoviePopup from '../../components/container/DetailMovieTop';
 
 import './Intro.scoped.scss';
 
-const Intro = (): JSX.Element => {
-  const showPopupStore = useSelector(
-    (store: { moviesStore: { showPopup: boolean } }) => store.moviesStore.showPopup,
-  );
+export default function Intro(): JSX.Element {
+  const store = useSelector((store: AppState) => {
+    return {
+      showPopup: store.moviesStore.showPopup,
+      selectedMovieId: store.moviesStore.selectedMovieId,
+    };
+  });
 
   return (
-    <div className={!showPopupStore ? 'intro_page' : 'intro_page show_movie_popup'}>
-      <Header />
+    <div className={`intro_page ${!store.showPopup ? '' : 'show_movie_popup'}`}>
+      {store.selectedMovieId !== 0 ? <DetailMoviePopup /> : <Header />}
       <ContentIntro />
       <Footer />
     </div>
   );
-};
-
-export default Intro;
+}
