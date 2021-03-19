@@ -7,10 +7,23 @@
     font-size: 20px;
     color: #FFFFFF;
     &>option {
-        padding-right: 15px;
+        padding-right: 8px;
+        padding-left: 8px;
+        position: relative;
         &:hover {
             color: #f65261;
             cursor: pointer;
+        }
+    }
+    .selected {
+        &::after {
+            content: "";
+            height: 3px;
+            position: absolute;
+            background-color: #ff0a48;
+            top: calc(100% + 1px);
+            width: 100%;
+            left: 0;
         }
     }
 }

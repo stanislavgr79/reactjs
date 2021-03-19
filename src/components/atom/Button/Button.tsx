@@ -8,18 +8,18 @@ interface ButtonProps {
   modifier?: string;
   onClick?: (e: unknown) => void;
   buttonType?: 'button' | 'submit' | 'reset';
-  label: string;
+  label?: string;
   sharingType?: string;
 }
 
-export default function Button({
+const Button = ({
   onClick,
   label = '',
   buttonType,
   className,
   id,
   sharingType,
-}: ButtonProps) {
+}: ButtonProps): JSX.Element => {
   const classList = createClassList(['btn button', className || '']);
 
   return (
@@ -33,4 +33,6 @@ export default function Button({
       {label}
     </button>
   );
-}
+};
+
+export default Button;

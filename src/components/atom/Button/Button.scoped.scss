@@ -20,3 +20,33 @@
     font-weight: 500;
     padding: 0.475rem 3.476rem;
 }
+
+.btn_reset {
+    color: #F65261;
+    background: none;
+    font-weight: 600;
+    padding: 0.375rem 3.016rem;
+    border: 2px solid #F65261;
+    margin-right: 10px;
+    &:hover {
+        color: #FFFFFF;
+    }
+}
+
+.btn_submit {
+    color: #FFFFFF;
+    background-color: #F65261;
+    font-weight: 600;
+    padding: 0.375rem 2.476rem;
+    border: 2px solid #F65261;
+    &:hover {
+        color: #232323;
+    }
+}
+
+.btn_close {
+    color: #FFFFFF;
+    background-image: url('../../../resources/images/icon_close_0.png');
+    background-repeat: no-repeat;
+    padding: 1rem 1rem;
+}
