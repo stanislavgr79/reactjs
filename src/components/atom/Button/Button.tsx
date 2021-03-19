@@ -2,7 +2,7 @@ import React from 'react';
 import { createClassList } from '../../../helpers/utils';
 import './Button.scoped.scss';
 
-interface ButtonProps {
+interface IProps {
   className?: string;
   id?: string;
   modifier?: string;
@@ -12,14 +12,14 @@ interface ButtonProps {
   sharingType?: string;
 }
 
-const Button = ({
+export default function Button({
   onClick,
   label = '',
   buttonType,
   className,
   id,
   sharingType,
-}: ButtonProps): JSX.Element => {
+}: IProps): JSX.Element {
   const classList = createClassList(['btn button', className || '']);
 
   return (
@@ -33,6 +33,4 @@ const Button = ({
       {label}
     </button>
   );
-};
-
-export default Button;
+}

@@ -1,20 +1,19 @@
-export const SEARCH = 'SEARCH';
+import { SearchState, SearchActionTypes, UPDATE_SEARCH_QUERY } from '../types/search-reducer-types';
 
-const initialState = {
+const initialState: SearchState = {
   search: {
     value: '',
   },
 };
 
-export const reducerSearch = (
-  state = initialState.search,
-  action: { type: string, payload: string },
-) => {
+export const reducerSearch = (state = initialState, action: SearchActionTypes): SearchState => {
   switch (action.type) {
-    case SEARCH:
+    case UPDATE_SEARCH_QUERY:
       return {
         ...state,
-        value: action.payload,
+        search: {
+          value: action.search.value,
+        },
       };
     default:
       return state;

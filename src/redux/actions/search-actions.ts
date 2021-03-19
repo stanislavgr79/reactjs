@@ -1,6 +1,8 @@
-import { SEARCH } from '../reducers/search-reducer';
+import { SearchActionTypes, UPDATE_SEARCH_QUERY } from '../types/search-reducer-types';
 
-export const updateSearchValue = (payload: string) => ({
-  type: SEARCH,
-  payload,
+export const updateSearchValue = (value: string): SearchActionTypes => ({
+  type: UPDATE_SEARCH_QUERY,
+  search: {
+    value,
+  },
 });
