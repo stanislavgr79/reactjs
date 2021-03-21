@@ -1,0 +1,149 @@
+@import 'react-datepicker/dist/react-datepicker.css';
+
+.site_name {
+    padding-top: 10px;
+    margin: unset;
+}
+
+.edit_movie {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 100%;
+    display: flex;
+    justify-content: center;
+    
+    .form {
+        padding-left: 7%;
+        padding-right: 7%;
+        background-color: #232323;
+        position: relative;
+        padding-top: 50px;
+        max-width: 720px;
+        
+        .page_title{
+            font-size: 36px;
+            color: #FFF;
+            font-weight: 100;
+        }
+        .page_close{
+                position: absolute;
+                right: 20px;
+                top: 20px;
+        }
+    }
+}
+
+.movie_form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: column;
+
+    & > Label {
+        color: #F65261;
+        font-weight: 600;
+        margin-top: 6px;
+        margin-bottom: 6px;
+        font-size: 16px;
+    }
+
+    .button_section {
+        display: flex;
+        flex-direction: row-reverse;
+        height: 100%;
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+
+    input {
+        background-color: #424242;
+        padding: 2px 8px;
+        font-size: 15px;
+        border: 1px solid #424242;
+        border-radius: 4px;
+        color: #FFF;
+
+        &:focus {
+            border-color: blue;
+        }
+    }
+
+    .simple_input {
+        height: 28px;
+        width: inherit;
+    }
+
+    .input_readonly{
+        background-color: #232323;
+        border: none;
+        padding-left: 0;
+    }
+}
+
+.select_genres {
+    color: #bbb;
+
+    & > div {
+        background-color: #424242;
+        border: none;
+        font-size: 18px;
+
+        & > div {
+            color: #bbbbbb;
+        }
+    }
+}
+
+.select_genres [class$="control"] {
+    background-color: #424242;
+    border: none;
+    box-shadow: none;
+    border: 1px solid;
+}
+
+.select_genres label:hover {
+    color: #F65261;
+}
+
+.select_genres [class$='option']{
+    background-color: inherit;
+    &:hover{
+        background: none;
+    }
+    &:active {
+        background-color: inherit;
+        color: #F65261;
+    }
+}
+
+.popup_model {
+    position: fixed;
+    inset: 0px;
+    display: flow-root;
+    z-index: 999;
+    background: rgba(49, 49, 49, 0.88);
+    pointer-events: auto;
+  }
+
+  .model_content {
+    height: 100%;
+    position: relative;
+    margin: auto;
+    pointer-events: auto;
+
+    .footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    }
+  }
+
+  .image_calendar{
+    position: absolute;
+    width: 23px;
+    margin-left: -28px;
+    padding-top: 2px;
+    &:hover{
+        cursor: pointer;
+    }
+  }

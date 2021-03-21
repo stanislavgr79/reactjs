@@ -25,7 +25,8 @@ module.exports = {
       '@components': path.resolve(path.join(__dirname, '..', 'src', 'components')),
       '@pages': path.resolve(path.join(__dirname, '..', 'src', 'pages')),
       '@resources': path.resolve(path.join(__dirname, '..', 'src', 'resources')),
-      '@plugins': path.resolve(path.join(__dirname, '..', 'src', 'plugins')),
+      '@redux': path.resolve(path.join(__dirname, '..', 'src', 'redux')),
+      '@helpers': path.resolve(path.join(__dirname, '..', 'src', 'helpers')),
     },
   },
   module: {

@@ -1,0 +1,70 @@
+@import 'react-datepicker/dist/react-datepicker.css';
+
+.site_name {
+    padding-top: 10px;
+    margin: unset;
+}
+
+.delete_movie {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    margin-bottom: 100%;
+    
+    .form {
+        padding-left: 7%;
+        padding-right: 7%;
+        width: 60%;
+        background-color: #232323;
+        position: relative;
+        padding-top: 50px;
+        
+        .page_title{
+            font-size: 36px;
+            color: #FFF;
+            font-weight: 100;
+        }
+
+        .page_description  {
+            font-size: 22px;
+            color: #FFF;
+            font-weight: 100;
+        }
+
+        .section_icon-close{
+                position: absolute;
+                right: 20px;
+                top: 20px;
+        }
+
+        .button_section {
+            display: flex;
+            flex-direction: row-reverse;
+            padding-top: 40px;
+            padding-bottom: 60px;
+        }
+
+    }
+}
+
+.popup_model {
+    position: fixed;
+    inset: 0px;
+    display: flow-root;
+    z-index: 999;
+    background: rgba(49, 49, 49, 0.88);
+    pointer-events: auto;
+  }
+
+  .model_content {
+    height: 100%;
+    position: relative;
+    margin: auto;
+    pointer-events: auto;
+
+    .footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    }
+  }

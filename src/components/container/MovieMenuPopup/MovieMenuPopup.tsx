@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { IMovie } from '../../../helpers/interface';
+import { updateShowPopup } from '@redux/actions/movies-actions';
 
-import { updateShowPopup } from '../../../redux/actions/movies-actions';
-import Button from '../../atom/Button';
-import DeleteMoviePopap from '../DeleteMoviePopap';
-import EditMoviePopap from '../EditMoviePopap';
+import Button from '@components/atom/Button';
+import DeleteMoviePopup from '@components/container/DeleteMoviePopup';
+import ModelMoviePopup from '@components/container/ModelMoviePopup';
+import { IMovie } from '../../../helpers/interface';
 
 import './MovieMenuPopup.scoped.less';
 
@@ -14,33 +14,33 @@ interface IProps {
   closeMenu: () => void;
 }
 
-const MovieMenuPopup = ({ movie, closeMenu }: IProps): JSX.Element => {
+export default function MovieMenuPopup({ movie, closeMenu }: IProps): JSX.Element {
+  const dispatch = useDispatch();
   const [showPopupEdit, setShowPopupEdit] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(updateShowPopup(showPopupEdit));
     dispatch(updateShowPopup(showPopupDelete));
   }, [dispatch, showPopupEdit, showPopupDelete]);
 
-  const updatePopupEdit = () => {
+  const updatePopupEdit = useCallback(() => {
     setShowPopupEdit(!showPopupEdit);
-  };
+  }, [showPopupEdit]);
 
-  const togglePopupEdit = () => {
+  const togglePopupEdit = useCallback(() => {
     setShowPopupDelete(!showPopupEdit);
     closeMenu();
-  };
+  }, [closeMenu, showPopupEdit]);
 
-  const updatePopupDelete = () => {
+  const updatePopupDelete = useCallback(() => {
     setShowPopupDelete(!showPopupDelete);
-  };
+  }, [showPopupDelete]);
 
-  const togglePopupDelete = () => {
+  const togglePopupDelete = useCallback(() => {
     setShowPopupDelete(!showPopupDelete);
     closeMenu();
-  };
+  }, [closeMenu, showPopupDelete]);
 
   return (
     <div className="movie_sub_menu">
@@ -51,16 +51,14 @@ const MovieMenuPopup = ({ movie, closeMenu }: IProps): JSX.Element => {
         <div className="edit_point menu_item" onClick={updatePopupEdit}>
           Edit
         </div>
-        {showPopupEdit ? <EditMoviePopap movie={movie} closePopup={togglePopupEdit} /> : null}
+        {showPopupEdit && (
+          <ModelMoviePopup movie={movie} closePopup={togglePopupEdit} role="edit" />
+        )}
         <div className="delete_point menu_item" onClick={updatePopupDelete}>
           Delete
         </div>
-        {showPopupDelete ? (
-          <DeleteMoviePopap movieId={movie.id} closePopup={togglePopupDelete} />
-        ) : null}
+        {showPopupDelete && <DeleteMoviePopup movieId={movie.id} closePopup={togglePopupDelete} />}
       </div>
     </div>
   );
-};
-
-export default MovieMenuPopup;
+}

@@ -1,37 +1,32 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../../../redux/redux-store';
+import { updateSelectedMovieId } from '../../../redux/actions/movies-actions';
 
-import MovieCard from '../../atom/MovieCard';
+import MovieCard from '@components/atom/MovieCard';
+import MovieMenuPopup from '@components/container/MovieMenuPopup';
 import { IMovie } from '../../../helpers/interface';
-import MovieMenuPopup from '../MovieMenuPopup';
-import image from '@resources/images/menu-icon.png';
 
+import image from '@resources/images/menu-icon.png';
 import './MoviesList.scoped.scss';
+
 interface IProp {
   movies: IMovie[];
 }
 
-function filterByGenre(movies: IMovie[], genre: string) {
-  return movies.filter(function (el) {
-    let isFinded = false;
-    el.genres.forEach(function (e) {
-      if (e.toLowerCase() == genre.toLowerCase()) {
-        isFinded = true;
-      }
-    });
-    if (isFinded) {
-      return el;
-    }
-  });
-}
-
-function renderMoviesNotFounded() {
-  return <div className="movies_not_finded">Movies not finded</div>;
-}
+const renderMoviesNotFounded = () => {
+  <div className="movies_not_finded">Movies not finded</div>;
+};
 
 const RenderMoviesFounded = ({ movies }: IProp): JSX.Element => {
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [activeMovieId, setActiveMovieId] = useState(0);
+  const [selectedMovieId, setSelectedMovieId] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateSelectedMovieId(selectedMovieId));
+  }, [dispatch, selectedMovieId]);
 
   const updateShowSubMenuWithId = (id: number) => {
     setActiveMovieId(id);
@@ -42,6 +37,10 @@ const RenderMoviesFounded = ({ movies }: IProp): JSX.Element => {
     setShowSubMenu(!showSubMenu);
   };
 
+  const changeSelectedMovieId = (id: number) => {
+    setSelectedMovieId(id);
+  };
+
   return (
     <>
       <div className="container-md movies-wraper">
@@ -50,12 +49,14 @@ const RenderMoviesFounded = ({ movies }: IProp): JSX.Element => {
             <div className="col movie-unit" key={movie.title}>
               <div className="movie_holder">
                 <MovieCard
+                  id={movie.id}
                   title={movie.title}
                   releaseDate={movie.release_date}
                   genres={movie.genres}
                   movieUrl={movie.movieUrl}
                   posterPath={movie.poster_path}
                   key={movie.title}
+                  changeSelectedMovieId={changeSelectedMovieId}
                 />
                 {!showSubMenu ? (
                   <img
@@ -76,6 +77,20 @@ const RenderMoviesFounded = ({ movies }: IProp): JSX.Element => {
     </>
   );
 };
+
+function filterByGenre(movies: IMovie[], genre: string) {
+  return movies.filter(function (el) {
+    let isFinded = false;
+    el.genres.forEach(function (e) {
+      if (e.toLowerCase() == genre.toLowerCase()) {
+        isFinded = true;
+      }
+    });
+    if (isFinded) {
+      return el;
+    }
+  });
+}
 
 function dynamicSort(property: string) {
   let sortOrder = 1;
@@ -99,33 +114,31 @@ function searchMovies(movies: IMovie[], search: string) {
   return movies.filter((movie: IMovie) => movie.title.toLowerCase().includes(search.toLowerCase()));
 }
 
-const MoviesList = (): JSX.Element => {
-  const store = {
-    movies: useSelector((store: { moviesStore: { movies: IMovie[] } }) => store.moviesStore.movies),
-    sidebar: useSelector((store: { sidebar: { genre: string, sortBy: string } }) => store.sidebar),
-    search: useSelector((store: { search: { value: string } }) => store.search.value),
-  };
+export default function MoviesList(): JSX.Element {
+  const store = useSelector((store: AppState) => {
+    return {
+      movies: store.moviesStore.movies,
+      sidebar: store.sidebar,
+      search: store.searchStore.search,
+    };
+  });
 
-  const movies = store.search != '' ? searchMovies(store.movies, store.search) : store.movies;
-  const filteredMovies =
-    store.sidebar.genre == 'ALL' ? movies : filterByGenre(movies, store.sidebar.genre);
-
-  filteredMovies.sort(dynamicSort(store.sidebar.sortBy.toString().toLowerCase()));
+  const movies: IMovie[] = useMemo(() => {
+    const movies: IMovie[] =
+      store.search.value != '' ? searchMovies(store.movies, store.search.value) : store.movies;
+    const filteredMovies: IMovie[] =
+      store.sidebar.genre == 'ALL' ? movies : filterByGenre(movies, store.sidebar.genre);
+    return filteredMovies.sort(dynamicSort(store.sidebar.sortBy.toString().toLowerCase()));
+  }, [store.movies, store.search, store.sidebar.genre, store.sidebar.sortBy]);
 
   return (
     <>
-      <div className="movies_finded">
+      <div className="container-md movies_finded">
         <label>
-          <strong>{filteredMovies.length}</strong> movies found
+          <strong>{movies.length}</strong> movies found
         </label>
       </div>
-      {filteredMovies.length > 0 ? (
-        <RenderMoviesFounded movies={filteredMovies} />
-      ) : (
-        renderMoviesNotFounded()
-      )}
+      {movies.length > 0 ? <RenderMoviesFounded movies={movies} /> : renderMoviesNotFounded}
     </>
   );
-};
-
-export default MoviesList;
+}

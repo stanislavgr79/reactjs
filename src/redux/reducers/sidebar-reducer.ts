@@ -1,19 +1,23 @@
-export const SELECT_GENRE = 'SELECT_GENRE';
-export const SORT_BY = 'SORT_BY';
+import {
+  SidebarState,
+  SidebarActionTypes,
+  UPDATE_SELECT_GENRE,
+  UPDATE_SORT_BY,
+} from '../types/sidebar-reducer-types';
 
-const initialState = {
+const initialState: SidebarState = {
   genre: 'ALL',
   sortBy: 'TITLE',
 };
 
-export const reducerSideBar = (state = initialState, action: { type: string, payload: Object }) => {
+export const reducerSideBar = (state = initialState, action: SidebarActionTypes): SidebarState => {
   switch (action.type) {
-    case SELECT_GENRE:
+    case UPDATE_SELECT_GENRE:
       return {
         ...state,
         genre: action.payload,
       };
-    case SORT_BY:
+    case UPDATE_SORT_BY:
       return {
         ...state,
         sortBy: action.payload,

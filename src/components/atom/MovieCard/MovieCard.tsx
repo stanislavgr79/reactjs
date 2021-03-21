@@ -1,27 +1,31 @@
 import React from 'react';
 import './MovieCard.scoped.scss';
 
-interface MovieCardProps {
+interface IProps {
+  id: number | undefined;
   title: string;
+  movieUrl?: string;
   releaseDate: string;
-  movieUrl: string;
-  genres: string[];
-  posterPath: string;
+  genres: string[] | { value: string, label: string }[];
+  posterPath: string | undefined;
+  changeSelectedMovieId: (e: number) => void;
 }
 
-const MovieCard = ({
+export default function MovieCard({
+  id = 0,
   title = 'missing_title',
   releaseDate = 'missing_releaseDate',
-  movieUrl = '#',
   genres = ['missing_genre'],
   posterPath = 'missing_image',
-}: MovieCardProps): JSX.Element => {
+  changeSelectedMovieId,
+}: IProps): JSX.Element {
   const year = releaseDate.split('-')[0];
+  const KEY = 'value';
   const genreStr =
     typeof genres[0] === 'object'
       ? genres
-          .map(function (item) {
-            return item['value'];
+          .map(function (item: any) {
+            return item[KEY];
           })
           .join(', ')
       : genres.join(', ');
@@ -30,8 +34,13 @@ const MovieCard = ({
     <>
       <div className="movie-card">
         <div className="movie-image">
-          <a href={movieUrl}>
-            <img src={posterPath} className="img-fluid" alt={title} />
+          <a href="#">
+            <img
+              src={posterPath}
+              className="img-fluid"
+              alt={title}
+              onClick={() => changeSelectedMovieId(id)}
+            />
           </a>
         </div>
         <div className="movie-props">
@@ -44,6 +53,4 @@ const MovieCard = ({
       </div>
     </>
   );
-};
-
-export default MovieCard;
+}
