@@ -4,12 +4,16 @@
             "label": "TITLE"
         },
         {
-            "value": "RELEASE",
+            "value": "release_date",
             "label": "RELEASE"
         },
         {
             "value": "RUNTIME",
             "label": "RUNTIME"
+        },
+        {
+            "value": "vote_average",
+            "label": "RATING"
         }
     ],
     "genre": [{

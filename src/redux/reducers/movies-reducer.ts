@@ -1,18 +1,27 @@
-import { IMovie } from '../../helpers/interface';
+import { IData, IMovie } from '../../helpers/interface';
 
 import {
   MoviesState,
   MoviesActionTypes,
-  ADD_TO_MOVIES,
-  DELETE_FROM_MOVIES,
-  UPDATE_MOVIE_IN_MOVIES,
+  FETCH_DATA,
+  FETCH_DATA_SUCCESS,
+  FETCH_DATA_FAILURE,
+  FETCH_ADD_MOVIE_SUCCESS,
+  DELETE_MOVIE,
+  UPDATE_MOVIE,
   UPDATE_STATUS_MOVIE_POPUP,
   UPDATE_SELECTED_MOVIE_ID,
 } from '../types/movies-reducer-types';
 
 const initialState: MoviesState = {
-  movies: require('../../resources/movies.json'),
-  moviesIsLoading: true,
+  movies: {
+    totalAmount: 0,
+    data: [],
+    offset: 0,
+    limit: 6,
+  },
+  dataStatus: 'idle',
+  error: null,
   showPopup: false,
   selectedMovieId: 0,
   movie: undefined,
@@ -20,27 +29,56 @@ const initialState: MoviesState = {
 
 export const reducerMovies = (state = initialState, action: MoviesActionTypes): MoviesState => {
   switch (action.type) {
-    case ADD_TO_MOVIES:
+    case FETCH_DATA:
       return {
         ...state,
-        movies: [...state.movies, action.payload],
+        error: null,
+        dataStatus: 'loading',
       };
-
-    case DELETE_FROM_MOVIES:
+    case FETCH_DATA_SUCCESS:
       return {
         ...state,
-        movies: state.movies.filter((movie: IMovie) => movie.id !== action.payload),
+        dataStatus: 'succeeded',
+        movies: action.response.data,
+      };
+    case FETCH_DATA_FAILURE:
+      return {
+        ...state,
+        error: action.error.data,
+        dataStatus: 'failed',
+        movies: initialState.movies,
       };
 
-    case UPDATE_MOVIE_IN_MOVIES:
-      const index: number = state.movies.findIndex(
-        (movie: IMovie) => movie.id == action.payload.id,
+    case DELETE_MOVIE:
+      const newMoviesForDelete: IData = state.movies;
+      newMoviesForDelete.totalAmount = state.movies.totalAmount - 1;
+      return {
+        ...state,
+        movies: newMoviesForDelete,
+      };
+
+    case FETCH_ADD_MOVIE_SUCCESS:
+      const newMoviesAfterAdd: IData = state.movies;
+      newMoviesAfterAdd.totalAmount = state.movies.totalAmount + 1;
+      return {
+        ...state,
+        movies: newMoviesAfterAdd,
+      };
+
+    case UPDATE_MOVIE:
+      const newMoviesForEdit: IMovie[] = state.movies.data;
+      const index: number = newMoviesForEdit.findIndex(
+        (movie: IMovie) => movie.id == action.response.data.id,
       );
-      const newMovies: IMovie[] = [...state.movies];
-      newMovies[index] = action.payload;
+      newMoviesForEdit[index] = action.response.data;
       return {
         ...state,
-        movies: newMovies,
+        movies: {
+          totalAmount: state.movies.totalAmount,
+          offset: state.movies.offset,
+          limit: 6,
+          data: newMoviesForEdit,
+        },
       };
 
     case UPDATE_STATUS_MOVIE_POPUP:
@@ -50,13 +88,13 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
       };
 
     case UPDATE_SELECTED_MOVIE_ID:
-      const indexMovie: number = state.movies.findIndex(
+      const indexMovie: number = state.movies.data.findIndex(
         (movie: IMovie) => movie.id == action.payload,
       );
       return {
         ...state,
         selectedMovieId: action.payload == 0 ? 0 : action.payload,
-        movie: action.payload == 0 ? undefined : state.movies[indexMovie],
+        movie: action.payload == 0 ? undefined : state.movies.data[indexMovie],
       };
 
     default:

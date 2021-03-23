@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MovieCard.scoped.scss';
+import noneImage from '@resources/images/nofoto.png';
 
 interface IProps {
   id: number | undefined;
   title: string;
-  movieUrl?: string;
   releaseDate: string;
   genres: string[] | { value: string, label: string }[];
   posterPath: string | undefined;
@@ -30,13 +30,25 @@ export default function MovieCard({
           .join(', ')
       : genres.join(', ');
 
+  const [error, setError] = useState(false);
+
+  const handleImageLoaded = () => {
+    if (!error) setError(false);
+  };
+
+  const handleImageError = () => {
+    setError(true);
+  };
+
   return (
     <>
       <div className="movie-card">
         <div className="movie-image">
           <a href="#">
             <img
-              src={posterPath}
+              src={error || posterPath == null ? noneImage : posterPath}
+              onLoad={handleImageLoaded}
+              onError={handleImageError}
               className="img-fluid"
               alt={title}
               onClick={() => changeSelectedMovieId(id)}

@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './SidebarSelectNav.scoped.scss';
 
 interface IProps {
-  sideSortBy: [];
+  sideSortBy: { value: string, label: string }[];
   defaultValue: string;
-  updateCurrentSortBy: (e: string) => void;
+  updateCurrentSortBy: (sortBy: string) => void;
 }
 
 interface SideSortByProps {
@@ -19,24 +19,27 @@ export default function SidebarSelectNav({
 }: IProps): JSX.Element {
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-  const handleChange = useCallback(
-    (event: any) => {
-      setSelectedValue(event.value);
-      updateCurrentSortBy(event.target.value);
-    },
-    [updateCurrentSortBy],
-  );
+  const handleChange = useCallback((event: any) => {
+    setSelectedValue(event.target.value);
+  }, []);
+
+  useEffect(() => {
+    updateCurrentSortBy(selectedValue.toLowerCase());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedValue]);
 
   return (
     <div className="sidebar-select-nav">
-      <select
-        className="side-sort-select"
-        onChange={(e) => handleChange(e)}
-        value={sideSortBy.find((obj: SideSortByProps) => obj.value === selectedValue)}
-      >
+      <select className="side-sort-select" onChange={(e) => handleChange(e)} value={selectedValue}>
         {sideSortBy.map((obj: SideSortByProps) => (
-          <option id={obj.value} key={obj.value} className="c-pointer" role="button">
-            {obj.value}
+          <option
+            id={obj.value}
+            value={obj.value}
+            key={obj.value}
+            className="c-pointer"
+            role="button"
+          >
+            {obj.label}
           </option>
         ))}
       </select>

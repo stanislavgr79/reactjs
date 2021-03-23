@@ -12,6 +12,7 @@ interface IProps {
   onFocus?: (event: unknown) => void;
   value?: string | number | string[];
   readonly?: boolean;
+  min?: string;
 }
 
 export default function Input({
@@ -26,6 +27,7 @@ export default function Input({
   onFocus,
   value,
   readonly,
+  min,
 }: IProps): JSX.Element {
   return (
     <input
@@ -40,6 +42,7 @@ export default function Input({
       onFocus={onFocus}
       value={value}
       readOnly={readonly}
+      min={min}
     />
   );
 }

@@ -1,15 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import ModelMoviePopup from '@components/container/ModelMoviePopup';
+import ModelMoviePopup from '../../container/ModelMoviePopup';
 
-import SiteName from '@components/atom/SiteName';
-import Button from '@components/atom/Button';
-import Input from '@components/atom/Input';
+import SiteName from '../../atom/SiteName';
+import Button from '../../atom/Button';
+import Input from '../../atom/Input';
 
-import { updateSearchValue } from '@redux/actions/search-actions';
-import { updateShowPopup } from '@redux/actions/movies-actions';
+import { updateSearchValue } from '../../../redux/actions/search-actions';
+import { updateShowPopup } from '../../../redux/actions/movies-actions';
 
 import './Header.scoped.less';
+import {
+  updateCurrentGenre,
+  updateSelectedIndexListNav,
+} from '../../../redux/actions/sidebar-actions';
 
 export default function Header(): JSX.Element {
   const dispatch = useDispatch();
@@ -30,6 +34,8 @@ export default function Header(): JSX.Element {
 
   const onClick = useCallback(() => {
     dispatch(updateSearchValue(searchValue));
+    dispatch(updateCurrentGenre(''));
+    dispatch(updateSelectedIndexListNav(0));
   }, [dispatch, searchValue]);
 
   return (

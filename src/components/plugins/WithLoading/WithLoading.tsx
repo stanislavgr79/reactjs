@@ -1,17 +1,17 @@
 import React from 'react';
+import './WithLoading.scoped.less';
 
 interface WithLoadingProps {
   isLoading: boolean;
 }
 
 export default function WithLoading(Component: React.FC) {
-  const LoadingIndication = (): JSX.Element => <h2>Just a moment... Almost there</h2>;
+  const LoadingIndication = (): JSX.Element => <h2>Just a moment... Movies are loading...</h2>;
 
   return function WithLoadingComponent({
     isLoading,
     ...props
   }: WithLoadingProps): React.ReactElement {
-    if (!isLoading) return <Component {...props} />;
-    return <LoadingIndication />;
+    return !isLoading ? <Component {...props} /> : <LoadingIndication />;
   };
 }

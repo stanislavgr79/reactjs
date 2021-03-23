@@ -1,32 +1,51 @@
-import { IMovie } from '../../helpers/interface';
+import { IData, IMovie } from '../../helpers/interface';
 
-export const ADD_TO_MOVIES = 'ADD_TO_MOVIES';
-export const DELETE_FROM_MOVIES = 'DELETE_FROM_MOVIES';
-export const UPDATE_MOVIE_IN_MOVIES = 'UPDATE_MOVIE_IN_MOVIES';
+export const FETCH_DATA = 'FETCH_DATA';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
+export const FETCH_ADD_MOVIE_SUCCESS = 'FETCH_ADD_MOVIE_SUCCESS';
+export const DELETE_MOVIE = 'DELETE_MOVIE';
+export const UPDATE_MOVIE = 'UPDATE_MOVIE';
 export const UPDATE_STATUS_MOVIE_POPUP = 'UPDATE_STATUS_MOVIE_POPUP';
 export const UPDATE_SELECTED_MOVIE_ID = 'UPDATE_SELECTED_MOVIE_ID';
 
 export interface MoviesState {
-  movies: IMovie[];
-  moviesIsLoading: boolean;
+  [x: string]: any;
+  movies: IData;
+  dataStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
   showPopup: boolean;
   selectedMovieId: number;
   movie: IMovie | undefined;
 }
 
-interface AddMovieToMovies {
-  type: typeof ADD_TO_MOVIES;
-  payload: IMovie;
+interface FetchData {
+  type: typeof FETCH_DATA;
 }
 
-interface DeleteFromMovies {
-  type: typeof DELETE_FROM_MOVIES;
+interface FetchDataSuccess {
+  type: typeof FETCH_DATA_SUCCESS;
+  response: { data: IData };
+}
+
+interface FetchDataFailure {
+  type: typeof FETCH_DATA_FAILURE;
+  error: { data: string };
+}
+
+interface DeleteMovie {
+  type: typeof DELETE_MOVIE;
   payload: number;
 }
 
-interface UpdateMovieInMovies {
-  type: typeof UPDATE_MOVIE_IN_MOVIES;
-  payload: IMovie;
+interface UpdateMovie {
+  type: typeof UPDATE_MOVIE;
+  response: { data: IMovie };
+}
+
+interface AddMovie {
+  type: typeof FETCH_ADD_MOVIE_SUCCESS;
+  response: IMovie;
 }
 
 interface UpdateStatusMoviePopup {
@@ -40,8 +59,11 @@ interface UpdateSelectedMovieId {
 }
 
 export type MoviesActionTypes =
-  | AddMovieToMovies
-  | DeleteFromMovies
-  | UpdateMovieInMovies
+  | FetchData
+  | FetchDataSuccess
+  | FetchDataFailure
+  | DeleteMovie
+  | UpdateMovie
+  | AddMovie
   | UpdateStatusMoviePopup
   | UpdateSelectedMovieId;

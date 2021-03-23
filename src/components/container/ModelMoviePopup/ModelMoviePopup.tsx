@@ -1,19 +1,19 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  updateMovieInMovies,
   updateShowPopup,
-  addMovieToMovies,
-} from '@redux/actions/movies-actions';
+  fetchUpdateMovie,
+  fetchAddMovie,
+} from '../../../redux/actions/movies-actions';
 
-import Footer from '@components/structure/Footer';
-import Sitename from '@components/atom/SiteName/SiteName';
-import Input from '@components/atom/Input';
-import Button from '@components/atom/Button';
-import Calendar from '@components/atom/Calendar';
-import MultiSelect from '@components/atom/MultiSelect';
+import Footer from '../../structure/Footer';
+import Sitename from '../../atom/SiteName';
+import Input from '../../atom/Input';
+import Button from '../../atom/Button';
+import Calendar from '../../atom/Calendar';
+import MultiSelect from '../../atom/MultiSelect';
 import { IMovie } from '../../../helpers/interface';
-import { transformGenresToStringArray } from '@helpers/utils';
+import { transformGenresToStringArray } from '../../../helpers/utils';
 import './ModelMoviePopup.scoped.less';
 
 interface IProps {
@@ -27,11 +27,10 @@ const init = (): IMovie => {
     id: 0,
     title: '',
     release_date: '',
-    movieUrl: '',
     poster_path: '',
     genres: [],
     overview: '',
-    runtime: '',
+    runtime: 0,
   };
   return form;
 };
@@ -57,7 +56,7 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
   );
 
   const handleChangeReleaseDate = useCallback(
-    (date: any) => {
+    (date) => {
       const dateFormat = require('dateformat');
       const momentDateFormat = 'yyyy-mm-dd';
       setForm({ ...form, release_date: dateFormat(date, momentDateFormat) });
@@ -79,17 +78,36 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
     setForm(newForm);
   }, [form.id]);
 
+  const getValidForm = (form: any) => {
+    if (form.tagline?.length == 0) {
+      form.tagline = 'Out description';
+    }
+    form.runtime = form.runtime == null ? 0 : parseInt(form.runtime);
+    return form;
+  };
+
   const handleSubmitEdit = useCallback(() => {
-    dispatch(updateMovieInMovies(form));
+    const formValid = getValidForm(form);
+    dispatch(fetchUpdateMovie(formValid));
     dispatch(updateShowPopup(false));
     closePopup();
   }, [dispatch, closePopup, form]);
 
   const handleSubmitAdd = useCallback(() => {
-    const newId = new Date().getTime();
-    const newForm = { ...form };
-    newForm.id = newId;
-    dispatch(addMovieToMovies(newForm));
+    const fetchForm: IMovie = {
+      title: form.title,
+      tagline: '',
+      vote_average: 0,
+      vote_count: 0,
+      release_date: form.release_date,
+      poster_path: form.poster_path,
+      overview: form.overview,
+      budget: 0,
+      revenue: 0,
+      runtime: form.runtime,
+      genres: form.genres,
+    };
+    dispatch(fetchAddMovie(getValidForm(fetchForm)));
     closePopup();
   }, [form, dispatch, closePopup]);
 
@@ -132,15 +150,6 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
                 />
                 <label>RELEASE DATE</label>
                 <Calendar form={form} handleChangeReleaseDate={handleChangeReleaseDate} />
-                <label>MOVIE URL</label>
-                <Input
-                  type="text"
-                  name="movieUrl"
-                  className="simple_input"
-                  placeholder="Movie URL here"
-                  value={form.movieUrl || ''}
-                  onChange={handleChange}
-                />
                 <label>POSTER URL</label>
                 <Input
                   type="text"
@@ -163,16 +172,16 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
                 />
                 <label>RUNTIME</label>
                 <Input
-                  type="text"
+                  type="number"
                   name="runtime"
                   className="simple_input"
                   placeholder="Runtime here"
-                  value={form.runtime || ''}
+                  value={form.runtime == (0 || null) ? '' : form.runtime}
+                  min={'0'}
                   onChange={handleChange}
                 />
                 <div className="button_section">
                   <Button
-                    buttonType="submit"
                     className="btn_submit"
                     id="add_movie_btn_submit"
                     label={isEditForm ? 'SAVE' : 'SUBMIT'}

@@ -9,6 +9,7 @@ interface IProps {
   onClick?: (e: unknown) => void;
   buttonType?: 'button' | 'submit' | 'reset';
   label?: string;
+  title?: string;
   sharingType?: string;
 }
 
@@ -18,6 +19,7 @@ export default function Button({
   buttonType,
   className,
   id,
+  title,
   sharingType,
 }: IProps): JSX.Element {
   const classList = createClassList(['btn button', className || '']);
@@ -29,6 +31,7 @@ export default function Button({
       onClick={onClick}
       type={buttonType || 'button'}
       data-type={sharingType}
+      title={title}
     >
       {label}
     </button>

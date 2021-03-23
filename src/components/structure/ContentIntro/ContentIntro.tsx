@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../redux/redux-store';
 
-import NavBar from '@components/container/Navbar';
-import MoviesList from '@components/container/MoviesList';
-import ErrorBoundary from '@components/plugins/ErrorBoundary';
-import withLoading from '@components/plugins/WithLoading';
+import NavBar from '../../container/Navbar';
+import MoviesList from '../../container/MoviesList';
+import ErrorBoundary from '../../plugins/ErrorBoundary';
+import withLoading from '../../plugins/WithLoading';
 
 import './ContentIntro.scoped.scss';
 
@@ -14,26 +14,26 @@ const MovieListWithLoading = withLoading(MoviesList);
 export default function ContentIntro(): JSX.Element {
   const store = useSelector((store: AppState) => {
     return {
-      moviesIsLoading: store.moviesStore.moviesIsLoading,
+      dataStatus: store.moviesStore.dataStatus,
     };
   });
-  const [isLoading, setIsloading] = useState(store.moviesIsLoading);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const id = setTimeout(() => {
-      if (isLoading) {
+      if (status == 'succeeded') {
         return;
       }
-      setIsloading(false);
-    }, 1500);
+      setIsLoading(false);
+    }, 3000);
     return () => clearTimeout(id);
-  }, [isLoading]);
+  }, [store.dataStatus]);
 
   return (
     <div className="content content-intro">
       <NavBar />
       <ErrorBoundary>
-        <MovieListWithLoading isLoading={!isLoading} />
+        <MovieListWithLoading isLoading={isLoading} />
       </ErrorBoundary>
     </div>
   );

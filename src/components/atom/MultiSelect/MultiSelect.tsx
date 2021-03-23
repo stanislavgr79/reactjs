@@ -2,7 +2,10 @@ import React from 'react';
 import Select, { CommonProps, components, GroupTypeBase, OptionTypeBase } from 'react-select';
 import { transformGenresToArrayObjects } from '../../../helpers/utils';
 
-const select_genres: { value: string, label: string }[] = require('@resources/select_genres.json');
+const select_genres: {
+  value: string,
+  label: string,
+}[] = require('../../../resources/select_genres.json');
 
 const Option = (props: any): JSX.Element => {
   return (
@@ -45,8 +48,8 @@ const MultiValue = (
 };
 
 interface IProps {
-  genres: string[] | { label: string, value: string }[];
-  handleChangeGenre: (genres: any) => void;
+  genres: string[];
+  handleChangeGenre: (genres: { label: string, value: string }[]) => void;
 }
 
 export default function MultiSelect({ genres, handleChangeGenre }: IProps): JSX.Element {
@@ -57,7 +60,7 @@ export default function MultiSelect({ genres, handleChangeGenre }: IProps): JSX.
       placeholder="Select Genre"
       isMulti={true}
       components={{ Option, MultiValue }}
-      value={typeof genres[0] === 'object' ? genres : transformGenresToArrayObjects(genres)}
+      value={transformGenresToArrayObjects(genres)}
       options={select_genres}
       hideSelectedOptions={false}
       menuIsClose={false}

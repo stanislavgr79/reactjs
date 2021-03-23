@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../../redux/redux-store';
-import { updateSelectedMovieId } from '@redux/actions/movies-actions';
+import { updateSelectedMovieId } from '../../../redux/actions/movies-actions';
 
-import Button from '@components/atom/Button';
-import Sitename from '@components/atom/SiteName/SiteName';
+import Button from '../../atom/Button';
+import Sitename from '../../atom/SiteName';
 
 import './DetailMovieTop.scoped.less';
 
-export default function DetailMoviePopup(): JSX.Element {
+export default function DetailMovieTop(): JSX.Element {
   const dispatch = useDispatch();
 
   const store = useSelector((store: AppState) => {

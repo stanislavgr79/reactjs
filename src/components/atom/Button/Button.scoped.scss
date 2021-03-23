@@ -50,3 +50,20 @@
     background-repeat: no-repeat;
     padding: 1rem 1rem;
 }
+
+.btn.btn_arrow {
+    background-repeat: no-repeat;
+    padding: 0.6rem 0.7rem;
+    background-size: cover;
+    margin-bottom: .5rem;
+    border: none;
+    box-shadow: none;
+}
+
+.arrow_up {
+    background-image: url('../../../resources/images/arrow_up.png');
+}
+
+.arrow_down {
+    background-image: url('../../../resources/images/arrow_down.png');
+}
