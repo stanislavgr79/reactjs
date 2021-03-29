@@ -1,45 +1,36 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Genres } from '../../../helpers/enums';
 import { updateSelectedIndexListNav } from '../../../redux/actions/sidebar-actions';
 import { AppState } from '../../../redux/redux-store';
+
 import './SidebarListNav.scoped.scss';
 
 interface IProps {
-  sideGenre: { value: string, label: string }[];
-  defaultValue: string;
-  updateCurrentGenre: (genre: string) => void;
+  defaultValue: Genres;
+  updateCurrentGenre: (genre: Genres) => void;
 }
 
-interface SideGenreProps {
-  value: string;
-  label: string;
-}
-
-export default function SidebarListNav({
-  sideGenre,
-  defaultValue,
-  updateCurrentGenre,
-}: IProps): JSX.Element {
+export default function SidebarListNav({ defaultValue, updateCurrentGenre }: IProps): JSX.Element {
   const dispatch = useDispatch();
-  const store = useSelector((store: AppState) => {
-    return {
-      selectedIndexListNav: store.sidebar.selectedIndexListNav,
-    };
+  const { selectedIndexListNav } = useSelector((store: AppState) => {
+    return store.sidebar;
   });
+  const sideGenre = Object.values(Genres);
 
   const handleChange = useCallback(
-    (event: any) => {
-      dispatch(updateSelectedIndexListNav(event.target.id));
+    (index: number) => {
+      dispatch(updateSelectedIndexListNav(index));
     },
     [dispatch],
   );
 
   useEffect(() => {
-    sideGenre[store.selectedIndexListNav].value !== 'ALL'
-      ? updateCurrentGenre(sideGenre[store.selectedIndexListNav].value.toLowerCase())
-      : updateCurrentGenre('');
+    sideGenre[selectedIndexListNav] !== Genres.ALL
+      ? updateCurrentGenre(sideGenre[selectedIndexListNav])
+      : updateCurrentGenre(Genres.ALL);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sideGenre, store.selectedIndexListNav]);
+  }, [selectedIndexListNav]);
 
   return (
     <div className="sidebar-list-nav">
@@ -48,14 +39,15 @@ export default function SidebarListNav({
         onChange={(event) => event.preventDefault()}
         defaultValue={defaultValue}
       >
-        {sideGenre.map((el: SideGenreProps, index: number) => (
+        {Object.entries(Genres).map(([key, value], index: number) => (
           <option
-            className={store.selectedIndexListNav == index ? 'selected' : ''}
-            id={'' + index}
+            className={selectedIndexListNav == index ? 'selected' : ''}
+            id={`${value}-${index}`}
+            value={value}
             key={index}
-            onClick={(e) => handleChange(e)}
+            onClick={() => handleChange(index)}
           >
-            {el.value}
+            {key}
           </option>
         ))}
       </form>

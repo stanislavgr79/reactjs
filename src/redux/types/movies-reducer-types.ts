@@ -25,12 +25,12 @@ interface FetchData {
 
 interface FetchDataSuccess {
   type: typeof FETCH_DATA_SUCCESS;
-  response: { data: IData };
+  payload: IData;
 }
 
 interface FetchDataFailure {
   type: typeof FETCH_DATA_FAILURE;
-  error: { data: string };
+  payload: { error: string };
 }
 
 interface DeleteMovie {
@@ -40,12 +40,12 @@ interface DeleteMovie {
 
 interface UpdateMovie {
   type: typeof UPDATE_MOVIE;
-  response: { data: IMovie };
+  payload: IMovie;
 }
 
 interface AddMovie {
   type: typeof FETCH_ADD_MOVIE_SUCCESS;
-  response: IMovie;
+  payload: IMovie;
 }
 
 interface UpdateStatusMoviePopup {

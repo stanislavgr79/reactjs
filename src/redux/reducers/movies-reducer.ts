@@ -39,12 +39,12 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
       return {
         ...state,
         dataStatus: 'succeeded',
-        movies: action.response.data,
+        movies: action.payload,
       };
     case FETCH_DATA_FAILURE:
       return {
         ...state,
-        error: action.error.data,
+        error: action.payload.error,
         dataStatus: 'failed',
         movies: initialState.movies,
       };
@@ -68,9 +68,9 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
     case UPDATE_MOVIE:
       const newMoviesForEdit: IMovie[] = state.movies.data;
       const index: number = newMoviesForEdit.findIndex(
-        (movie: IMovie) => movie.id == action.response.data.id,
+        (movie: IMovie) => movie.id == action.payload.id,
       );
-      newMoviesForEdit[index] = action.response.data;
+      newMoviesForEdit[index] = action.payload;
       return {
         ...state,
         movies: {

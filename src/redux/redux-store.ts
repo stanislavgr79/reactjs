@@ -1,5 +1,5 @@
 import { combineReducers, createStore, StoreEnhancer, applyMiddleware } from 'redux';
-import { apiMiddleware } from 'react-redux-api-tools';
+import { apiMiddleware } from 'redux-api-middleware';
 import { reducerSearch } from './reducers/search-reducer';
 import { reducerMovies } from './reducers/movies-reducer';
 import { reducerSideBar } from './reducers/sidebar-reducer';

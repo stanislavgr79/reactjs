@@ -5,18 +5,19 @@ import {
   UPDATE_SORT_ORDER,
   UPDATE_SELECTED_INDEX_LIST_NAV,
 } from '../types/sidebar-reducer-types';
+import { Genres, SortBy, SortOrder } from '../../helpers/enums';
 
-export const updateCurrentGenre = (genre: string): SidebarActionTypes => ({
+export const updateCurrentGenre = (genre: Genres): SidebarActionTypes => ({
   type: UPDATE_SELECT_GENRE,
   payload: genre,
 });
 
-export const updateCurrentSortBy = (sortBy: string): SidebarActionTypes => ({
+export const updateCurrentSortBy = (sortBy: SortBy): SidebarActionTypes => ({
   type: UPDATE_SORT_BY,
   payload: sortBy,
 });
 
-export const updateSortOrder = (sortOrder: string): SidebarActionTypes => ({
+export const updateSortOrder = (sortOrder: SortOrder): SidebarActionTypes => ({
   type: UPDATE_SORT_ORDER,
   payload: sortOrder,
 });

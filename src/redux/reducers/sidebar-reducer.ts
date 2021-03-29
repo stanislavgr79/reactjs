@@ -6,11 +6,12 @@ import {
   UPDATE_SORT_ORDER,
   UPDATE_SELECTED_INDEX_LIST_NAV,
 } from '../types/sidebar-reducer-types';
+import { Genres, SortBy, SortOrder } from '../../helpers/enums';
 
 const initialState: SidebarState = {
-  genre: '',
-  sortBy: 'title',
-  sortOrder: 'asc',
+  genre: Genres.ALL,
+  sortBy: SortBy.TITLE,
+  sortOrder: SortOrder.ASC,
   selectedIndexListNav: 0,
 };
 

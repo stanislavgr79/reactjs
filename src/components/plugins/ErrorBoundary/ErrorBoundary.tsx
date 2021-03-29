@@ -1,22 +1,53 @@
 import React from 'react';
-import Catch from '../FunctionalErrorBoundary';
 
 interface Props {
   children: React.ReactNode;
 }
 
-// eslint-disable-next-line new-cap
-const ErrorBoundary = Catch(function MyErrorBoundary(props: Props, error?: Error) {
-  if (error) {
-    return (
-      <div className="error-screen">
-        <h2>An error has occured</h2>
-        <h4>{error.message}</h4>
-      </div>
-    );
-  } else {
-    return <React.Fragment>{props.children}</React.Fragment>;
+interface ErrorState {
+  error?: Error;
+  errorInfo?: React.ErrorInfo;
+}
+
+class ErrorBoundary extends React.Component<Props, ErrorState> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { error: undefined, errorInfo: undefined };
   }
-});
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    this.setState({
+      error: error,
+      errorInfo: errorInfo,
+    });
+    // You can also log error messages to an error reporting service here
+    // eslint-disable-next-line no-console
+    console.log('error: ' + error);
+    // eslint-disable-next-line no-console
+    console.log('errorInfo: ' + JSON.stringify(errorInfo));
+    // eslint-disable-next-line no-console
+    console.log('componentStack: ' + errorInfo.componentStack);
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="error-screen">
+          <h2>An error has occured</h2>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            {this.state.error && this.state.error.message.toString()}
+            <br />
+            {this.state.errorInfo && this.state.errorInfo.componentStack}
+          </details>
+        </div>
+      );
+    }
+    return <React.Fragment>{this.props.children}</React.Fragment>;
+  }
+}
 
 export default ErrorBoundary;

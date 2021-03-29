@@ -12,22 +12,17 @@ import './ContentIntro.scoped.scss';
 const MovieListWithLoading = withLoading(MoviesList);
 
 export default function ContentIntro(): JSX.Element {
-  const store = useSelector((store: AppState) => {
-    return {
-      dataStatus: store.moviesStore.dataStatus,
-    };
+  const { dataStatus } = useSelector((store: AppState) => {
+    return store.moviesStore;
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      if (status == 'succeeded') {
-        return;
-      }
-      setIsLoading(false);
-    }, 3000);
-    return () => clearTimeout(id);
-  }, [store.dataStatus]);
+    if (dataStatus == 'succeeded') {
+      return;
+    }
+    setIsLoading(false);
+  }, [dataStatus]);
 
   return (
     <div className="content content-intro">

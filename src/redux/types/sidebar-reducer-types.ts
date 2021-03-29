@@ -1,28 +1,31 @@
+import { Genres, SortBy, SortOrder } from '../../helpers/enums';
+
+/* eslint-disable no-unused-vars */
 export const UPDATE_SELECT_GENRE = 'UPDATE_SELECT_GENRE';
 export const UPDATE_SORT_BY = 'UPDATE_SORT_BY';
 export const UPDATE_SORT_ORDER = 'UPDATE_SORT_ORDER';
 export const UPDATE_SELECTED_INDEX_LIST_NAV = 'UPDATE_SELECTED_INDEX_LIST_NAV';
 
 export interface SidebarState {
-  genre: string;
-  sortBy: string;
-  sortOrder: string;
+  genre: Genres;
+  sortBy: SortBy;
+  sortOrder: SortOrder;
   selectedIndexListNav: number;
 }
 
 interface UpdateCurrentGenre {
   type: typeof UPDATE_SELECT_GENRE;
-  payload: string;
+  payload: Genres;
 }
 
 interface UpdateCurrentSortBy {
   type: typeof UPDATE_SORT_BY;
-  payload: string;
+  payload: SortBy;
 }
 
 interface UpdateSortOrder {
   type: typeof UPDATE_SORT_ORDER;
-  payload: string;
+  payload: SortOrder;
 }
 
 interface UpdateSelectedIndexListNav {

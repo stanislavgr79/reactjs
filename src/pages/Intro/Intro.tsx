@@ -11,16 +11,13 @@ const ContentIntro = React.lazy(() => import('../../components/structure/Content
 import './Intro.scoped.scss';
 
 export default function Intro(): JSX.Element {
-  const store = useSelector((store: AppState) => {
-    return {
-      showPopup: store.moviesStore.showPopup,
-      selectedMovieId: store.moviesStore.selectedMovieId,
-    };
+  const { showPopup, selectedMovieId } = useSelector((store: AppState) => {
+    return store.moviesStore;
   });
 
   return (
-    <div className={`intro_page ${!store.showPopup ? '' : 'show_movie_popup'}`}>
-      {store.selectedMovieId !== 0 ? <DetailMovieTop /> : <Header />}
+    <div className={`intro_page ${!showPopup ? '' : 'show_movie_popup'}`}>
+      {selectedMovieId !== 0 ? <DetailMovieTop /> : <Header />}
       <Suspense fallback="Loading ...">
         <ContentIntro />
       </Suspense>

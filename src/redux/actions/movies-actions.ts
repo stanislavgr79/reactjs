@@ -1,5 +1,5 @@
 import { IMovie } from '../../helpers/interface';
-import { fetchFromApi } from 'react-redux-api-tools';
+import { createAction } from 'redux-api-middleware';
 const URL_API_MOVIES = 'HTTP://localhost:4000/movies';
 
 import {
@@ -24,70 +24,35 @@ export const updateSelectedMovieId = (id: number): MoviesActionTypes => ({
   payload: id,
 });
 
-export const fetchMovies = (params: string[][]) => {
-  const requestUrl = new URL(`${URL_API_MOVIES}`);
-  if (params !== undefined) {
-    requestUrl.search = new URLSearchParams(params).toString();
-  }
-  const requestData = {
+export const fetchMovies = (params: string[][]) =>
+  createAction({
+    endpoint: `${URL_API_MOVIES}?${new URLSearchParams(params).toString()}`,
     method: 'GET',
-  };
-  return {
-    types: {
-      request: FETCH_DATA,
-      success: FETCH_DATA_SUCCESS,
-      failure: FETCH_DATA_FAILURE,
-    },
-    apiCallFunction: () => fetchFromApi(requestUrl, requestData),
-    // shouldDispatch: (AppState, action) => {
-    //   return !appState.data;
-    // },
-  };
-};
+    headers: { 'Content-Type': 'application/json' },
+    types: [FETCH_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE],
+  });
 
-export const fetchDeleteMovie = (id: number) => {
-  const requestUrl = new URL(`${URL_API_MOVIES}/${id}`);
-  const requestData = {
+export const fetchDeleteMovie = (id: number) =>
+  createAction({
+    endpoint: `${URL_API_MOVIES}/${id}`,
     method: 'DELETE',
-  };
-  return {
-    types: {
-      request: '',
-      success: DELETE_MOVIE,
-      failure: '',
-    },
-    apiCallFunction: () => fetchFromApi(requestUrl, requestData),
-  };
-};
+    types: ['', DELETE_MOVIE, ''],
+  });
 
-export const fetchUpdateMovie = (movie: IMovie) => {
-  const requestUrl = new URL(`${URL_API_MOVIES}`);
-  const requestData = {
+export const fetchUpdateMovie = (movie: IMovie) =>
+  createAction({
+    endpoint: URL_API_MOVIES,
     method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie),
-  };
-  return {
-    types: {
-      request: '',
-      success: UPDATE_MOVIE,
-      failure: '',
-    },
-    apiCallFunction: () => fetchFromApi(requestUrl, requestData),
-  };
-};
+    types: ['', UPDATE_MOVIE, ''],
+  });
 
-export const fetchAddMovie = (movie: IMovie) => {
-  const requestUrl = new URL(`${URL_API_MOVIES}`);
-  const requestData = {
+export const fetchAddMovie = (movie: IMovie) =>
+  createAction({
+    endpoint: URL_API_MOVIES,
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie),
-  };
-  return {
-    types: {
-      request: '',
-      success: FETCH_ADD_MOVIE_SUCCESS,
-      failure: '',
-    },
-    apiCallFunction: () => fetchFromApi(requestUrl, requestData),
-  };
-};
+    types: ['', FETCH_ADD_MOVIE_SUCCESS, ''],
+  });
