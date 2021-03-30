@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateShowPopup } from '@redux/actions/movies-actions';
+import { updateShowPopup } from '../../../redux/actions/movies-actions';
 
-import Button from '@components/atom/Button';
-import DeleteMoviePopup from '@components/container/DeleteMoviePopup';
-import ModelMoviePopup from '@components/container/ModelMoviePopup';
+import Button from '../../atom/Button';
+import DeleteMoviePopup from '../DeleteMoviePopup';
+import ModelMoviePopup from '../ModelMoviePopup';
 import { IMovie } from '../../../helpers/interface';
 
 import './MovieMenuPopup.scoped.less';

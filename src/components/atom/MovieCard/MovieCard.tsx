@@ -1,34 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IMovie } from '../../../helpers/interface';
+
+import noneImage from '@resources/images/nofoto.png';
 import './MovieCard.scoped.scss';
 
 interface IProps {
-  id: number | undefined;
-  title: string;
-  movieUrl?: string;
-  releaseDate: string;
-  genres: string[] | { value: string, label: string }[];
-  posterPath: string | undefined;
+  movie: IMovie;
   changeSelectedMovieId: (e: number) => void;
 }
 
-export default function MovieCard({
-  id = 0,
-  title = 'missing_title',
-  releaseDate = 'missing_releaseDate',
-  genres = ['missing_genre'],
-  posterPath = 'missing_image',
-  changeSelectedMovieId,
-}: IProps): JSX.Element {
-  const year = releaseDate.split('-')[0];
+export default function MovieCard({ movie, changeSelectedMovieId }: IProps): JSX.Element {
+  const year = movie.release_date.split('-')[0];
   const KEY = 'value';
   const genreStr =
-    typeof genres[0] === 'object'
-      ? genres
+    typeof movie.genres[0] === 'object'
+      ? movie.genres
           .map(function (item: any) {
             return item[KEY];
           })
           .join(', ')
-      : genres.join(', ');
+      : movie.genres.join(', ');
+
+  const [error, setError] = useState(false);
+
+  const handleImageLoaded = () => {
+    if (!error) setError(false);
+  };
+
+  const handleImageError = () => {
+    setError(true);
+  };
 
   return (
     <>
@@ -36,16 +37,18 @@ export default function MovieCard({
         <div className="movie-image">
           <a href="#">
             <img
-              src={posterPath}
+              src={error || movie.poster_path == null ? noneImage : movie.poster_path}
+              onLoad={handleImageLoaded}
+              onError={handleImageError}
               className="img-fluid"
-              alt={title}
-              onClick={() => changeSelectedMovieId(id)}
+              alt={movie.title}
+              onClick={() => changeSelectedMovieId(Number(movie.id))}
             />
           </a>
         </div>
         <div className="movie-props">
           <div className="movie-info">
-            <div className="movie-title">{title}</div>
+            <div className="movie-title">{movie.title}</div>
             <div className="movie-releaseDate">{year}</div>
           </div>
           <div className="movie-genre">{genreStr}</div>

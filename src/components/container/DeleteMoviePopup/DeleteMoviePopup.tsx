@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteFromMovies, updateShowPopup } from '@redux/actions/movies-actions';
+import { fetchDeleteMovie, updateShowPopup } from '../../../redux/actions/movies-actions';
 
-import Sitename from '@components/atom/SiteName/SiteName';
-import Button from '@components/atom/Button';
-import Footer from '@components/structure/Footer';
+import Sitename from '../../atom/SiteName';
+import Button from '../../atom/Button';
+import Footer from '../../structure/Footer';
 
 import './DeleteMoviePopup.scoped.less';
 
@@ -17,7 +17,7 @@ export default function DeleteMoviePopup({ movieId, closePopup }: IProps): JSX.E
   const dispatch = useDispatch();
 
   const handleSubmit = useCallback(() => {
-    dispatch(deleteFromMovies(movieId));
+    dispatch(fetchDeleteMovie(movieId));
     dispatch(updateShowPopup(false));
     closePopup();
   }, [dispatch, movieId, closePopup]);

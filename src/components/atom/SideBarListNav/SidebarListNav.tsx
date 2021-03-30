@@ -1,31 +1,36 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Genres } from '../../../helpers/enums';
+import { updateSelectedIndexListNav } from '../../../redux/actions/sidebar-actions';
+import { AppState } from '../../../redux/redux-store';
+
 import './SidebarListNav.scoped.scss';
 
 interface IProps {
-  sideGenre: [];
-  defaultValue: string;
-  updateCurrentGenre: (e: string) => void;
+  defaultValue: Genres;
+  updateCurrentGenre: (genre: Genres) => void;
 }
 
-interface SideGenreProps {
-  value: string;
-  label: string;
-}
-
-export default function SidebarListNav({
-  sideGenre,
-  defaultValue,
-  updateCurrentGenre,
-}: IProps): JSX.Element {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export default function SidebarListNav({ defaultValue, updateCurrentGenre }: IProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { selectedIndexListNav } = useSelector((store: AppState) => {
+    return store.sidebar;
+  });
+  const sideGenre = Object.values(Genres);
 
   const handleChange = useCallback(
-    (event: any) => {
-      setSelectedIndex(event.target.id);
-      updateCurrentGenre(event.target.value);
+    (index: number) => {
+      dispatch(updateSelectedIndexListNav(index));
     },
-    [updateCurrentGenre],
+    [dispatch],
   );
+
+  useEffect(() => {
+    sideGenre[selectedIndexListNav] !== Genres.ALL
+      ? updateCurrentGenre(sideGenre[selectedIndexListNav])
+      : updateCurrentGenre(Genres.ALL);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedIndexListNav]);
 
   return (
     <div className="sidebar-list-nav">
@@ -34,14 +39,15 @@ export default function SidebarListNav({
         onChange={(event) => event.preventDefault()}
         defaultValue={defaultValue}
       >
-        {sideGenre.map((el: SideGenreProps, index: number) => (
+        {Object.entries(Genres).map(([key, value], index: number) => (
           <option
-            className={selectedIndex == index ? 'selected' : ''}
-            id={'' + index}
+            className={selectedIndexListNav == index ? 'selected' : ''}
+            id={`${value}-${index}`}
+            value={value}
             key={index}
-            onClick={(e) => handleChange(e)}
+            onClick={() => handleChange(index)}
           >
-            {el.value}
+            {key}
           </option>
         ))}
       </form>
