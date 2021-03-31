@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { FormikProps, FormikErrors, Form, Formik } from 'formik';
 import {
   updateShowPopup,
   fetchUpdateMovie,
@@ -13,8 +14,17 @@ import Button from '../../atom/Button';
 import Calendar from '../../atom/Calendar';
 import MultiSelect from '../../atom/MultiSelect';
 import { IMovie } from '../../../helpers/interface';
-import { transformGenresToStringArray } from '../../../helpers/utils';
 import './ModelMoviePopup.scoped.less';
+
+interface FormValues {
+  id?: number;
+  title: string;
+  release_date: string;
+  poster_path: string;
+  genres: string[];
+  overview: string;
+  runtime: number;
+}
 
 interface IProps {
   movie?: IMovie;
@@ -35,9 +45,9 @@ const init = (): IMovie => {
   return form;
 };
 
-export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JSX.Element {
+export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>): JSX.Element {
+  const { movie, closePopup, role } = props;
   const dispatch = useDispatch();
-
   const isEditForm = role == 'edit' ? true : false;
   const [form, setForm] = useState(movie ? movie : init);
 
@@ -46,14 +56,13 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
     closePopup();
   }, [closePopup, dispatch]);
 
-  const handleChange = useCallback(
-    (event: any) => {
-      const property = event.target.name;
-      const value = event.target.value;
-      setForm({ ...form, [property]: value });
-    },
-    [form],
-  );
+  const handleChangeProp = useCallback((event: any) => {
+    const { name, value } = event.target;
+    setForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }, []);
 
   const handleChangeReleaseDate = useCallback(
     (date) => {
@@ -65,18 +74,11 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
   );
 
   const handleChangeGenre = useCallback(
-    (genres: { label: string, value: string }[]) => {
-      const newGenres: string[] = transformGenresToStringArray(genres);
-      setForm({ ...form, genres: newGenres });
+    (genres: string[]) => {
+      setForm({ ...form, genres: genres });
     },
     [form],
   );
-
-  const onClickReset = useCallback(() => {
-    const newForm = init();
-    newForm.id = form.id ? form.id : 0;
-    setForm(newForm);
-  }, [form.id]);
 
   const getValidForm = (form: any) => {
     if (form.tagline?.length == 0) {
@@ -91,21 +93,21 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
     dispatch(fetchUpdateMovie(formValid));
     dispatch(updateShowPopup(false));
     closePopup();
-  }, [dispatch, closePopup, form]);
+  }, [form, dispatch, closePopup]);
 
   const handleSubmitAdd = useCallback(() => {
     const fetchForm: IMovie = {
       title: form.title,
+      release_date: form.release_date,
+      poster_path: form.poster_path,
+      genres: form.genres,
+      overview: form.overview,
+      runtime: form.runtime,
       tagline: '',
       vote_average: 0,
       vote_count: 0,
-      release_date: form.release_date,
-      poster_path: form.poster_path,
-      overview: form.overview,
       budget: 0,
       revenue: 0,
-      runtime: form.runtime,
-      genres: form.genres,
     };
     dispatch(fetchAddMovie(getValidForm(fetchForm)));
     closePopup();
@@ -122,80 +124,158 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
                 <Button buttonType="button" className="btn_close" onClick={closeEditPopup} />
               </div>
               <div className="page_title">{isEditForm ? 'EDIT MOVIE' : 'ADD MOVIE'}</div>
-              <form
-                className="movie_form"
-                onSubmit={isEditForm ? handleSubmitEdit : handleSubmitAdd}
+              <Formik
+                initialValues={form}
+                validate={(values: IMovie) => {
+                  const errors: FormikErrors<FormValues> = {};
+                  if (!values.title) {
+                    errors.title = 'Required title';
+                  }
+                  if (values.release_date) {
+                    if (new Date().getTime() < new Date(values.release_date).getTime()) {
+                      errors.release_date = 'Bad date';
+                    }
+                  }
+                  if (!values.poster_path) {
+                    errors.poster_path = 'Required';
+                  }
+                  if (values.genres.length == 0) {
+                    errors.genres = 'Required min 1 genre';
+                  }
+                  if (!values.overview) {
+                    errors.overview = 'Required overview';
+                  }
+                  if (!values.runtime || values.runtime < 1) {
+                    errors.runtime = 'Required runtime > 0';
+                  }
+                  return errors;
+                }}
+                onSubmit={(_form, { setSubmitting }) => {
+                  setTimeout(() => {
+                    {
+                      isEditForm ? handleSubmitEdit() : handleSubmitAdd();
+                    }
+                    setSubmitting(false);
+                  }, 400);
+                }}
               >
-                {isEditForm && (
-                  <>
-                    <label>MOVIE ID</label>
+                {({
+                  values,
+                  errors,
+                  handleChange,
+                  handleSubmit,
+                  isSubmitting,
+                  setFieldValue,
+                  resetForm,
+                }) => (
+                  <Form className="movie_form" onSubmit={handleSubmit}>
+                    {isEditForm && (
+                      <>
+                        <label>MOVIE ID</label>
+                        <Input
+                          type="text"
+                          name="id"
+                          className="simple_input input_readonly"
+                          // value={form?.id}
+                          value={values?.id}
+                          onChange={handleChange}
+                          readonly={true}
+                        />
+                      </>
+                    )}
+                    <label>TITLE</label>
                     <Input
                       type="text"
-                      name="id"
-                      className="simple_input input_readonly"
-                      value={form?.id}
-                      onChange={handleChange}
-                      readonly={true}
+                      name="title"
+                      className="simple_input"
+                      placeholder="Write Title"
+                      value={values.title}
+                      onChange={(e) => {
+                        handleChangeProp(e);
+                        handleChange(e);
+                      }}
                     />
-                  </>
+                    {errors.title && <div>{errors.title}</div>}
+                    <label>RELEASE DATE</label>
+                    <Calendar
+                      name="release_date"
+                      value={values.release_date}
+                      handleChangeReleaseDate={handleChangeReleaseDate}
+                      onChange={(name, val) => {
+                        setFieldValue(name, val, true);
+                        handleChangeReleaseDate(val);
+                      }}
+                    />
+                    {errors.release_date && <div>{errors.release_date}</div>}
+                    <label>POSTER URL</label>
+                    <Input
+                      type="text"
+                      name="poster_path"
+                      className="simple_input"
+                      placeholder="Poster URL here"
+                      value={values.poster_path}
+                      onChange={(e) => {
+                        handleChangeProp(e);
+                        handleChange(e);
+                      }}
+                    />
+                    {errors.poster_path && <div>{errors.poster_path}</div>}
+                    <label>GENRE</label>
+                    <MultiSelect
+                      name="genres"
+                      value={values.genres}
+                      onChange={(name: string, val: string[]) => {
+                        setFieldValue(name, val, true);
+                        handleChangeGenre(val);
+                      }}
+                    />
+                    {errors.genres && <div>{errors.genres}</div>}
+                    <label>OVERVIEW</label>
+                    <Input
+                      type="text"
+                      name="overview"
+                      className="simple_input"
+                      placeholder="Overview here"
+                      value={values.overview}
+                      onChange={(e) => {
+                        handleChangeProp(e);
+                        handleChange(e);
+                      }}
+                    />
+                    {errors.overview && <div>{errors.overview}</div>}
+                    <label>RUNTIME</label>
+                    <Input
+                      type="number"
+                      name="runtime"
+                      className="simple_input"
+                      placeholder="Runtime here"
+                      value={form.runtime == (0 || null) ? '' : values.runtime}
+                      min={'0'}
+                      onChange={(e) => {
+                        handleChangeProp(e);
+                        handleChange(e);
+                      }}
+                    />
+                    {errors.runtime && <div>{errors.runtime}</div>}
+                    <div className="button_section">
+                      <Button
+                        className="btn_submit"
+                        id="add_movie_btn_submit"
+                        label={isEditForm ? 'SAVE' : 'SUBMIT'}
+                        buttonType="submit"
+                        disabled={isSubmitting}
+                      />
+                      <Button
+                        buttonType="reset"
+                        className="btn_reset"
+                        id="add_movie_btn_reset"
+                        label="RESET"
+                        onClick={resetForm}
+                      />
+                    </div>
+                  </Form>
                 )}
-                <label>TITLE</label>
-                <Input
-                  type="text"
-                  name="title"
-                  className="simple_input"
-                  placeholder="Write Title"
-                  value={form.title}
-                  onChange={handleChange}
-                />
-                <label>RELEASE DATE</label>
-                <Calendar form={form} handleChangeReleaseDate={handleChangeReleaseDate} />
-                <label>POSTER URL</label>
-                <Input
-                  type="text"
-                  name="poster_path"
-                  className="simple_input"
-                  placeholder="Poster URL here"
-                  value={form.poster_path}
-                  onChange={handleChange}
-                />
-                <label>GENRE</label>
-                <MultiSelect genres={form.genres} handleChangeGenre={handleChangeGenre} />
-                <label>OVERVIEW</label>
-                <Input
-                  type="text"
-                  name="overview"
-                  className="simple_input"
-                  placeholder="Overview here"
-                  value={form.overview}
-                  onChange={handleChange}
-                />
-                <label>RUNTIME</label>
-                <Input
-                  type="number"
-                  name="runtime"
-                  className="simple_input"
-                  placeholder="Runtime here"
-                  value={form.runtime == (0 || null) ? '' : form.runtime}
-                  min={'0'}
-                  onChange={handleChange}
-                />
-                <div className="button_section">
-                  <Button
-                    className="btn_submit"
-                    id="add_movie_btn_submit"
-                    label={isEditForm ? 'SAVE' : 'SUBMIT'}
-                    onClick={isEditForm ? handleSubmitEdit : handleSubmitAdd}
-                  />
-                  <Button
-                    buttonType="reset"
-                    className="btn_reset"
-                    id="add_movie_btn_reset"
-                    label="RESET"
-                    onClick={onClickReset}
-                  />
-                </div>
-              </form>
+              </Formik>
             </div>
           </div>
           <Footer />

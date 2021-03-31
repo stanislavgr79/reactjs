@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
-import { IMovie } from '../../../helpers/interface';
 
 import calendar from '@resources/images/calendar.png';
 
@@ -28,25 +27,34 @@ const CustomInput = forwardRef(
 );
 
 interface IProps {
-  form: IMovie;
+  name: string;
+  value: string;
+  onChange: (field: string, value: string, shouldValidate?: boolean | undefined) => void;
   handleChangeReleaseDate: (date: any) => void;
 }
 
-export default function Calendar({ form, handleChangeReleaseDate }: IProps): JSX.Element {
+export default function Calendar({
+  name,
+  value,
+  onChange,
+  handleChangeReleaseDate,
+}: IProps): JSX.Element {
   const ref: React.LegacyRef<HTMLInputElement> = React.createRef();
   return (
     <DatePicker
-      name="release_date"
-      selected={form.release_date ? new Date(form.release_date) : null}
+      name={name}
+      selected={value ? new Date(value) : null}
       placeholderText="Select Date"
       dateFormat="yyyy-MM-dd"
       showMonthDropdown
       showYearDropdown
       dropdownMode="select"
-      onChange={handleChangeReleaseDate}
+      onChange={(val) => {
+        onChange(name, val);
+      }}
       customInput={
         <CustomInput
-          value={form.release_date ? new Date(form.release_date).toString() : ''}
+          value={value ? new Date(value).toString() : ''}
           onClick={handleChangeReleaseDate}
           ref={ref}
         />
