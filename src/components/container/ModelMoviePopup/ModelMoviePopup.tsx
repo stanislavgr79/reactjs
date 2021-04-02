@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { FormikProps, FormikErrors, Form, Formik } from 'formik';
+import { FormikProps, useFormik } from 'formik';
+import * as Yup from 'yup';
 import {
   updateShowPopup,
   fetchUpdateMovie,
@@ -26,92 +27,127 @@ interface FormValues {
   runtime: number;
 }
 
+const emptyMovieForm: IMovie = {
+  id: 0,
+  title: '',
+  release_date: '',
+  poster_path: '',
+  genres: [],
+  overview: '',
+  runtime: 0,
+};
+
 interface IProps {
   movie?: IMovie;
   closePopup: () => void;
   role: string;
 }
 
-const init = (): IMovie => {
-  const form = {
-    id: 0,
-    title: '',
-    release_date: '',
-    poster_path: '',
-    genres: [],
-    overview: '',
-    runtime: 0,
-  };
-  return form;
-};
+declare module 'yup' {
+  // eslint-disable-next-line prettier/prettier
+  interface StringSchema {
+    dateValidator(): StringSchema;
+  }
+}
+
+Yup.addMethod(Yup.string, 'dateValidator', function () {
+  // eslint-disable-next-line no-invalid-this
+  return this.test({
+    name: 'test-date',
+    message: 'Must be valid date',
+    test: (date?: string | null) => {
+      return new Date().getTime() > new Date(date ? date : '').getTime();
+    },
+  });
+});
 
 export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>): JSX.Element {
-  const { movie, closePopup, role } = props;
   const dispatch = useDispatch();
+  const { movie, closePopup, role } = props;
   const isEditForm = role == 'edit' ? true : false;
-  const [form, setForm] = useState(movie ? movie : init);
 
   const closeEditPopup = useCallback(() => {
     dispatch(updateShowPopup(false));
     closePopup();
   }, [closePopup, dispatch]);
 
-  const handleChangeProp = useCallback((event: any) => {
-    const { name, value } = event.target;
-    setForm((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
-
-  const handleChangeReleaseDate = useCallback(
-    (date) => {
-      const dateFormat = require('dateformat');
-      const momentDateFormat = 'yyyy-mm-dd';
-      setForm({ ...form, release_date: dateFormat(date, momentDateFormat) });
+  const handleSubmitEdit = useCallback(
+    (form: IMovie) => {
+      dispatch(
+        fetchUpdateMovie({
+          ...form,
+          tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+        }),
+      );
+      dispatch(updateShowPopup(false));
+      closePopup();
     },
-    [form],
+    [dispatch, closePopup],
   );
 
-  const handleChangeGenre = useCallback(
-    (genres: string[]) => {
-      setForm({ ...form, genres: genres });
+  const handleSubmitAdd = useCallback(
+    (form: IMovie) => {
+      const fetchForm: IMovie = {
+        title: form.title,
+        release_date: form.release_date,
+        poster_path: form.poster_path,
+        genres: form.genres,
+        overview: form.overview,
+        runtime: form.runtime,
+        tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+        vote_average: 0,
+        vote_count: 0,
+        budget: 0,
+        revenue: 0,
+      };
+      dispatch(fetchAddMovie(fetchForm));
+      closePopup();
     },
-    [form],
+    [dispatch, closePopup],
   );
 
-  const getValidForm = (form: any) => {
-    if (form.tagline?.length == 0) {
-      form.tagline = 'Out description';
-    }
-    form.runtime = form.runtime == null ? 0 : parseInt(form.runtime);
-    return form;
-  };
+  const form = movie ? movie : emptyMovieForm;
 
-  const handleSubmitEdit = useCallback(() => {
-    const formValid = getValidForm(form);
-    dispatch(fetchUpdateMovie(formValid));
-    dispatch(updateShowPopup(false));
-    closePopup();
-  }, [form, dispatch, closePopup]);
-
-  const handleSubmitAdd = useCallback(() => {
-    const fetchForm: IMovie = {
+  const formik = useFormik({
+    initialValues: {
+      id: form.id,
       title: form.title,
       release_date: form.release_date,
       poster_path: form.poster_path,
       genres: form.genres,
       overview: form.overview,
       runtime: form.runtime,
-      tagline: '',
-      vote_average: 0,
-      vote_count: 0,
-      budget: 0,
-      revenue: 0,
-    };
-    dispatch(fetchAddMovie(getValidForm(fetchForm)));
-    closePopup();
-  }, [form, dispatch, closePopup]);
+    },
+    validationSchema: Yup.object({
+      title: Yup.string()
+        .min(2, 'Must be min 2 characters')
+        .max(30, 'Must be 30 characters or less')
+        .required('Required'),
+      release_date: Yup.string()
+        .test('isValidNumber', 'Must be valid date', (date?: string) => {
+          return new Date().getTime() > new Date(date ? date : '').getTime();
+        })
+        .dateValidator()
+        .required('Required'),
+      poster_path: Yup.string()
+        .matches(new RegExp('^.+(\\.)(jpg|jpeg|png)$'), 'Must be a Picture')
+        .required('Required'),
+      genres: Yup.array().min(1, 'Must be one or more genres').required('Required'),
+      overview: Yup.string().min(6, 'Must be 6 characters or more').required('Required'),
+      runtime: Yup.number()
+        .positive('age must be greater than zero')
+        .typeError('age must be a number')
+        .required('Required'),
+    }),
+    onSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        {
+          isEditForm ? handleSubmitEdit(values) : handleSubmitAdd(values);
+        }
+        setSubmitting(false);
+      }, 400);
+    },
+  });
 
   return (
     <>
@@ -124,158 +160,114 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                 <Button buttonType="button" className="btn_close" onClick={closeEditPopup} />
               </div>
               <div className="page_title">{isEditForm ? 'EDIT MOVIE' : 'ADD MOVIE'}</div>
-              <Formik
-                initialValues={form}
-                validate={(values: IMovie) => {
-                  const errors: FormikErrors<FormValues> = {};
-                  if (!values.title) {
-                    errors.title = 'Required title';
-                  }
-                  if (values.release_date) {
-                    if (new Date().getTime() < new Date(values.release_date).getTime()) {
-                      errors.release_date = 'Bad date';
-                    }
-                  }
-                  if (!values.poster_path) {
-                    errors.poster_path = 'Required';
-                  }
-                  if (values.genres.length == 0) {
-                    errors.genres = 'Required min 1 genre';
-                  }
-                  if (!values.overview) {
-                    errors.overview = 'Required overview';
-                  }
-                  if (!values.runtime || values.runtime < 1) {
-                    errors.runtime = 'Required runtime > 0';
-                  }
-                  return errors;
-                }}
-                onSubmit={(_form, { setSubmitting }) => {
-                  setTimeout(() => {
-                    {
-                      isEditForm ? handleSubmitEdit() : handleSubmitAdd();
-                    }
-                    setSubmitting(false);
-                  }, 400);
-                }}
-              >
-                {({
-                  values,
-                  errors,
-                  handleChange,
-                  handleSubmit,
-                  isSubmitting,
-                  setFieldValue,
-                  resetForm,
-                }) => (
-                  <Form className="movie_form" onSubmit={handleSubmit}>
-                    {isEditForm && (
-                      <>
-                        <label>MOVIE ID</label>
-                        <Input
-                          type="text"
-                          name="id"
-                          className="simple_input input_readonly"
-                          // value={form?.id}
-                          value={values?.id}
-                          onChange={handleChange}
-                          readonly={true}
-                        />
-                      </>
-                    )}
-                    <label>TITLE</label>
+              <form className="movie_form" onSubmit={formik.handleSubmit}>
+                {isEditForm && (
+                  <>
+                    <label>MOVIE ID</label>
                     <Input
                       type="text"
-                      name="title"
-                      className="simple_input"
-                      placeholder="Write Title"
-                      value={values.title}
-                      onChange={(e) => {
-                        handleChangeProp(e);
-                        handleChange(e);
-                      }}
+                      name="id"
+                      className="simple_input input_readonly"
+                      value={formik.values?.id}
+                      onChange={formik.handleChange}
+                      readonly={true}
                     />
-                    {errors.title && <div>{errors.title}</div>}
-                    <label>RELEASE DATE</label>
-                    <Calendar
-                      name="release_date"
-                      value={values.release_date}
-                      handleChangeReleaseDate={handleChangeReleaseDate}
-                      onChange={(name, val) => {
-                        setFieldValue(name, val, true);
-                        handleChangeReleaseDate(val);
-                      }}
-                    />
-                    {errors.release_date && <div>{errors.release_date}</div>}
-                    <label>POSTER URL</label>
-                    <Input
-                      type="text"
-                      name="poster_path"
-                      className="simple_input"
-                      placeholder="Poster URL here"
-                      value={values.poster_path}
-                      onChange={(e) => {
-                        handleChangeProp(e);
-                        handleChange(e);
-                      }}
-                    />
-                    {errors.poster_path && <div>{errors.poster_path}</div>}
-                    <label>GENRE</label>
-                    <MultiSelect
-                      name="genres"
-                      value={values.genres}
-                      onChange={(name: string, val: string[]) => {
-                        setFieldValue(name, val, true);
-                        handleChangeGenre(val);
-                      }}
-                    />
-                    {errors.genres && <div>{errors.genres}</div>}
-                    <label>OVERVIEW</label>
-                    <Input
-                      type="text"
-                      name="overview"
-                      className="simple_input"
-                      placeholder="Overview here"
-                      value={values.overview}
-                      onChange={(e) => {
-                        handleChangeProp(e);
-                        handleChange(e);
-                      }}
-                    />
-                    {errors.overview && <div>{errors.overview}</div>}
-                    <label>RUNTIME</label>
-                    <Input
-                      type="number"
-                      name="runtime"
-                      className="simple_input"
-                      placeholder="Runtime here"
-                      value={form.runtime == (0 || null) ? '' : values.runtime}
-                      min={'0'}
-                      onChange={(e) => {
-                        handleChangeProp(e);
-                        handleChange(e);
-                      }}
-                    />
-                    {errors.runtime && <div>{errors.runtime}</div>}
-                    <div className="button_section">
-                      <Button
-                        className="btn_submit"
-                        id="add_movie_btn_submit"
-                        label={isEditForm ? 'SAVE' : 'SUBMIT'}
-                        buttonType="submit"
-                        disabled={isSubmitting}
-                      />
-                      <Button
-                        buttonType="reset"
-                        className="btn_reset"
-                        id="add_movie_btn_reset"
-                        label="RESET"
-                        onClick={resetForm}
-                      />
-                    </div>
-                  </Form>
+                  </>
                 )}
-              </Formik>
+                <label>TITLE</label>
+                  <Input
+                    type="text"
+                    name="title"
+                    className="simple_input"
+                    placeholder="Write Title"
+                    value={formik.values.title}
+                    onChange={e => {
+                      formik.setFieldTouched('title');
+                      formik.handleChange(e);
+                    }}
+                  />
+                {formik.touched.title && formik.errors.title && <div>{formik.errors.title}</div>}
+                <label>RELEASE DATE</label>
+                <Calendar
+                  name="release_date"
+                  value={formik.values.release_date}
+                  onChange={(name, val) => {
+                    formik.setFieldTouched('release_date');
+                    formik.setFieldValue(name, val, true);
+                  }}
+                />
+                {formik.touched.release_date && formik.errors.release_date && <div>
+                  {formik.errors.release_date}</div>}
+                <label>POSTER URL</label>
+                <Input
+                  type="text"
+                  name="poster_path"
+                  className="simple_input"
+                  placeholder="Poster URL here"
+                  value={formik.values.poster_path}
+                  onChange={e => {
+                    formik.setFieldTouched('poster_path');
+                    formik.handleChange(e);
+                  }}
+                />
+                {formik.touched.poster_path && formik.errors.poster_path && <div>
+                  {formik.errors.poster_path}</div>}
+                <label>GENRE</label>
+                <MultiSelect
+                  name="genres"
+                  value={formik.values.genres}
+                  onChange={(name: string, val: string[]) => {
+                    formik.setFieldTouched('genres');
+                    formik.setFieldValue(name, val, true);
+                  }}
+                />
+                {formik.touched.genres && formik.errors.genres && <div>{formik.errors.genres}</div>}
+                <label>OVERVIEW</label>
+                <Input
+                  type="text"
+                  name="overview"
+                  className="simple_input"
+                  placeholder="Overview here"
+                  value={formik.values.overview}
+                  onChange={e => {
+                    formik.setFieldTouched('overview');
+                    formik.handleChange(e);
+                  }}
+                />
+                {formik.touched.overview && formik.errors.overview && <div>
+                  {formik.errors.overview}</div>}
+                <label>RUNTIME</label>
+                <Input
+                  type="number"
+                  name="runtime"
+                  className="simple_input"
+                  placeholder="Runtime here"
+                  value={formik.values.runtime == 0 ? '' : formik.values.runtime}
+                  min={'0'}
+                  onChange={e => {
+                    formik.setFieldTouched('runtime');
+                    formik.handleChange(e);
+                  }}
+                />
+                {formik.touched.runtime && formik.errors.runtime && <div>
+                  {formik.errors.runtime}</div>}
+                <div className="button_section">
+                  <Button
+                    className="btn_submit"
+                    id="add_movie_btn_submit"
+                    label={isEditForm ? 'SAVE' : 'SUBMIT'}
+                    buttonType="submit"
+                    disabled={formik.isSubmitting}
+                  />
+                  <Button
+                    buttonType="reset"
+                    className="btn_reset"
+                    id="add_movie_btn_reset"
+                    label="RESET"
+                    onClick={formik.resetForm}
+                  />
+                </div>
+              </form>
             </div>
           </div>
           <Footer />

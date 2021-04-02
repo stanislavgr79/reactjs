@@ -10,6 +10,21 @@ interface IProps {
   modifier?: string;
   onClick?:
     | ((e: unknown) => void)
+    | ((
+        nextState?:
+          | Partial<
+              FormikState<{
+                id: number | undefined,
+                title: string,
+                release_date: string,
+                poster_path: string | undefined,
+                genres: string[],
+                overview: string,
+                runtime: number,
+              }>
+            >
+          | undefined,
+      ) => void)
     | ((nextState?: Partial<FormikState<IMovie>> | undefined) => void);
   buttonType?: 'button' | 'submit' | 'reset';
   label?: string;
