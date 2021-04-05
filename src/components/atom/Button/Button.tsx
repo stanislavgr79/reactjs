@@ -11,6 +11,7 @@ interface IProps {
   label?: string;
   title?: string;
   sharingType?: string;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -21,6 +22,7 @@ export default function Button({
   id,
   title,
   sharingType,
+  disabled,
 }: IProps): JSX.Element {
   const classList = createClassList(['btn button', className || '']);
 
@@ -32,6 +34,7 @@ export default function Button({
       type={buttonType || 'button'}
       data-type={sharingType}
       title={title}
+      disabled={disabled}
     >
       {label}
     </button>

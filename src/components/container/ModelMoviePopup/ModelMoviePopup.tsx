@@ -1,5 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { FormikProps, useFormik } from 'formik';
+import * as Yup from 'yup';
 import {
   updateShowPopup,
   fetchUpdateMovie,
@@ -13,8 +15,27 @@ import Button from '../../atom/Button';
 import Calendar from '../../atom/Calendar';
 import MultiSelect from '../../atom/MultiSelect';
 import { IMovie } from '../../../helpers/interface';
-import { transformGenresToStringArray } from '../../../helpers/utils';
 import './ModelMoviePopup.scoped.less';
+
+interface FormValues {
+  id?: number;
+  title: string;
+  release_date: string;
+  poster_path: string;
+  genres: string[];
+  overview: string;
+  runtime: number;
+}
+
+const emptyMovieForm: IMovie = {
+  id: 0,
+  title: '',
+  release_date: '',
+  poster_path: '',
+  genres: [],
+  overview: '',
+  runtime: 0,
+};
 
 interface IProps {
   movie?: IMovie;
@@ -22,94 +43,94 @@ interface IProps {
   role: string;
 }
 
-const init = (): IMovie => {
-  const form = {
-    id: 0,
-    title: '',
-    release_date: '',
-    poster_path: '',
-    genres: [],
-    overview: '',
-    runtime: 0,
-  };
-  return form;
-};
-
-export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JSX.Element {
+export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>): JSX.Element {
   const dispatch = useDispatch();
-
+  const { movie, closePopup, role } = props;
   const isEditForm = role == 'edit' ? true : false;
-  const [form, setForm] = useState(movie ? movie : init);
 
   const closeEditPopup = useCallback(() => {
     dispatch(updateShowPopup(false));
     closePopup();
   }, [closePopup, dispatch]);
 
-  const handleChange = useCallback(
-    (event: any) => {
-      const property = event.target.name;
-      const value = event.target.value;
-      setForm({ ...form, [property]: value });
+  const resetForm = useCallback((formik) => {
+    formik.handleReset();
+  }, []);
+
+  const handleSubmitEdit = useCallback(
+    (form: IMovie) => {
+      dispatch(
+        fetchUpdateMovie({
+          ...form,
+          tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+        }),
+      );
+      dispatch(updateShowPopup(false));
+      closePopup();
     },
-    [form],
+    [dispatch, closePopup],
   );
 
-  const handleChangeReleaseDate = useCallback(
-    (date) => {
-      const dateFormat = require('dateformat');
-      const momentDateFormat = 'yyyy-mm-dd';
-      setForm({ ...form, release_date: dateFormat(date, momentDateFormat) });
+  const handleSubmitAdd = useCallback(
+    (form: IMovie) => {
+      const fetchForm: IMovie = {
+        title: form.title,
+        release_date: form.release_date,
+        poster_path: form.poster_path,
+        genres: form.genres,
+        overview: form.overview,
+        runtime: form.runtime,
+        tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+        vote_average: 0,
+        vote_count: 0,
+        budget: 0,
+        revenue: 0,
+      };
+      dispatch(fetchAddMovie(fetchForm));
+      closePopup();
     },
-    [form],
+    [dispatch, closePopup],
   );
 
-  const handleChangeGenre = useCallback(
-    (genres: { label: string, value: string }[]) => {
-      const newGenres: string[] = transformGenresToStringArray(genres);
-      setForm({ ...form, genres: newGenres });
-    },
-    [form],
-  );
+  const form = movie ? movie : emptyMovieForm;
 
-  const onClickReset = useCallback(() => {
-    const newForm = init();
-    newForm.id = form.id ? form.id : 0;
-    setForm(newForm);
-  }, [form.id]);
-
-  const getValidForm = (form: any) => {
-    if (form.tagline?.length == 0) {
-      form.tagline = 'Out description';
-    }
-    form.runtime = form.runtime == null ? 0 : parseInt(form.runtime);
-    return form;
-  };
-
-  const handleSubmitEdit = useCallback(() => {
-    const formValid = getValidForm(form);
-    dispatch(fetchUpdateMovie(formValid));
-    dispatch(updateShowPopup(false));
-    closePopup();
-  }, [dispatch, closePopup, form]);
-
-  const handleSubmitAdd = useCallback(() => {
-    const fetchForm: IMovie = {
+  const formik = useFormik({
+    initialValues: {
+      id: form.id,
       title: form.title,
-      tagline: '',
-      vote_average: 0,
-      vote_count: 0,
       release_date: form.release_date,
       poster_path: form.poster_path,
-      overview: form.overview,
-      budget: 0,
-      revenue: 0,
-      runtime: form.runtime,
       genres: form.genres,
-    };
-    dispatch(fetchAddMovie(getValidForm(fetchForm)));
-    closePopup();
-  }, [form, dispatch, closePopup]);
+      overview: form.overview,
+      runtime: form.runtime,
+    },
+    validationSchema: Yup.object({
+      title: Yup.string()
+        .min(2, 'Must be min 2 characters')
+        .max(30, 'Must be 30 characters or less')
+        .required('Required'),
+      release_date: Yup.string()
+        .matches(new RegExp('^[\\d]{4}-[\\d]{2}-[\\d]{2}$'), 'Not valide date stamp')
+        .required('Required'),
+      poster_path: Yup.string()
+        .matches(new RegExp('^.+(\\.)(jpg|jpeg|png)$'), 'Must be a Picture')
+        .required('Required'),
+      genres: Yup.array().min(1, 'Must be one or more genres').required('Required'),
+      overview: Yup.string().min(6, 'Must be 6 characters or more').required('Required'),
+      runtime: Yup.number()
+        .positive('age must be greater than zero')
+        .typeError('age must be a number')
+        .required('Required'),
+    }),
+    onSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        {
+          isEditForm ? handleSubmitEdit(values) : handleSubmitAdd(values);
+        }
+        setSubmitting(false);
+      }, 400);
+    },
+  });
 
   return (
     <>
@@ -122,10 +143,7 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
                 <Button buttonType="button" className="btn_close" onClick={closeEditPopup} />
               </div>
               <div className="page_title">{isEditForm ? 'EDIT MOVIE' : 'ADD MOVIE'}</div>
-              <form
-                className="movie_form"
-                onSubmit={isEditForm ? handleSubmitEdit : handleSubmitAdd}
-              >
+              <form className="movie_form" onSubmit={formik.handleSubmit}>
                 {isEditForm && (
                   <>
                     <label>MOVIE ID</label>
@@ -133,8 +151,8 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
                       type="text"
                       name="id"
                       className="simple_input input_readonly"
-                      value={form?.id}
-                      onChange={handleChange}
+                      value={formik.values?.id}
+                      onChange={formik.handleChange}
                       readonly={true}
                     />
                   </>
@@ -145,54 +163,95 @@ export default function ModelMoviePopup({ movie, closePopup, role }: IProps): JS
                   name="title"
                   className="simple_input"
                   placeholder="Write Title"
-                  value={form.title}
-                  onChange={handleChange}
+                  value={formik.values.title}
+                  onChange={(e) => {
+                    formik.setFieldTouched('title');
+                    formik.handleChange(e);
+                  }}
                 />
+                {formik.touched.title && formik.errors.title && <div>{formik.errors.title}</div>}
                 <label>RELEASE DATE</label>
-                <Calendar form={form} handleChangeReleaseDate={handleChangeReleaseDate} />
+                <Calendar
+                  name="release_date"
+                  value={formik.values.release_date}
+                  onChange={(name, val) => {
+                    formik.setFieldTouched('release_date');
+                    formik.setFieldValue(name, val, true);
+                  }}
+                />
+                {formik.touched.release_date && formik.errors.release_date && (
+                  <div>{formik.errors.release_date}</div>
+                )}
                 <label>POSTER URL</label>
                 <Input
                   type="text"
                   name="poster_path"
                   className="simple_input"
                   placeholder="Poster URL here"
-                  value={form.poster_path}
-                  onChange={handleChange}
+                  value={formik.values.poster_path}
+                  onChange={(e) => {
+                    formik.setFieldTouched('poster_path');
+                    formik.handleChange(e);
+                  }}
                 />
+                {formik.touched.poster_path && formik.errors.poster_path && (
+                  <div>{formik.errors.poster_path}</div>
+                )}
                 <label>GENRE</label>
-                <MultiSelect genres={form.genres} handleChangeGenre={handleChangeGenre} />
+                <MultiSelect
+                  name="genres"
+                  value={formik.values.genres}
+                  onChange={(name: string, val: string[]) => {
+                    formik.setFieldTouched('genres');
+                    formik.setFieldValue(name, val, true);
+                  }}
+                />
+                {formik.touched.genres && formik.errors.genres && <div>{formik.errors.genres}</div>}
                 <label>OVERVIEW</label>
                 <Input
                   type="text"
                   name="overview"
                   className="simple_input"
                   placeholder="Overview here"
-                  value={form.overview}
-                  onChange={handleChange}
+                  value={formik.values.overview}
+                  onChange={(e) => {
+                    formik.setFieldTouched('overview');
+                    formik.handleChange(e);
+                  }}
                 />
+                {formik.touched.overview && formik.errors.overview && (
+                  <div>{formik.errors.overview}</div>
+                )}
                 <label>RUNTIME</label>
                 <Input
                   type="number"
                   name="runtime"
                   className="simple_input"
                   placeholder="Runtime here"
-                  value={form.runtime == (0 || null) ? '' : form.runtime}
+                  value={formik.values.runtime == 0 ? '' : formik.values.runtime}
                   min={'0'}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    formik.setFieldTouched('runtime');
+                    formik.handleChange(e);
+                  }}
                 />
+                {formik.touched.runtime && formik.errors.runtime && (
+                  <div>{formik.errors.runtime}</div>
+                )}
                 <div className="button_section">
                   <Button
                     className="btn_submit"
                     id="add_movie_btn_submit"
                     label={isEditForm ? 'SAVE' : 'SUBMIT'}
-                    onClick={isEditForm ? handleSubmitEdit : handleSubmitAdd}
+                    buttonType="submit"
+                    disabled={formik.isSubmitting}
                   />
                   <Button
                     buttonType="reset"
                     className="btn_reset"
                     id="add_movie_btn_reset"
                     label="RESET"
-                    onClick={onClickReset}
+                    onClick={() => resetForm(formik)}
                   />
                 </div>
               </form>

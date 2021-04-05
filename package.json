@@ -107,10 +107,12 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.8.4",
+        "@types/yup": "^0.29.11",
         "autoprefixer": "^9.8.6",
         "babel-plugin-react-scoped-css": "^1.1.1",
         "bootstrap": "^4.6.0",
         "dateformat": "^4.5.1",
+        "formik": "^2.2.6",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1",
         "react": "^17.0.1",
@@ -121,7 +123,8 @@
         "react-router-dom": "^5.2.0",
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
-        "scoped-css-loader": "^1.0.0"
+        "scoped-css-loader": "^1.0.0",
+        "yup": "^0.32.9"
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"

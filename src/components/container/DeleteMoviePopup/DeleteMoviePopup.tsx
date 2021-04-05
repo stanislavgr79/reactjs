@@ -9,7 +9,7 @@ import Footer from '../../structure/Footer';
 import './DeleteMoviePopup.scoped.less';
 
 interface IProps {
-  movieId: number;
+  movieId?: number;
   closePopup: () => void;
 }
 
