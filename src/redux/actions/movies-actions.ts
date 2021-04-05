@@ -32,7 +32,7 @@ export const fetchMovies = (params: string[][]) =>
     types: [FETCH_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE],
   });
 
-export const fetchDeleteMovie = (id: number) =>
+export const fetchDeleteMovie = (id?: number) =>
   createAction({
     endpoint: `${URL_API_MOVIES}/${id}`,
     method: 'DELETE',

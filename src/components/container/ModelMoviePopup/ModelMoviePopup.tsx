@@ -43,24 +43,6 @@ interface IProps {
   role: string;
 }
 
-declare module 'yup' {
-  // eslint-disable-next-line prettier/prettier
-  interface StringSchema {
-    dateValidator(): StringSchema;
-  }
-}
-
-Yup.addMethod(Yup.string, 'dateValidator', function () {
-  // eslint-disable-next-line no-invalid-this
-  return this.test({
-    name: 'test-date',
-    message: 'Must be valid date',
-    test: (date?: string | null) => {
-      return new Date().getTime() > new Date(date ? date : '').getTime();
-    },
-  });
-});
-
 export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>): JSX.Element {
   const dispatch = useDispatch();
   const { movie, closePopup, role } = props;
@@ -70,6 +52,10 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
     dispatch(updateShowPopup(false));
     closePopup();
   }, [closePopup, dispatch]);
+
+  const resetForm = useCallback((formik) => {
+    formik.handleReset();
+  }, []);
 
   const handleSubmitEdit = useCallback(
     (form: IMovie) => {
@@ -124,10 +110,7 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
       release_date: Yup.string()
-        .test('isValidNumber', 'Must be valid date', (date?: string) => {
-          return new Date().getTime() > new Date(date ? date : '').getTime();
-        })
-        .dateValidator()
+        .matches(new RegExp('^[\\d]{4}-[\\d]{2}-[\\d]{2}$'), 'Not valide date stamp')
         .required('Required'),
       poster_path: Yup.string()
         .matches(new RegExp('^.+(\\.)(jpg|jpeg|png)$'), 'Must be a Picture')
@@ -175,17 +158,17 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                   </>
                 )}
                 <label>TITLE</label>
-                  <Input
-                    type="text"
-                    name="title"
-                    className="simple_input"
-                    placeholder="Write Title"
-                    value={formik.values.title}
-                    onChange={e => {
-                      formik.setFieldTouched('title');
-                      formik.handleChange(e);
-                    }}
-                  />
+                <Input
+                  type="text"
+                  name="title"
+                  className="simple_input"
+                  placeholder="Write Title"
+                  value={formik.values.title}
+                  onChange={(e) => {
+                    formik.setFieldTouched('title');
+                    formik.handleChange(e);
+                  }}
+                />
                 {formik.touched.title && formik.errors.title && <div>{formik.errors.title}</div>}
                 <label>RELEASE DATE</label>
                 <Calendar
@@ -196,8 +179,9 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                     formik.setFieldValue(name, val, true);
                   }}
                 />
-                {formik.touched.release_date && formik.errors.release_date && <div>
-                  {formik.errors.release_date}</div>}
+                {formik.touched.release_date && formik.errors.release_date && (
+                  <div>{formik.errors.release_date}</div>
+                )}
                 <label>POSTER URL</label>
                 <Input
                   type="text"
@@ -205,13 +189,14 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                   className="simple_input"
                   placeholder="Poster URL here"
                   value={formik.values.poster_path}
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.setFieldTouched('poster_path');
                     formik.handleChange(e);
                   }}
                 />
-                {formik.touched.poster_path && formik.errors.poster_path && <div>
-                  {formik.errors.poster_path}</div>}
+                {formik.touched.poster_path && formik.errors.poster_path && (
+                  <div>{formik.errors.poster_path}</div>
+                )}
                 <label>GENRE</label>
                 <MultiSelect
                   name="genres"
@@ -229,13 +214,14 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                   className="simple_input"
                   placeholder="Overview here"
                   value={formik.values.overview}
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.setFieldTouched('overview');
                     formik.handleChange(e);
                   }}
                 />
-                {formik.touched.overview && formik.errors.overview && <div>
-                  {formik.errors.overview}</div>}
+                {formik.touched.overview && formik.errors.overview && (
+                  <div>{formik.errors.overview}</div>
+                )}
                 <label>RUNTIME</label>
                 <Input
                   type="number"
@@ -244,13 +230,14 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                   placeholder="Runtime here"
                   value={formik.values.runtime == 0 ? '' : formik.values.runtime}
                   min={'0'}
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.setFieldTouched('runtime');
                     formik.handleChange(e);
                   }}
                 />
-                {formik.touched.runtime && formik.errors.runtime && <div>
-                  {formik.errors.runtime}</div>}
+                {formik.touched.runtime && formik.errors.runtime && (
+                  <div>{formik.errors.runtime}</div>
+                )}
                 <div className="button_section">
                   <Button
                     className="btn_submit"
@@ -264,7 +251,7 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                     className="btn_reset"
                     id="add_movie_btn_reset"
                     label="RESET"
-                    onClick={formik.resetForm}
+                    onClick={() => resetForm(formik)}
                   />
                 </div>
               </form>
