@@ -1,9 +1,15 @@
-import { SearchState, SearchActionTypes, UPDATE_SEARCH_QUERY } from '../types/search-reducer-types';
+import {
+  SearchState,
+  SearchActionTypes,
+  UPDATE_SEARCH_QUERY,
+  UPDATE_LOCATION,
+} from '../types/search-reducer-types';
 
 const initialState: SearchState = {
   search: {
     value: '',
   },
+  location: '',
 };
 
 export const reducerSearch = (state = initialState, action: SearchActionTypes): SearchState => {
@@ -14,6 +20,11 @@ export const reducerSearch = (state = initialState, action: SearchActionTypes): 
         search: {
           value: action.search.value,
         },
+      };
+    case UPDATE_LOCATION:
+      return {
+        ...state,
+        location: action.payload,
       };
     default:
       return state;

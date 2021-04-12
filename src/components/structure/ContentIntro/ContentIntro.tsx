@@ -12,23 +12,23 @@ import './ContentIntro.scoped.scss';
 const MovieListWithLoading = withLoading(MoviesList);
 
 export default function ContentIntro(): JSX.Element {
-  const { dataStatus } = useSelector((store: AppState) => {
+  const { dataStatus, newPage } = useSelector((store: AppState) => {
     return store.moviesStore;
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (dataStatus == 'succeeded') {
+    if (dataStatus == 'success') {
+      setIsLoading(false);
       return;
     }
-    setIsLoading(false);
   }, [dataStatus]);
 
   return (
     <div className="content content-intro">
       <NavBar />
       <ErrorBoundary>
-        <MovieListWithLoading isLoading={isLoading} />
+        <MovieListWithLoading isLoading={newPage ? false : isLoading} />
       </ErrorBoundary>
     </div>
   );

@@ -1,6 +1,4 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateSelectedMovieId } from '../../../redux/actions/movies-actions';
+import React, { useState } from 'react';
 
 import MovieCard from '../../atom/MovieCard';
 import MovieMenuPopup from '../MovieMenuPopup';
@@ -16,7 +14,6 @@ interface IProp {
 export default function RenderMoviesFounded({ movies }: IProp): JSX.Element {
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [activeMovieId, setActiveMovieId] = useState(0);
-  const dispatch = useDispatch();
 
   const updateShowSubMenuWithId = (id: number) => {
     setActiveMovieId(id);
@@ -27,25 +24,14 @@ export default function RenderMoviesFounded({ movies }: IProp): JSX.Element {
     setShowSubMenu(!showSubMenu);
   };
 
-  const changeSelectedMovieId = useCallback(
-    (id: number) => {
-      dispatch(updateSelectedMovieId(id));
-    },
-    [dispatch],
-  );
-
   return (
     <>
       <div className="container-md movies-wraper">
         <div className="row row-cols-3">
-          {movies.map((movie: IMovie) => (
-            <div className="col movie-unit" key={movie.id}>
+          {movies.map((movie: IMovie, index: number) => (
+            <div className="col movie-unit" key={`unit-${index}`}>
               <div className="movie_holder">
-                <MovieCard
-                  movie={movie}
-                  key={movie.id}
-                  changeSelectedMovieId={changeSelectedMovieId}
-                />
+                <MovieCard movie={movie} />
                 {!showSubMenu ? (
                   <img
                     src={image}

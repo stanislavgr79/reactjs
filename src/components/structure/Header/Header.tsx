@@ -8,35 +8,48 @@ import Input from '../../atom/Input';
 
 import { Genres } from '../../../helpers/enums';
 import { updateSearchValue } from '../../../redux/actions/search-actions';
-import { updateShowPopup } from '../../../redux/actions/movies-actions';
 import {
   updateCurrentGenre,
   updateSelectedIndexListNav,
 } from '../../../redux/actions/sidebar-actions';
 
 import './Header.scoped.less';
+import { useHistory, useLocation } from 'react-router-dom';
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 export default function Header(): JSX.Element {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const search = useQuery().get('search');
   const [searchValue, setSearchValue] = useState('');
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupAdd, setShowPopupAdd] = useState(false);
 
   useEffect(() => {
-    dispatch(updateShowPopup(showPopup));
-  }, [dispatch, showPopup]);
+    if (search) {
+      setSearchValue(search);
+      dispatch(updateSearchValue(search));
+    }
+  }, [dispatch, search]);
 
   const togglePopup = useCallback(() => {
-    setShowPopup(!showPopup);
-  }, [showPopup]);
+    setShowPopupAdd(!showPopupAdd);
+  }, [showPopupAdd]);
 
   const handleChange = useCallback((e: any) => {
     setSearchValue(e.currentTarget.value);
   }, []);
 
   const onClick = useCallback(() => {
+    searchValue == ''
+      ? history.replace('/movies')
+      : history.replace(`/movies?search=${searchValue}`);
     dispatch(updateSearchValue(searchValue));
     dispatch(updateCurrentGenre(Genres.ALL));
     dispatch(updateSelectedIndexListNav(0));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, searchValue]);
 
   return (
@@ -50,7 +63,7 @@ export default function Header(): JSX.Element {
             className="btn_addMovie"
             label="+ ADD MOVIE"
           />
-          {showPopup && <ModelMoviePopup closePopup={togglePopup} role="add" />}
+          {showPopupAdd && <ModelMoviePopup closePopup={togglePopup} role="add" />}
         </section>
         <section className="header_search container-md">
           <div className="search_title">FIND YOUR MOVIE</div>

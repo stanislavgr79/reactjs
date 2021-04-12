@@ -5,6 +5,8 @@ export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const FETCH_ADD_MOVIE_SUCCESS = 'FETCH_ADD_MOVIE_SUCCESS';
 export const DELETE_MOVIE = 'DELETE_MOVIE';
+export const FETCH_GET_MOVIE_SUCCESS = 'FETCH_GET_MOVIE_SUCCESS';
+export const FETCH_GET_MOVIE_FAILED = 'FETCH_GET_MOVIE_FAILED';
 export const UPDATE_MOVIE = 'UPDATE_MOVIE';
 export const UPDATE_STATUS_MOVIE_POPUP = 'UPDATE_STATUS_MOVIE_POPUP';
 export const UPDATE_SELECTED_MOVIE_ID = 'UPDATE_SELECTED_MOVIE_ID';
@@ -12,11 +14,12 @@ export const UPDATE_SELECTED_MOVIE_ID = 'UPDATE_SELECTED_MOVIE_ID';
 export interface MoviesState {
   [x: string]: any;
   movies: IData;
-  dataStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
+  dataStatus: 'idle' | 'loading' | 'success' | 'failed';
+  error: string | null | unknown;
   showPopup: boolean;
-  selectedMovieId: number;
+  selectedMovieId: number | undefined;
   movie: IMovie | undefined;
+  newPage: boolean;
 }
 
 interface FetchData {
@@ -36,6 +39,16 @@ interface FetchDataFailure {
 interface DeleteMovie {
   type: typeof DELETE_MOVIE;
   payload: number;
+}
+
+interface GetMovieSuccess {
+  type: typeof FETCH_GET_MOVIE_SUCCESS;
+  payload: IMovie;
+}
+
+interface GetMovieFailure {
+  type: typeof FETCH_GET_MOVIE_FAILED;
+  payload: { message: string };
 }
 
 interface UpdateMovie {
@@ -65,5 +78,7 @@ export type MoviesActionTypes =
   | DeleteMovie
   | UpdateMovie
   | AddMovie
+  | GetMovieSuccess
+  | GetMovieFailure
   | UpdateStatusMoviePopup
   | UpdateSelectedMovieId;

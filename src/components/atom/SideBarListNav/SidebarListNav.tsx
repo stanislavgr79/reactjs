@@ -44,7 +44,7 @@ export default function SidebarListNav({ defaultValue, updateCurrentGenre }: IPr
             className={selectedIndexListNav == index ? 'selected' : ''}
             id={`${value}-${index}`}
             value={value}
-            key={index}
+            key={`sidebar-genres-${index}`}
             onClick={() => handleChange(index)}
           >
             {key}

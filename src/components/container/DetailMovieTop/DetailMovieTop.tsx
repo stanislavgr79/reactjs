@@ -8,17 +8,27 @@ import Sitename from '../../atom/SiteName';
 
 import noneImage from '@resources/images/nofoto.png';
 import './DetailMovieTop.scoped.less';
+import { useHistory } from 'react-router-dom';
 
 export default function DetailMovieTop(): JSX.Element {
   const dispatch = useDispatch();
-  const { movie } = useSelector((store: AppState) => {
-    return store.moviesStore;
+  const history = useHistory();
+  const { movie, search } = useSelector((store: AppState) => {
+    return {
+      movie: store.moviesStore.movie,
+      search: store.searchStore.search,
+    };
   });
+
   const year = movie?.release_date.split('-')[0];
   const [error, setError] = useState(false);
 
   const resetActiveMovieId = useCallback(() => {
     dispatch(updateSelectedMovieId(0));
+    search.value == ''
+      ? history.replace('/movies')
+      : history.replace(`/movies?search=${search.value}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   const handleImageLoaded = () => {
