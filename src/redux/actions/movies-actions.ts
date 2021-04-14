@@ -12,6 +12,8 @@ import {
   UPDATE_MOVIE,
   UPDATE_STATUS_MOVIE_POPUP,
   UPDATE_SELECTED_MOVIE_ID,
+  FETCH_GET_MOVIE_SUCCESS,
+  FETCH_GET_MOVIE_FAILED,
 } from '../types/movies-reducer-types';
 
 export const updateShowPopup = (showPopup: boolean): MoviesActionTypes => ({
@@ -55,4 +57,12 @@ export const fetchAddMovie = (movie: IMovie) =>
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie),
     types: ['', FETCH_ADD_MOVIE_SUCCESS, ''],
+  });
+
+export const fetchGetMovieById = (id?: number) =>
+  createAction({
+    endpoint: `${URL_API_MOVIES}/${id}`,
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    types: ['', FETCH_GET_MOVIE_SUCCESS, FETCH_GET_MOVIE_FAILED],
   });

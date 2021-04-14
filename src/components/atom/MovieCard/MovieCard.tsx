@@ -3,13 +3,13 @@ import { IMovie } from '../../../helpers/interface';
 
 import noneImage from '@resources/images/nofoto.png';
 import './MovieCard.scoped.scss';
+import { Link } from 'react-router-dom';
 
 interface IProps {
   movie: IMovie;
-  changeSelectedMovieId: (e: number) => void;
 }
 
-export default function MovieCard({ movie, changeSelectedMovieId }: IProps): JSX.Element {
+export default function MovieCard({ movie }: IProps): JSX.Element {
   const year = movie.release_date.split('-')[0];
   const KEY = 'value';
   const genreStr =
@@ -35,16 +35,15 @@ export default function MovieCard({ movie, changeSelectedMovieId }: IProps): JSX
     <>
       <div className="movie-card">
         <div className="movie-image">
-          <a href="#">
+          <Link to={`/movies/${movie.id}`}>
             <img
               src={error || movie.poster_path == null ? noneImage : movie.poster_path}
               onLoad={handleImageLoaded}
               onError={handleImageError}
               className="img-fluid"
               alt={movie.title}
-              onClick={() => changeSelectedMovieId(Number(movie.id))}
             />
-          </a>
+          </Link>
         </div>
         <div className="movie-props">
           <div className="movie-info">

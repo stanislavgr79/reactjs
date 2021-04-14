@@ -10,7 +10,7 @@ interface IProps {
   onChange?: (event: unknown) => void;
   onBlur?: (event: unknown) => void;
   onFocus?: (event: unknown) => void;
-  value?: string | number | string[];
+  value?: string | number | string[] | null;
   readonly?: boolean;
   min?: string;
 }

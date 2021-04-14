@@ -31,7 +31,7 @@ export default function SidebarSelectNav({
           <option
             id={`${value}-${index}`}
             value={value}
-            key={index}
+            key={`sidebar-select-${index}`}
             className="c-pointer"
             role="button"
           >

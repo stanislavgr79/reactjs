@@ -12,6 +12,6 @@ export default function WithLoading(Component: React.FC) {
     isLoading,
     ...props
   }: WithLoadingProps): React.ReactElement {
-    return !isLoading ? <Component {...props} /> : <LoadingIndication />;
+    return isLoading ? <LoadingIndication /> : <Component {...props} />;
   };
 }

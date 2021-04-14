@@ -11,6 +11,8 @@ import {
   UPDATE_MOVIE,
   UPDATE_STATUS_MOVIE_POPUP,
   UPDATE_SELECTED_MOVIE_ID,
+  FETCH_GET_MOVIE_SUCCESS,
+  FETCH_GET_MOVIE_FAILED,
 } from '../types/movies-reducer-types';
 
 const initialState: MoviesState = {
@@ -25,6 +27,7 @@ const initialState: MoviesState = {
   showPopup: false,
   selectedMovieId: 0,
   movie: undefined,
+  newPage: true,
 };
 
 export const reducerMovies = (state = initialState, action: MoviesActionTypes): MoviesState => {
@@ -38,7 +41,7 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
     case FETCH_DATA_SUCCESS:
       return {
         ...state,
-        dataStatus: 'succeeded',
+        dataStatus: 'success',
         movies: action.payload,
       };
     case FETCH_DATA_FAILURE:
@@ -55,6 +58,27 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
       return {
         ...state,
         movies: newMoviesForDelete,
+      };
+
+    case FETCH_GET_MOVIE_SUCCESS:
+      const newMovies: IData = state.movies;
+      newMovies.totalAmount = 1;
+      newMovies.data[0] = action.payload;
+      return {
+        ...state,
+        dataStatus: 'success',
+        newPage: false,
+        showPopup: true,
+        movies: newMovies,
+        selectedMovieId: action.payload.id,
+        movie: action.payload,
+      };
+
+    case FETCH_GET_MOVIE_FAILED:
+      return {
+        ...state,
+        dataStatus: 'failed',
+        error: action.payload.message,
       };
 
     case FETCH_ADD_MOVIE_SUCCESS:
@@ -93,6 +117,8 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
       );
       return {
         ...state,
+        newPage: false,
+        showPopup: false,
         selectedMovieId: action.payload == 0 ? 0 : action.payload,
         movie: action.payload == 0 ? undefined : state.movies.data[indexMovie],
       };
