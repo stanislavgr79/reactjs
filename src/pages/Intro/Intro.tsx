@@ -6,12 +6,13 @@ import Header from '../../components/structure/Header';
 import Footer from '../../components/structure/Footer';
 import DetailMovieTop from '../../components/container/DetailMovieTop';
 
-const ContentIntro = React.lazy(() => import('../../components/structure/ContentIntro'));
-
-import './Intro.scoped.scss';
 import { Redirect, useLocation, useParams } from 'react-router';
 import { fetchGetMovieById } from '../../redux/actions/movies-actions';
 import { updateLocation } from '../../redux/actions/search-actions';
+
+const ContentIntro = React.lazy(() => import('../../components/structure/ContentIntro'));
+
+import './Intro.scoped.scss';
 
 export default function Intro(): JSX.Element {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function Intro(): JSX.Element {
       dispatch(updateLocation(location.pathname));
       dispatch(fetchGetMovieById(parseInt(id)));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id]);
 
   let content;
@@ -35,7 +37,7 @@ export default function Intro(): JSX.Element {
   } else {
     content = (
       <div className={`intro_page ${!showPopup ? '' : 'show_movie_popup'}`}>
-        {showPopup ? <DetailMovieTop /> : <Header />}
+        {id && showPopup ? <DetailMovieTop /> : <Header />}
         <Suspense fallback="Loading ...">
           <ContentIntro />
         </Suspense>

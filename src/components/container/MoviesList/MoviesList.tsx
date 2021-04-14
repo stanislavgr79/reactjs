@@ -7,6 +7,7 @@ import './MoviesList.scoped.scss';
 
 import RenderMoviesFounded from './RenderMoviesFounded';
 import NewPage from '../../../pages/NewPage/NewPage';
+import { Redirect } from 'react-router-dom';
 
 export default function MoviesList(): JSX.Element {
   const dispatch = useDispatch();
@@ -26,37 +27,19 @@ export default function MoviesList(): JSX.Element {
       setIsNewPage(false);
       return;
     }
-    let params: string[][];
-    if (dataStatus === 'idle') {
-      params = [
-        ['offset', '0'],
-        ['limit', '6'],
-        ['filter', sidebar.genre],
-        ['sortBy', sidebar.sortBy],
-        ['sortOrder', sidebar.sortOrder],
-      ];
-    } else {
-      params = [
-        ['offset', movies.offset.toString()],
-        ['limit', '6'],
-        ['searchBy', 'title'],
-        ['search', search.value],
-        ['filter', sidebar.genre],
-        ['sortBy', sidebar.sortBy],
-        ['sortOrder', sidebar.sortOrder],
-      ];
-    }
+    const params = [
+      ['offset', movies.offset.toString()],
+      ['limit', '6'],
+      ['searchBy', 'title'],
+      ['search', search.value],
+      ['filter', sidebar.genre],
+      ['sortBy', sidebar.sortBy],
+      ['sortOrder', sidebar.sortOrder],
+    ];
+
     dispatch(fetchMovies(params));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    movies.totalAmount,
-    search.value,
-    sidebar.sortBy,
-    sidebar.sortOrder,
-    movies.offset,
-    sidebar.genre,
-    dispatch,
-  ]);
+  }, [search.value, sidebar.sortBy, sidebar.sortOrder, movies.offset, sidebar.genre, dispatch]);
 
   let content;
 
@@ -80,7 +63,7 @@ export default function MoviesList(): JSX.Element {
       </>
     );
   } else if (dataStatus === 'failed') {
-    content = <div>Error</div>;
+    content = <Redirect to="/404" />;
   }
 
   return <>{content}</>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import Intro from '../../pages/Intro';
 import './App.scss';
@@ -12,6 +12,7 @@ const App = () => {
     <BrowserRouter>
       <Provider store={store}>
         <Switch>
+          <Route exact key="Home" path="/" render={() => <Intro />} />
           <Route exact key="Intro" path="/movies" render={() => <Intro />} />
           <Route exact key="Movie" path="/movies/:id" render={() => <Intro />} />
           <Route exact key="404" path="/404" render={() => <NoMatch />} />
