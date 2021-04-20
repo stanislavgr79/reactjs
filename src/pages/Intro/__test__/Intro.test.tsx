@@ -13,23 +13,23 @@ import configureStore from 'redux-mock-store';
 //   jest.spyOn(location, 'useLocation').mockReturnValue(mockLocation);
 // });
 
+jest.mock('react-router', () => ({
+  // ...jest.requireActual('react-router'),
+  useParams: () => ({
+    id: 23,
+  }),
+  useRouteMatch: () => ({ url: '/movies' }),
+}));
+
 describe('Intro', () => {
   const initialState = { moviesStore: { showPopup: false, dataStatus: 'success' } };
   const mockStore = configureStore();
   let store;
 
-  // jest.mock('react-router', () => ({
-  //   // ...jest.requireActual('react-router'),
-  //   useParams: () => ({
-  //     id: undefined,
-  //   }),
-  //   useRouteMatch: () => ({ url: '/movies' }),
-  // }));
-
   test('snapshot renders', () => {
     store = mockStore(initialState);
-    jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ id: undefined });
-    
+    // jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ id: 23 });
+
     // const tree = render(
     //   <Provider store={store}>
     //     <Intro />
@@ -38,45 +38,43 @@ describe('Intro', () => {
 
     const tree = renderer
       .create(
-        <BrowserRouter>
-          <Provider store={store}>
-            <Route path="/movies">
-              <Intro />
-            </Route>
-          </Provider>
-        </BrowserRouter>,
+        // <BrowserRouter>
+        <Provider store={store}>
+          {/* <Route path="/movies"> */}
+          <Intro />
+          {/* </Route> */}
+        </Provider>,
+        // </BrowserRouter>,
       )
       .toJSON();
 
+    console.log(tree);
     expect(tree).toMatchSnapshot();
     // expect(tree).toContainHTML('<div class="header">');
   });
 
+  // test('snapshot renders2', () => {
+  //   store = mockStore(initialState);
+  //   // jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ id: '123' });
+  //   // const tree = render(
+  //   //   <Provider store={store}>
+  //   //     <Intro />
+  //   //   </Provider>,
+  //   // );
 
+  //   const tree = renderer
+  //     .create(
+  //       <BrowserRouter>
+  //         <Provider store={store}>
+  //           {/* <Route path="/movies/123"> */}
+  //           <Intro />
+  //           {/* </Route> */}
+  //         </Provider>
+  //       </BrowserRouter>,
+  //     )
+  //     .toJSON();
 
-
-  test('snapshot renders2', () => {
-    store = mockStore(initialState);
-    jest.spyOn(ReactRouter, 'useParams').mockReturnValue({ id: '123' });
-    // const tree = render(
-    //   <Provider store={store}>
-    //     <Intro />
-    //   </Provider>,
-    // );
-
-    const tree = renderer
-      .create(
-        <BrowserRouter>
-          <Provider store={store}>
-            <Route path="/movies/123">
-              <Intro />
-            </Route>
-          </Provider>
-        </BrowserRouter>,
-      )
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
-    // expect(tree).toContainHTML('<div class="header">');
-  });
+  //   expect(tree).toMatchSnapshot();
+  //   // expect(tree).toContainHTML('<div class="header">');
+  // });
 });
