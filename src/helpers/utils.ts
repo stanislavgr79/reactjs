@@ -1,10 +1,12 @@
+import { OptionsType, OptionTypeBase } from 'react-select';
+
 export const createClassList = (classesArray: string[]) =>
   classesArray
     .filter((className) => typeof className === 'string' && className.length > 0)
     .join(' ')
     .trim();
 
-export function transformGenresToStringArray(genres: { value: string, label: string }[]) {
+export function transformGenresToStringArray(genres: OptionsType<OptionTypeBase>) {
   const genresArray: string[] = [];
   genres.map((it) => genresArray.push(it.value));
   return genresArray;

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { FormikProps, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
   updateShowPopup,
@@ -16,16 +16,6 @@ import Calendar from '../../atom/Calendar';
 import MultiSelect from '../../atom/MultiSelect';
 import { IMovie } from '../../../helpers/interface';
 import './ModelMoviePopup.scoped.less';
-
-interface FormValues {
-  id?: number;
-  title: string;
-  release_date: string;
-  poster_path: string;
-  genres: string[];
-  overview: string;
-  runtime: number;
-}
 
 const emptyMovieForm: IMovie = {
   id: 0,
@@ -43,7 +33,7 @@ interface IProps {
   role: string;
 }
 
-export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>): JSX.Element {
+export default function ModelMoviePopup(props: IProps): JSX.Element {
   const dispatch = useDispatch();
   const { movie, closePopup, role } = props;
   const isEditForm = role == 'edit' ? true : false;

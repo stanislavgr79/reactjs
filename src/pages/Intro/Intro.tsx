@@ -14,12 +14,16 @@ const ContentIntro = React.lazy(() => import('../../components/structure/Content
 
 import './Intro.scoped.scss';
 
+interface Props {
+  id: string | undefined;
+}
+
 export default function Intro(): JSX.Element {
   const dispatch = useDispatch();
   const { showPopup, dataStatus } = useSelector((store: AppState) => {
     return store.moviesStore;
   });
-  const { id } = useParams();
+  const { id }: Props = useParams();
   const location = useLocation();
 
   useEffect(() => {
