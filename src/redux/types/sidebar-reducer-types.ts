@@ -10,7 +10,7 @@ export interface SidebarState {
   genre: Genres;
   sortBy: SortBy;
   sortOrder: SortOrder;
-  selectedIndexListNav: number;
+  selectedIndexListNav?: number;
 }
 
 interface UpdateCurrentGenre {

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar snapshot renders 1`] = `
+<body>
+  <div>
+    <div
+      class="nav-bar container-md"
+    >
+      <div
+        class="side-genre"
+      >
+        <div
+          class="sidebar-list-nav"
+        />
+      </div>
+      <div
+        class="side-sort "
+      >
+        <label>
+          SORT BY
+        </label>
+        <div
+          class="sidebar-select-nav"
+        />
+        <div
+          class="sort_order"
+        >
+          <button
+            class="btn button btn_arrow arrow_down"
+            id=""
+            title="Change sort order"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`NavBar snapshot renders2 1`] = `
+<body>
+  <div>
+    <div
+      class="nav-bar container-md"
+    >
+      <div
+        class="side-genre"
+      >
+        <div
+          class="sidebar-list-nav"
+        />
+      </div>
+      <div
+        class="side-sort "
+      >
+        <label>
+          SORT BY
+        </label>
+        <div
+          class="sidebar-select-nav"
+        />
+        <div
+          class="sort_order"
+        >
+          <button
+            class="btn button btn_arrow arrow_up"
+            id=""
+            title="Change sort order"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

@@ -127,7 +127,7 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
       <div className="popup_model">
         <div className="model_content container-md">
           <Sitename />
-          <div className="container edit_movie">
+          <div className={`container ${role}_movie`}>
             <div className="container-sm form">
               <div className="page_close">
                 <Button buttonType="button" className="btn_close" onClick={closeEditPopup} />

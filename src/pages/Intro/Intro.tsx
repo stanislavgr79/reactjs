@@ -24,7 +24,7 @@ export default function Intro(): JSX.Element {
     return store.moviesStore;
   });
   const { id }: Props = useParams();
-  // const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     if (id) {
@@ -35,18 +35,17 @@ export default function Intro(): JSX.Element {
   }, [dispatch, id]);
 
   let content;
-  console.log(id);
 
   if (dataStatus == 'failed') {
     content = <Redirect to="/404" />;
   } else {
     content = (
       <div className={`intro_page ${!showPopup ? '' : 'show_movie_popup'}`}>
-        {/* {id && showPopup ? <DetailMovieTop /> : <Header />}
+        {id && showPopup ? <DetailMovieTop /> : <Header />}
         <Suspense fallback="Loading ...">
           <ContentIntro />
         </Suspense>
-        <Footer /> */}
+        <Footer />
       </div>
     );
   }
