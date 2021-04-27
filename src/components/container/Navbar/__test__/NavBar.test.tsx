@@ -1,18 +1,15 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 
 import NavBar from '../NavBar';
 
-import ReactRouter from 'react-router';
-
 import configureStore from 'redux-mock-store';
 import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import storeReal from '../../../../redux/redux-store';
 import { SidebarState } from '../../../../redux/types/sidebar-reducer-types';
 import { Genres, SortBy, SortOrder } from '../../../../helpers/enums';
-import { updateSortOrder } from '../../../../redux/actions/sidebar-actions';
+import thunk from 'redux-thunk';
+import { BrowserRouter } from 'react-router-dom';
 
 jest.mock('../../../atom/SideBarListNav', () => {
   return {
@@ -30,63 +27,78 @@ jest.mock('../../../atom/SidebarSelectNav', () => {
     },
   };
 });
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+  useDispatch: () => mockDispatch,
+}));
+
+interface AppState {
+  sidebar: SidebarState;
+}
+const initialState: AppState = {
+  sidebar: { genre: Genres.ALL, sortBy: SortBy.TITLE, sortOrder: SortOrder.ASC },
+};
+const buildStore = configureStore([thunk]);
+let store = buildStore(initialState);
+
+jest.mock('../../../../redux/actions/sidebar-actions', () => ({
+  updateSortOrder: () => {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
+    const newInitialState: AppState = {
+      sidebar: { genre: Genres.ALL, sortBy: SortBy.TITLE, sortOrder: SortOrder.DESC },
+    };
+    store = buildStore(newInitialState);
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
+  },
+}));
 
 describe('NavBar', () => {
+  // let store;
+  // let wrapper;
+
+  beforeEach(() => {
+    store = buildStore(initialState);
+    // wrapper = shallow(<colorbuttons store="{store}" />);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  interface AppState {
-    sidebar: SidebarState;
-  }
+  // test('snapshot renders', () => {
+  //   const tree = render(
+  //     <Provider store={store}>
+  //       <NavBar />
+  //     </Provider>,
+  //   );
 
-  const initialState: AppState = {
-    sidebar: { genre: Genres.ALL, sortBy: SortBy.TITLE, sortOrder: SortOrder.ASC },
-  };
-  const mockStore = configureStore();
-  let store = mockStore(initialState);
-
-  test('snapshot renders', () => {
-    // const store = storeReal;
-
-    const tree = render(
-      <Provider store={store}>
-        <NavBar />
-      </Provider>,
-    );
-
-    expect(tree.baseElement).toMatchSnapshot();
-    expect(tree.baseElement).toContainHTML('<div class="nav-bar container-md">');
-  });
-
-  jest.mock('../../../../redux/actions/sidebar-actions', () => ({
-    updateSortOrder: () => {
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-      const newInitialState: AppState = {
-        sidebar: { genre: Genres.ALL, sortBy: SortBy.TITLE, sortOrder: SortOrder.DESC },
-      };
-      store = mockStore(newInitialState);
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-    },
-  }));
+  //   expect(tree.baseElement).toMatchSnapshot();
+  //   expect(tree.baseElement).toContainHTML('<div class="nav-bar container-md">');
+  // });
 
   test('snapshot renders2', () => {
-    const store = storeReal;
-    // store = mockStore(initialState);
-    const spy = jest.spyOn(store, 'dispatch');
+    // const store = storeReal;
+    // store = buildStore(initialState);
+    // const spy = jest.spyOn(store, 'dispatch');
 
     const tree = render(
-      <Provider store={store}>
-        <NavBar />
-      </Provider>,
+      <BrowserRouter>
+        <Provider store={store}>
+          <NavBar />
+        </Provider>
+      </BrowserRouter>,
     );
+    // const wrapper = shallow(
+    //   <Provider store={store}>
+    //     <NavBar />
+    //   </Provider>,
+    // );
 
     fireEvent.click(screen.getByTitle('Change sort order'));
-
     expect(tree.baseElement).toMatchSnapshot();
     expect(tree.baseElement).toContainHTML('<div class="nav-bar container-md">');
-    expect(spy).toHaveBeenCalled();
+    // expect(spy).toHaveBeenCalled();
     console.log(store.getState());
   });
-
 });
