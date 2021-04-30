@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeleteMoviePopup handleClick function 1`] = `
+<body>
+  <div>
+    <div
+      class="popup_model"
+    >
+      <div
+        class="model_content container-md"
+      >
+        <p
+          class="site_name"
+        >
+          <strong>
+            netflix
+          </strong>
+          roulette
+        </p>
+        <div
+          class="container delete_movie"
+        >
+          <div
+            class="container form"
+          >
+            <div
+              class="section_icon-close"
+            >
+              <button
+                class="btn button btn_close"
+                id="delete_movie_btn_close"
+                type="button"
+              />
+            </div>
+            <div
+              class="page_title"
+            >
+              DELETE MOVIE
+            </div>
+            <div
+              class="page_description"
+            >
+              Are you sure want to delete this movie?
+            </div>
+            <div
+              class="button_section"
+            >
+              <button
+                class="btn button btn_submit"
+                id="delete_movie_btn_submit"
+                type="submit"
+              >
+                CONFIRM
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="footer"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`DeleteMoviePopup handleSubmit function 1`] = `
+<body>
+  <div>
+    <div
+      class="popup_model"
+    >
+      <div
+        class="model_content container-md"
+      >
+        <p
+          class="site_name"
+        >
+          <strong>
+            netflix
+          </strong>
+          roulette
+        </p>
+        <div
+          class="container delete_movie"
+        >
+          <div
+            class="container form"
+          >
+            <div
+              class="section_icon-close"
+            >
+              <button
+                class="btn button btn_close"
+                id="delete_movie_btn_close"
+                type="button"
+              />
+            </div>
+            <div
+              class="page_title"
+            >
+              DELETE MOVIE
+            </div>
+            <div
+              class="page_description"
+            >
+              Are you sure want to delete this movie?
+            </div>
+            <div
+              class="button_section"
+            >
+              <button
+                class="btn button btn_submit"
+                id="delete_movie_btn_submit"
+                type="submit"
+              >
+                CONFIRM
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="footer"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;

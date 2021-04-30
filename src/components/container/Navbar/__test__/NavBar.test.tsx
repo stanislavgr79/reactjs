@@ -1,15 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import storeReal from '../../../../redux/redux-store';
 
 import NavBar from '../NavBar';
 
-import configureStore from 'redux-mock-store';
 import { render, screen, fireEvent } from '@testing-library/react';
-import storeReal from '../../../../redux/redux-store';
-import { SidebarState } from '../../../../redux/types/sidebar-reducer-types';
-import { Genres, SortBy, SortOrder } from '../../../../helpers/enums';
-import thunk from 'redux-thunk';
-import { BrowserRouter } from 'react-router-dom';
+import { SearchActionTypes } from '../../../../redux/types/search-reducer-types';
+import { MoviesActionTypes } from '../../../../redux/types/movies-reducer-types';
+import { SidebarActionTypes } from '../../../../redux/types/sidebar-reducer-types';
+import { Store } from 'redux';
 
 jest.mock('../../../atom/SideBarListNav', () => {
   return {
@@ -27,78 +26,39 @@ jest.mock('../../../atom/SidebarSelectNav', () => {
     },
   };
 });
-const mockDispatch = jest.fn();
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-  useDispatch: () => mockDispatch,
-}));
-
-interface AppState {
-  sidebar: SidebarState;
-}
-const initialState: AppState = {
-  sidebar: { genre: Genres.ALL, sortBy: SortBy.TITLE, sortOrder: SortOrder.ASC },
-};
-const buildStore = configureStore([thunk]);
-let store = buildStore(initialState);
-
-jest.mock('../../../../redux/actions/sidebar-actions', () => ({
-  updateSortOrder: () => {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-    const newInitialState: AppState = {
-      sidebar: { genre: Genres.ALL, sortBy: SortBy.TITLE, sortOrder: SortOrder.DESC },
-    };
-    store = buildStore(newInitialState);
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-  },
-}));
 
 describe('NavBar', () => {
-  // let store;
-  // let wrapper;
+  let store: Store<unknown, SearchActionTypes | MoviesActionTypes | SidebarActionTypes>;
 
   beforeEach(() => {
-    store = buildStore(initialState);
-    // wrapper = shallow(<colorbuttons store="{store}" />);
+    store = storeReal;
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  // test('snapshot renders', () => {
-  //   const tree = render(
-  //     <Provider store={store}>
-  //       <NavBar />
-  //     </Provider>,
-  //   );
-
-  //   expect(tree.baseElement).toMatchSnapshot();
-  //   expect(tree.baseElement).toContainHTML('<div class="nav-bar container-md">');
-  // });
-
-  test('snapshot renders2', () => {
-    // const store = storeReal;
-    // store = buildStore(initialState);
-    // const spy = jest.spyOn(store, 'dispatch');
-
+  test('snapshot renders', () => {
     const tree = render(
-      <BrowserRouter>
-        <Provider store={store}>
-          <NavBar />
-        </Provider>
-      </BrowserRouter>,
+      <Provider store={store}>
+        <NavBar />
+      </Provider>,
     );
-    // const wrapper = shallow(
-    //   <Provider store={store}>
-    //     <NavBar />
-    //   </Provider>,
-    // );
 
-    fireEvent.click(screen.getByTitle('Change sort order'));
     expect(tree.baseElement).toMatchSnapshot();
     expect(tree.baseElement).toContainHTML('<div class="nav-bar container-md">');
-    // expect(spy).toHaveBeenCalled();
-    console.log(store.getState());
+  });
+
+  test('snapshot renders button class: arrow_up', () => {
+    const tree = render(
+      <Provider store={store}>
+        <NavBar />
+      </Provider>,
+    );
+    expect(tree.baseElement).toContainHTML('<div class="nav-bar container-md">');
+
+    expect(tree.baseElement).toMatchSnapshot();
+    fireEvent.click(screen.getByTitle('Change sort order'));
+    expect(tree.baseElement).toMatchSnapshot();
   });
 });

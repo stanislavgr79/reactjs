@@ -8,12 +8,13 @@ import {
   FETCH_DATA_SUCCESS,
   FETCH_DATA_FAILURE,
   FETCH_ADD_MOVIE_SUCCESS,
-  DELETE_MOVIE,
-  UPDATE_MOVIE,
+  DELETE_MOVIE_SUCCESS,
+  UPDATE_MOVIE_SUCCESS,
   UPDATE_STATUS_MOVIE_POPUP,
   UPDATE_SELECTED_MOVIE_ID,
   FETCH_GET_MOVIE_SUCCESS,
   FETCH_GET_MOVIE_FAILED,
+  API_REQUEST,
 } from '../types/movies-reducer-types';
 
 export const updateShowPopup = (showPopup: boolean): MoviesActionTypes => ({
@@ -38,7 +39,7 @@ export const fetchDeleteMovie = (id?: number) =>
   createAction({
     endpoint: `${URL_API_MOVIES}/${id}`,
     method: 'DELETE',
-    types: ['', DELETE_MOVIE, ''],
+    types: [API_REQUEST, DELETE_MOVIE_SUCCESS, ''],
   });
 
 export const fetchUpdateMovie = (movie: IMovie) =>
@@ -47,7 +48,7 @@ export const fetchUpdateMovie = (movie: IMovie) =>
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie),
-    types: ['', UPDATE_MOVIE, ''],
+    types: [API_REQUEST, UPDATE_MOVIE_SUCCESS, ''],
   });
 
 export const fetchAddMovie = (movie: IMovie) =>
@@ -56,7 +57,7 @@ export const fetchAddMovie = (movie: IMovie) =>
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie),
-    types: ['', FETCH_ADD_MOVIE_SUCCESS, ''],
+    types: [API_REQUEST, FETCH_ADD_MOVIE_SUCCESS, ''],
   });
 
 export const fetchGetMovieById = (id?: number) =>
@@ -64,5 +65,5 @@ export const fetchGetMovieById = (id?: number) =>
     endpoint: `${URL_API_MOVIES}/${id}`,
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
-    types: ['', FETCH_GET_MOVIE_SUCCESS, FETCH_GET_MOVIE_FAILED],
+    types: [API_REQUEST, FETCH_GET_MOVIE_SUCCESS, FETCH_GET_MOVIE_FAILED],
   });

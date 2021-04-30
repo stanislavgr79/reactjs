@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentIntro snapshot renders: movies are loading 1`] = `
+<body>
+  <div>
+    <div
+      class="content content-intro"
+    >
+      <div
+        class="nav-bar container-md"
+      />
+      <h2>
+        Just a moment... Movies are loading...
+      </h2>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`ContentIntro snapshot renders: movies list 1`] = `
+<body>
+  <div>
+    <div
+      class="content content-intro"
+    >
+      <div
+        class="nav-bar container-md"
+      />
+      <div
+        class="movies-list"
+      />
+    </div>
+  </div>
+</body>
+`;
+
+exports[`ContentIntro snapshot renders: movies list 2`] = `
+<body>
+  <div>
+    <div
+      class="content content-intro"
+    >
+      <div
+        class="nav-bar container-md"
+      />
+      <div
+        class="movies-list"
+      />
+    </div>
+  </div>
+</body>
+`;

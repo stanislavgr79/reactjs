@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SiteName snapshot renders 1`] = `
+<body>
+  <div>
+    <p
+      class="site_name"
+    >
+      <strong>
+        netflix
+      </strong>
+      roulette
+    </p>
+  </div>
+</body>
+`;

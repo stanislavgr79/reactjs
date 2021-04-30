@@ -30,3 +30,5 @@ export const reducerSearch = (state = initialState, action: SearchActionTypes): 
       return state;
   }
 };
+
+export default reducerSearch;
