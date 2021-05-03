@@ -5,7 +5,12 @@
         "<rootDir>/src/jest.setup.ts"
     ],
     "clearMocks": true,
-    "collectCoverage": false,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "!<rootDir>/node_modules/"
+    ],
+    "coverageReporters": ["text", "json", "html"],
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
     "preset": "ts-jest",
     "transform": {

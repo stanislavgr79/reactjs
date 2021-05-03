@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import fetchMock from 'fetch-mock';
 
 import DeleteMoviePopup from '../DeleteMoviePopup';
 
@@ -12,11 +11,11 @@ import {
   UPDATE_STATUS_MOVIE_POPUP,
 } from '../../../../redux/types/movies-reducer-types';
 
-jest.mock('../../../structure/Header', () => {
+jest.mock('../../../atom/SiteName', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div className="header"></div>;
+      return <div className="siteName"></div>;
     },
   };
 });
@@ -30,7 +29,6 @@ jest.mock('../../../structure/Footer', () => {
 });
 jest.mock('../../../../redux/actions/movies-actions', () => ({
   fetchDeleteMovie: (): MoviesActionTypes => {
-    fetchMock.mock(`http://localhost:4000/movies/123456`, 200);
     return {
       type: DELETE_MOVIE_SUCCESS,
     };
