@@ -5,13 +5,17 @@ export const Option = (props: any): JSX.Element => {
   return (
     <>
       <components.Option {...props}>
-        <input
-          type="checkbox"
-          checked={props.isSelected}
-          datatype={props.isSelected.toString()}
-          onChange={() => null}
-        />{' '}
-        <label>{props.value} </label>
+        <label htmlFor={props.value}>
+          {props.value}
+          <input
+            id={props.value}
+            type="checkbox"
+            name={props.value}
+            checked={props.isSelected}
+            datatype={props.isSelected.toString()}
+            onChange={() => null}
+          />
+        </label>{' '}
       </components.Option>
     </>
   );

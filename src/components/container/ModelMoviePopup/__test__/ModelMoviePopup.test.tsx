@@ -4,14 +4,17 @@ import configureStore from 'redux-mock-store';
 
 import ModelMoviePopup from '../ModelMoviePopup';
 
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, RenderOptions, waitFor } from '@testing-library/react';
 import {
+    FETCH_ADD_MOVIE_SUCCESS,
   MoviesActionTypes,
   UPDATE_MOVIE_SUCCESS,
   UPDATE_STATUS_MOVIE_POPUP,
 } from '../../../../redux/types/movies-reducer-types';
 import { IMovie } from '../../../../helpers/interface';
-
+import { Simulate } from "react-dom/test-utils";
+// eslint-disable-next-line import/no-duplicates
+import userEvent from '@testing-library/user-event';
 jest.mock('../../../atom/SiteName', () => {
   return {
     __esModule: true,
@@ -35,6 +38,12 @@ jest.mock('../../../../redux/actions/movies-actions', () => ({
       payload: movie,
     };
   },
+  fetchAddMovie: (movie: IMovie): MoviesActionTypes => {
+    return {
+      type: FETCH_ADD_MOVIE_SUCCESS,
+      payload: movie,
+    };
+  },
   updateShowPopup: (): MoviesActionTypes => {
     return {
       type: UPDATE_STATUS_MOVIE_POPUP,
@@ -47,271 +56,259 @@ describe('ModelMoviePopup', () => {
   const initialState = { moviesStore: { showPopup: true } };
   const mockStore = configureStore();
   const closePopup = jest.fn();
-  let store;
-
+  let container: Element 
+    | DocumentFragment 
+    | RenderOptions<typeof import('@testing-library/dom/types/queries'), HTMLElement>
+    | null;
+  const movie = {
+    id: 12345,
+    title: 'film title',
+    release_date: '2020-01-02',
+    poster_path: 'https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg',
+    genres: ['crime'],
+    overview: 'overview',
+    runtime: 66,
+  };
+  
   afterEach(() => {
+    container = null;
     jest.clearAllMocks();
   });
 
-  test('handleSubmit function', async () => {
-    // const promise = Promise.resolve();
-    store = mockStore(initialState);
-    const movie = {
-      id: 12345,
-      title: 'title',
-      release_date: '2020-01-02',
-      genres: ['crime'],
-      overview: 'overview',
-      runtime: 66,
-    };
-    const tree = render(
-      <Provider store={store}>
-        <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-      </Provider>,
-    );
+//   test('render edit model', async () => {
+//     container = render(<div></div>);
+//     const store = mockStore(initialState);
 
-    const expectedActions = [
-      { type: 'UPDATE_MOVIE_SUCCESS', payload: movie },
-      { type: 'UPDATE_STATUS_MOVIE_POPUP', payload: false },
-    ];
-
-    expect(tree.baseElement).toMatchSnapshot();
-    fireEvent.click(screen.getByRole('button', { name: 'SAVE' }));
-    expect(closePopup).toBeCalled();
-    // expect(store.getActions()).toEqual(expectedActions);
-    // await act(() => promise);
-  });
-});
-
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable prettier/prettier */
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import { Provider } from 'react-redux';
-// import configureStore from 'redux-mock-store';
-// import { act } from 'react-dom/test-utils';
-// // import { fireEvent, RenderOptions, RenderResult, screen, waitFor } from '@testing-library/react';
-// // eslint-disable-next-line max-len
-// import { fireEvent, render, RenderOptions, RenderResult, screen, waitFor } from '@testing-library/react';
-// import user from '@testing-library/user-event';
-// // import userEvent from '@testing-library/user-event';
-
-// import ModelMoviePopup from '../ModelMoviePopup';
-// import {
-//   MoviesActionTypes,
-//   UPDATE_MOVIE_SUCCESS,
-//   UPDATE_STATUS_MOVIE_POPUP,
-// } from '../../../../redux/types/movies-reducer-types';
-// import { IMovie } from '../../../../helpers/interface';
-
-// jest.mock('../../../atom/SiteName', () => {
-//   return {
-//     __esModule: true,
-//     default: () => {
-//       return <div className="siteName"></div>;
-//     },
-//   };
-// });
-// jest.mock('../../../structure/Footer', () => {
-//   return {
-//     __esModule: true,
-//     default: () => {
-//       return <div className="footer"></div>;
-//     },
-//   };
-// });
-// jest.mock('../../../../redux/actions/movies-actions', () => ({
-//   fetchUpdateMovie: (movie: IMovie): MoviesActionTypes => {
-//     return {
-//       type: UPDATE_MOVIE_SUCCESS,
-//       payload: movie,
-//     };
-//   },
-//   updateShowPopup: (): MoviesActionTypes => {
-//     return {
-//       type: UPDATE_STATUS_MOVIE_POPUP,
-//       payload: false,
-//     };
-//   },
-// }));
-
-// describe('ModelMoviePopup', () => {
-//   const movie = {
-//     id: 12345,
-//     title: 'title',
-//     release_date: '2020-01-02',
-//     genres: ['crime'],
-//     overview: 'overview',
-//     runtime: 66,
-//   };
-//   const initialState = { moviesStore: { showPopup: true } };
-//   const mockStore = configureStore();
-//   const handleSubmit = jest.fn();
-//   const closePopup = jest.fn();
-//   //   let store;
-//   //   let tree: JSX.Element;
-
-//   afterEach(() => {
-//     // tree = <div></div>;
-//     jest.clearAllMocks();
+//     container = render(<Provider store={store}>
+//         <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
+//     </Provider>,);
+    
+//     expect(container.baseElement).toMatchSnapshot();
+//     expect(screen.getByRole('button', { name: /SAVE/i })).toBeInTheDocument();
 //   });
 
-//   //   it('rendering and submitting a basic Formik form', async () => {
-//   test('handleClick function', () => {
+//   test('render add model', async () => {
+//     container = render(<div></div>);
 //     const store = mockStore(initialState);
-//     // eslint-disable-next-line max-len
-//     // let tree: RenderResult<typeof import ('@testing-library/dom/types/queries'), HTMLElement>;
 
-//     // act(() => {
-//     //   tree = render(
-//     //     <Provider store={store}>
-//     //       <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-//     //     </Provider>,
-//     //   );
-//     // });
+//     container = render(
+//         <Provider store={store}>
+//             <ModelMoviePopup closePopup={closePopup} role="add" />
+//         </Provider>,);
+    
+//     expect(container.baseElement).toMatchSnapshot();
+//     expect(screen.getByRole('button', { name: /SUBMIT/i })).toBeInTheDocument();
+//   });
 
-//     const tree = render(
-//       <Provider store={store}>
-//         <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-//       </Provider>,
-//     );
+//   test('closeEditPopup function', () => {
+//     const store = mockStore(initialState);
+//     render(
+//         <Provider store={store}>
+//             <ModelMoviePopup closePopup={closePopup} role="add" />
+//         </Provider>,);
+
+//     const expectedActions = [{ type: 'UPDATE_STATUS_MOVIE_POPUP', payload: false }];
+
+//     fireEvent.click(screen.getByRole('button', { name: '' }));
+//     expect(closePopup).toBeCalled();
+//     expect(store.getActions()).toEqual(expectedActions);
+//   });
+
+//   test('handleSubmitEdit function', async () => {
+//     const promise = Promise.resolve();
+//     container = render(<div></div>);
+//     const store = mockStore(initialState);
+
+//     act(() => {
+//         container = render(<Provider store={store}>
+//             <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
+//         </Provider>,);
+//     });
+
+//     act(() => {
+//         fireEvent.click(screen.getByRole('button', { name: 'SAVE' }));
+//     });
 
 //     const expectedActions = [
 //       { type: 'UPDATE_MOVIE_SUCCESS', payload: movie },
 //       { type: 'UPDATE_STATUS_MOVIE_POPUP', payload: false },
 //     ];
+    
+//     await act(() => promise);
 
-//     expect(tree.baseElement).toMatchSnapshot();
-
-//     // userEvent.type(screen.getByLabelText(/first name/i), 'John');
-//     // userEvent.type(screen.getByLabelText(/last name/i), 'Dee');
-//     // userEvent.type(screen.getByLabelText(/email/i), 'john.dee@someemail.com');
-
-//     expect(screen.getByRole('button', { name: /SAVE/i })).toBeInTheDocument();
-//     // fireEvent.click(screen.getByRole('button', { name: /SAVE/i }));
-
-//     //   fireEvent.click(screen.getByText('+ ADD MOVIE'));
-//     //  fireEvent.click(screen.getByRole('button', { name: 'CONFIRM' }));
-
-//     // await waitFor(() =>
-//     //   expect(handleSubmit).toHaveBeenCalledWith(
-//     //     {
-//     //       email: 'john.dee@someemail.com',
-//     //       firstName: 'John',
-//     //       lastName: 'Dee',
-//     //     },
-//     //     expect.anything(),
-//     //   ),
-//     // );
-//     // expect(closePopup).toBeCalled();
-//     // expect(store.getActions()).toEqual(expectedActions);
-
-//     // expect(tree.baseElement).toMatchSnapshot();
-//     fireEvent.click(screen.getByRole('button', { name: 'SAVE' }));
-//     expect(closePopup).toBeCalled();
-//     // expect(store.getActions()).toEqual(expectedActions);
+//     await waitFor(() => {
+//         expect(store.getActions()).toEqual(expectedActions);
+//         expect(closePopup).toBeCalled();
+//     });
 //   });
-// });
 
-// // describe('ModelMoviePopup', () => {
-// //   const movie = {
-// //     id: 12345,
-// //     title: 'title',
-// //     release_date: '2020-01-02',
-// //     genres: ['crime'],
-// //     overview: 'overview',
-// //     runtime: 66,
-// //   };
-// //   const initialState = { moviesStore: { showPopup: true } };
-// //   const mockStore = configureStore();
-// //   const movieId = 123456;
-// //   const closePopup = jest.fn();
-// //   let store;
+  test('handleSubmitAdd function', async () => {
+    const promise = Promise.resolve();
+    container = render(<div></div>);
+    const store = mockStore(initialState);
+    const movieSubmit = {
+        title: 'film title',
+        release_date: "2021-04-30",
+        poster_path: 'https://image.tmdb.org/3kcEGBH.jpg',
+        genres: ['Action', 'Adventure'],
+        overview: 'overview',
+        runtime: 77,
+        budget: 0,
+        revenue: 0,
+        tagline: undefined,
+        vote_average: 0,
+        vote_count: 0,
+      };
 
-// //   afterEach(() => {
-// //     jest.clearAllMocks();
-// //   });
+    act(() => {
+        container = render(<Provider store={store}>
+            <ModelMoviePopup closePopup={closePopup} role="add" />
+        </Provider>,);
+    });
 
-// // //   test('handleSubmitEdit', () => {
-// // //     store = mockStore(initialState);
-// // //     const tree = render(
-// // //       <Provider store={store}>
-// // //         <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-// // //       </Provider>,
-// // //     );
+    userEvent.type(screen.getByRole('textbox', { name: 'TITLE' }), "film title");
+    userEvent.type(screen.getByRole('textbox', { name: 'OVERVIEW' }), "overview");
+    userEvent.type(screen.getByRole('spinbutton', { name: 'RUNTIME' }), '77');
+    userEvent.type(screen.getByRole('textbox', { name: 'POSTER URL' }),
+            "https://image.tmdb.org/3kcEGBH.jpg");
+    
+    userEvent.click(screen.getByRole('img'));
+    fireEvent.click(screen.getByRole('button', { name: 'Choose Friday, April 30th, 2021' }));
 
-// // //     const expectedActions = [
-// // //       { type: 'UPDATE_MOVIE_SUCCESS', payload: movie },
-// // //       { type: 'UPDATE_STATUS_MOVIE_POPUP', payload: false },
-// // //     ];
+    // fireEvent.click(screen.getByRole('Select Genre'));
 
-// // //     expect(tree.baseElement).toMatchSnapshot();
-// // //     fireEvent.click(screen.getByRole('button', { name: 'SAVE' }));
-// // //     expect(closePopup).toBeCalled();
-// // //     expect(store.getActions()).toEqual(expectedActions);
-// // //   });
+    // userEvent.click(screen.getByRole('textbox', { name: 'GENRE Select Genre' }));
+    // userEvent.selectOptions(screen.getByRole('checkbox', { name: 'Action'}), 'datatype');
+ 
+    // const input = screen.getByRole('checkbox', { name: 'Action'});
+        // fireEvent.change(screen.getByRole('checkbox', { name: 'Action'}), {
+        //     target: { setChecked: true },
+        // });
+        // fireEvent.change(screen.getByLabelText('Action', { selector: 'input' }), {
+        //     target: {datatype: true}
+        //   });
+        // fireEvent.change(screen.getByLabelText('Action', { selector: 'input' }), {
+        //     checked: 'true',
+        // });  
+        // const keyDownEvent = {
+        //     key: 'Enter',
+        // };
+        // fireEvent.keyDown(screen.getByRole('checkbox', { name: 'Action'}), keyDownEvent);
 
-// // // // eslint-disable-next-line max-len
-// // // let container: Element | DocumentFragment | RenderOptions<typeof import("@testing-library/dom/types/queries"), HTMLElement> | null;
-// // //   test('search input value display test2', async () => {
-// // //     const promise = Promise.resolve();
-// // //     // store = mockStore();
-// // //     const store = mockStore(initialState);
-// // //     container = render(<div></div>);
-// // //     const closePopup = jest.fn();
+    // userEvent.click(screen.getByRole('checkbox', { name: 'Action'}));
+    
+    // fireEvent.keyPress(input, { key: "Enter", code: 13, charCode: 13 });
+    // userEvent.click(screen.getByLabelText('Action', { selector: 'input' }));
 
-// // //     // render(
-// // //     //   <Provider store={store}>
-// // //     //     <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-// // //     //   </Provider>,
-// // //     // );
-// // //     act(() => {
-// // //         container = render(<Provider store={store}>
-// // //             <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-// // //           </Provider>,);
-// // //       });
+    
+    // userEvent.click(screen.getByRole('textbox', { name: 'GENRE Select Genre' }));
+    // userEvent.click(screen.getByLabelText('Action'));
+    // userEvent.click(screen.getByRole('textbox', { name: 'GENRE Select Genre' }));
+    // fireEvent.click(screen.getByLabelText('Drama'));
+    // fireEvent.click(screen.getByLabelText('Adventure'));
+    // userEvent.click(screen.getByLabelText('Action', { selector: 'input'}, { name: 'Action' }));
 
-// // //     expect(container.baseElement).toMatchSnapshot();
-// // //     expect(screen.getByRole('button', { name: /SAVE/i })).toBeInTheDocument();
-// // //     const button = screen.getByRole('button', { name: 'SAVE' });
+    // userEvent.click(screen.getByLabelText('Select Genre'));
 
-// // //     console.log('!!!!!!!!!');
-// // //     // console.log(button);
-// // //     // expect(screen.queryByText(/film/)).toBeNull();
-// // //     act(() => {
-// // //         // button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
-// // //         // user.click(screen.getByRole('button', { name: 'SAVE' }));
-// // //         fireEvent.click(screen.getByRole('button', { name: 'SAVE' }));
-// // //     });
-// // //     await act(() => promise);
-// // //     fireEvent.click(screen.getByRole('button', { name: 'SAVE' }));
-// // //     expect(closePopup).toBeCalled();
-// // //     await act(() => promise);
+    // fireEvent.click(screen.getByDisplayValue('Select Genre'));
 
-// // //   });
+    // screen.getByDisplayValue('15');
+    // eslint-disable-next-line max-len
+    // userEvent.click(screen.getByLabelText('Choose Saturday, May 15th, 2021', { selector: 'input' }));
+    // userEvent.click(screen.getByLabelText('Choose Saturday, May 15th, 2021'));
+    // userEvent.type(screen.getByLabelText(/RELEASE DATE/i), "2007-12-18");
+    // fireEvent.change(screen.getByRole('input', { name: 'RELEASE DATE' }), {
+    //     target: { value: "2017-12-18" },
+    // });  
+    
+    // fireEvent.change(screen.getByRole('textbox', { name: 'GENRE Select Genre' }), {
+    //     target: { value: ["crime"] },
+    // });
+    // fireEvent.change(screen.getByLabelText(/RELEASE DATE/i), {
+    //             target: { value: "2017-12-18" },
+    //         });
+    
+    userEvent.click(screen.getByRole('textbox', { name: 'GENRE Select Genre' }));
+    // userEvent.click(screen.getByText('Action'));
+    // userEvent.click(screen.getByText('Adventure'));
 
-// //   // eslint-disable-next-line prettier/prettier
-// //   // eslint-disable-next-line max-len
+// userEvent.hover(screen.getByLabelText('Action'));
+// userEvent.selectOptions(screen.getByLabelText('Action'), datatype);
+// userEvent.keyboard('Action');
 
-// // //   it('can render and update a counter', () => {
-// // //     const store = mockStore(initialState);
-// // //     // Test first render and componentDidMount
-// // //     act(() => {
-// // //         ReactDOM.render(
-// // //         <Provider store={store}>
-// // //         <ModelMoviePopup movie={movie} closePopup={closePopup} role="edit" />
-// // //       </Provider>, container);
-// // //     });
-// // //     const button = container.querySelector('button');
-// // //     const label = container.querySelector('p');
-// // //     expect(label.textContent).toBe('You clicked 0 times');
-// // //     expect(document.title).toBe('You clicked 0 times');
+    act(() => {
+       Simulate.click(screen.getByText('Action'));
+       Simulate.click(screen.getByText('Adventure'));
+       
 
-// // //     // Test second render and componentDidUpdate
-// // //     act(() => {
-// // //       button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
-// // //     });
-// // //     expect(label.textContent).toBe('You clicked 1 times');
-// // //     expect(document.title).toBe('You clicked 1 times');
-// // //   });
-// // });
+
+    // fireEvent.focus(screen.getByLabelText('Action'));
+    // fireEvent.click(screen.getByLabelText('Action'));
+    // fireEvent.focusOut(screen.getByLabelText('Action'));
+
+    // fireEvent.focus(screen.getByLabelText('Adventure'));
+    // fireEvent.click(screen.getByLabelText('Adventure'));
+    // fireEvent.focusOut(screen.getByLabelText('Adventure'));
+
+    // fireEvent.focus(screen.getByLabelText('Adventure'));
+    // fireEvent.click(screen.getByLabelText('Adventure'));
+
+
+    // fireEvent.keyDown(screen.getByLabelText('Action'), {key: 'Enter'});
+    // fireEvent.keyDown(screen.getByLabelText('Adventure'), {key: 'Enter'});
+    });
+    expect(container.baseElement).toMatchSnapshot();
+    // fireEvent.click(screen.getByRole('textbox', { name: 'GENRE Select Genre' }));
+    // act(() => {
+        // fireEvent.keyDown(screen.getByLabelText('Adventure'), {key: 'Enter'});
+    // fireEvent.focus(screen.getByLabelText('Action'));
+    // fireEvent.click(screen.getByLabelText('Action'));
+    // fireEvent.focusOut(screen.getByLabelText('Action'));
+
+    // fireEvent.focus(screen.getByLabelText('Adventure'));
+    // fireEvent.click(screen.getByLabelText('Adventure'));
+    // fireEvent.focusOut(screen.getByLabelText('Adventure'));
+
+    // fireEvent.focus(screen.getByLabelText('Adventure'));
+    // fireEvent.click(screen.getByLabelText('Adventure'));
+
+
+    // fireEvent.keyDown(screen.getByLabelText('Action'), {key: 'Enter'});
+    // fireEvent.keyDown(screen.getByLabelText('Adventure'), {key: 'Enter'});
+    // });
+
+    // act(() => {
+    //     userEvent.click(screen.getByRole('textbox', { name: 'GENRE Select Genre' }));
+    //     fireEvent.focusIn(screen.getByLabelText('Adventure'));
+    //     fireEvent.click(screen.getByLabelText('Adventure'));
+    //     fireEvent.focusOut(screen.getByLabelText('Adventure'));
+    
+    //     // fireEvent.keyDown(screen.getByLabelText('Action'), {key: 'Enter'});
+    //     // fireEvent.keyDown(screen.getByLabelText('Adventure'), {key: 'Enter'});
+    //     });
+
+    
+        // fireEvent.keyDown(screen.getByLabelText('Action'), {key: 'ArrowDown'});
+        // fireEvent.focus(screen.getByLabelText('Adventure'));
+        // fireEvent.focusIn(screen.getByLabelText('Adventure'));
+
+        // fireEvent.keyDown(screen.getByLabelText('Adventure'), {key: 'Enter'});
+
+    
+    act(() => {
+        
+        
+        
+        fireEvent.click(screen.getByRole('button', { name: 'SUBMIT' }));
+    });
+    
+    const expectedActions = [
+      { type: 'FETCH_ADD_MOVIE_SUCCESS', payload: movieSubmit },
+    ];   
+    await act(() => promise);
+    await waitFor(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+        expect(closePopup).toBeCalled();
+    });
+  });
+});

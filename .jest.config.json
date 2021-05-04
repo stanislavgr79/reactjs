@@ -7,8 +7,18 @@
     "clearMocks": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-        "src/**/*.{js,jsx,ts,tsx}",
+        "src/**/*.{jsx,ts,tsx}",
+        "!index.*",
         "!<rootDir>/node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+        "node_modules",
+        "test-config",
+        "interfaces",
+        "jestGlobalMocks.ts",
+        ".module.ts",
+        "index.ts",
+        ".mock.ts"
     ],
     "coverageReporters": ["text", "json", "html"],
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
