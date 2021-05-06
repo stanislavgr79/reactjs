@@ -322,7 +322,7 @@ describe('movies-reducer', () => {
     const initialState: types.MoviesState = {
       movies: {
         totalAmount: 0,
-        data: [],
+        data: [movie],
         offset: 0,
         limit: 6,
       },
@@ -336,20 +336,64 @@ describe('movies-reducer', () => {
     expect(
       reducer(initialState, {
         type: types.UPDATE_SELECTED_MOVIE_ID,
-        payload: 5,
+        payload: 0,
       }),
     ).toEqual({
       movies: {
         totalAmount: 0,
-        data: [],
+        data: [movie],
         offset: 0,
         limit: 6,
       },
       dataStatus: 'idle',
       error: null,
       showPopup: false,
-      selectedMovieId: 5,
+      selectedMovieId: 0,
       movie: undefined,
+      newPage: false,
+    });
+  });
+
+  it('should handle UPDATE_SELECTED_MOVIE_ID', () => {
+    const movieExpected = {
+      id: 98765,
+      title: 'title',
+      release_date: '21-01-02',
+      genres: ['CRIME'],
+      overview: 'overview',
+      runtime: 66,
+    };
+    const initialState: types.MoviesState = {
+      movies: {
+        totalAmount: 0,
+        data: [movie, movie, movieExpected],
+        offset: 0,
+        limit: 6,
+      },
+      dataStatus: 'success',
+      error: null,
+      showPopup: false,
+      selectedMovieId: 2,
+      movie: undefined,
+      newPage: true,
+    };
+    expect(
+      reducer(initialState, {
+        type: types.UPDATE_SELECTED_MOVIE_ID,
+        payload: 98765,
+      }),
+    ).toEqual({
+      movies: {
+        totalAmount: 0,
+        data: [movie, movie, movieExpected],
+        offset: 0,
+        limit: 6,
+      },
+      dataStatus: 'success',
+      error: null,
+      showPopup: false,
+      selectedMovieId: 98765,
+      movie: movieExpected,
       newPage: false,
     });
   });

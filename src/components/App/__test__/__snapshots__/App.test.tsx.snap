@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App render intro page with \`/\` 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="intro"
+      />
+    </div>
+  </div>
+</body>
+`;
+
+exports[`App render intro page with \`/movies/12345\` 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="intro"
+      />
+    </div>
+  </div>
+</body>
+`;
+
+exports[`App render intro page with \`/movies\` 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="intro"
+      />
+    </div>
+  </div>
+</body>
+`;
+
+exports[`App render noMatch 404 page with \`/404\` 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="noMatch"
+      />
+    </div>
+  </div>
+</body>
+`;
+
+exports[`App render noMatch 404 page with bad url 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="noMatch"
+      />
+    </div>
+  </div>
+</body>
+`;

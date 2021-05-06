@@ -11,12 +11,7 @@ exports[`Header click add button 1`] = `
       >
         <p
           class="site_name"
-        >
-          <strong>
-            netflix
-          </strong>
-          roulette
-        </p>
+        />
         <button
           class="btn button btn_addMovie"
           id=""
@@ -24,216 +19,6 @@ exports[`Header click add button 1`] = `
         >
           + ADD MOVIE
         </button>
-        <div
-          class="popup_model"
-        >
-          <div
-            class="model_content container-md"
-          >
-            <p
-              class="site_name"
-            >
-              <strong>
-                netflix
-              </strong>
-              roulette
-            </p>
-            <div
-              class="container add_movie"
-            >
-              <div
-                class="container-sm form"
-              >
-                <div
-                  class="page_close"
-                >
-                  <button
-                    class="btn button btn_close"
-                    id=""
-                    type="button"
-                  />
-                </div>
-                <div
-                  class="page_title"
-                >
-                  ADD MOVIE
-                </div>
-                <form
-                  class="movie_form"
-                >
-                  <label>
-                    TITLE
-                  </label>
-                  <input
-                    class="input simple_input"
-                    name="title"
-                    placeholder="Write Title"
-                    type="text"
-                    value=""
-                  />
-                  <label>
-                    RELEASE DATE
-                  </label>
-                  <div
-                    class="react-datepicker-wrapper"
-                  >
-                    <div
-                      class="react-datepicker__input-container"
-                    >
-                      <input
-                        class="simple_input"
-                        name="release_date"
-                        placeholder="Select Date"
-                        readonly=""
-                        value=""
-                      />
-                      <img
-                        alt=""
-                        class="image_calendar"
-                        src="[object Object]"
-                      />
-                    </div>
-                  </div>
-                  <label>
-                    POSTER URL
-                  </label>
-                  <input
-                    class="input simple_input"
-                    name="poster_path"
-                    placeholder="Poster URL here"
-                    type="text"
-                    value=""
-                  />
-                  <label>
-                    GENRE
-                  </label>
-                  <div
-                    class="select_genres css-2b097c-container"
-                  >
-                    <div
-                      class=" css-yk16xz-control"
-                    >
-                      <div
-                        class=" css-g1d714-ValueContainer"
-                      >
-                        <div
-                          class=" css-1wa3eu0-placeholder"
-                        >
-                          Select Genre
-                        </div>
-                        <div
-                          class="css-b8ldur-Input"
-                        >
-                          <div
-                            class=""
-                            style="display: inline-block;"
-                          >
-                            <input
-                              aria-autocomplete="list"
-                              autocapitalize="none"
-                              autocomplete="off"
-                              autocorrect="off"
-                              id="react-select-2-input"
-                              spellcheck="false"
-                              style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
-                              tabindex="0"
-                              type="text"
-                              value=""
-                            />
-                            <div
-                              style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: -webkit-small-control; letter-spacing: normal; text-transform: none;"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=" css-1hb7zxy-IndicatorsContainer"
-                      >
-                        <span
-                          class=" css-1okebmr-indicatorSeparator"
-                        />
-                        <div
-                          aria-hidden="true"
-                          class=" css-tlfecz-indicatorContainer"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="css-tj5bde-Svg"
-                            focusable="false"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            width="20"
-                          >
-                            <path
-                              d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <input
-                        name="genres"
-                        type="hidden"
-                      />
-                    </div>
-                  </div>
-                  <label>
-                    OVERVIEW
-                  </label>
-                  <input
-                    class="input simple_input"
-                    name="overview"
-                    placeholder="Overview here"
-                    type="text"
-                    value=""
-                  />
-                  <label>
-                    RUNTIME
-                  </label>
-                  <input
-                    class="input simple_input"
-                    min="0"
-                    name="runtime"
-                    placeholder="Runtime here"
-                    type="number"
-                    value=""
-                  />
-                  <div
-                    class="button_section"
-                  >
-                    <button
-                      class="btn button btn_submit"
-                      id="add_movie_btn_submit"
-                      type="submit"
-                    >
-                      SUBMIT
-                    </button>
-                    <button
-                      class="btn button btn_reset"
-                      id="add_movie_btn_reset"
-                      type="reset"
-                    >
-                      RESET
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div
-              class="footer"
-            >
-              <p
-                class="site_name"
-              >
-                <strong>
-                  netflix
-                </strong>
-                roulette
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
       <section
         class="header_search container-md"
@@ -254,7 +39,66 @@ exports[`Header click add button 1`] = `
               name="search"
               placeholder="What do you want to watch?"
               type="text"
-              value=""
+              value="qwerty"
+            />
+            <button
+              class="btn button btn_search"
+              id=""
+              type="submit"
+            >
+              SEARCH
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Header click add button 2`] = `
+<body>
+  <div>
+    <div
+      class="header"
+    >
+      <section
+        class="header_top container-md"
+      >
+        <p
+          class="site_name"
+        />
+        <button
+          class="btn button btn_addMovie"
+          id=""
+          type="button"
+        >
+          + ADD MOVIE
+        </button>
+        <div
+          class="model_movie_popup"
+        />
+      </section>
+      <section
+        class="header_search container-md"
+      >
+        <div
+          class="search_title"
+        >
+          FIND YOUR MOVIE
+        </div>
+        <form>
+          <div
+            class="search_wraper"
+          >
+            <input
+              autocomplete="off"
+              class="input"
+              id="search"
+              name="search"
+              placeholder="What do you want to watch?"
+              type="text"
+              value="qwerty"
             />
             <button
               class="btn button btn_search"
@@ -282,12 +126,7 @@ exports[`Header click search button 1`] = `
       >
         <p
           class="site_name"
-        >
-          <strong>
-            netflix
-          </strong>
-          roulette
-        </p>
+        />
         <button
           class="btn button btn_addMovie"
           id=""
@@ -343,12 +182,63 @@ exports[`Header handleChange callback 1`] = `
       >
         <p
           class="site_name"
+        />
+        <button
+          class="btn button btn_addMovie"
+          id=""
+          type="button"
         >
-          <strong>
-            netflix
-          </strong>
-          roulette
-        </p>
+          + ADD MOVIE
+        </button>
+      </section>
+      <section
+        class="header_search container-md"
+      >
+        <div
+          class="search_title"
+        >
+          FIND YOUR MOVIE
+        </div>
+        <form>
+          <div
+            class="search_wraper"
+          >
+            <input
+              autocomplete="off"
+              class="input"
+              id="search"
+              name="search"
+              placeholder="What do you want to watch?"
+              type="text"
+              value="film"
+            />
+            <button
+              class="btn button btn_search"
+              id=""
+              type="submit"
+            >
+              SEARCH
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Header search input value display 1`] = `
+<body>
+  <div>
+    <div
+      class="header"
+    >
+      <section
+        class="header_top container-md"
+      >
+        <p
+          class="site_name"
+        />
         <button
           class="btn button btn_addMovie"
           id=""
@@ -394,63 +284,113 @@ exports[`Header handleChange callback 1`] = `
 `;
 
 exports[`Header snapshot renders 1`] = `
-<div
-  className="header"
->
-  <section
-    className="header_top container-md"
-  >
-    <p
-      className="site_name"
-    >
-      <strong>
-        netflix
-      </strong>
-      roulette
-    </p>
-    <button
-      className="btn button btn_addMovie"
-      id=""
-      onClick={[Function]}
-      type="button"
-    >
-      + ADD MOVIE
-    </button>
-  </section>
-  <section
-    className="header_search container-md"
-  >
+<body>
+  <div>
     <div
-      className="search_title"
+      class="header"
     >
-      FIND YOUR MOVIE
-    </div>
-    <form
-      onSubmit={[Function]}
-    >
-      <div
-        className="search_wraper"
+      <section
+        class="header_top container-md"
       >
-        <input
-          autoComplete="off"
-          className="input"
-          id="search"
-          name="search"
-          onChange={[Function]}
-          placeholder="What do you want to watch?"
-          type="text"
-          value=""
+        <p
+          class="site_name"
         />
         <button
-          className="btn button btn_search"
+          class="btn button btn_addMovie"
           id=""
-          onClick={[Function]}
-          type="submit"
+          type="button"
         >
-          SEARCH
+          + ADD MOVIE
         </button>
-      </div>
-    </form>
-  </section>
-</div>
+      </section>
+      <section
+        class="header_search container-md"
+      >
+        <div
+          class="search_title"
+        >
+          FIND YOUR MOVIE
+        </div>
+        <form>
+          <div
+            class="search_wraper"
+          >
+            <input
+              autocomplete="off"
+              class="input"
+              id="search"
+              name="search"
+              placeholder="What do you want to watch?"
+              type="text"
+              value=""
+            />
+            <button
+              class="btn button btn_search"
+              id=""
+              type="submit"
+            >
+              SEARCH
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Header snapshot renders with search 1`] = `
+<body>
+  <div>
+    <div
+      class="header"
+    >
+      <section
+        class="header_top container-md"
+      >
+        <p
+          class="site_name"
+        />
+        <button
+          class="btn button btn_addMovie"
+          id=""
+          type="button"
+        >
+          + ADD MOVIE
+        </button>
+      </section>
+      <section
+        class="header_search container-md"
+      >
+        <div
+          class="search_title"
+        >
+          FIND YOUR MOVIE
+        </div>
+        <form>
+          <div
+            class="search_wraper"
+          >
+            <input
+              autocomplete="off"
+              class="input"
+              id="search"
+              name="search"
+              placeholder="What do you want to watch?"
+              type="text"
+              value="qwerty"
+            />
+            <button
+              class="btn button btn_search"
+              id=""
+              type="submit"
+            >
+              SEARCH
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
 `;

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
@@ -52,7 +53,7 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
       dispatch(
         fetchUpdateMovie({
           ...form,
-          tagline: form.tagline?.length === 0 ? 'Out description' : form.tagline,
+          tagline: form.tagline == undefined ? 'Out description' : form.tagline,
         }),
       );
       dispatch(updateShowPopup(false));
@@ -70,7 +71,7 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
         genres: form.genres,
         overview: form.overview,
         runtime: form.runtime,
-        tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+        tagline: 'Out description',
         vote_average: 0,
         vote_count: 0,
         budget: 0,
@@ -93,6 +94,7 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
       genres: form.genres,
       overview: form.overview,
       runtime: form.runtime,
+      tagline: form.tagline,
     },
     validationSchema: Yup.object({
       title: Yup.string()
@@ -104,10 +106,9 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
         'Not valide date stamp',
       ),
       poster_path: Yup.string()
-        // .matches(new RegExp('^.+(\\.)(jpg|jpeg|png)$'), 'Must be a Picture')
+        .matches(new RegExp('^.+(\\.)(jpg|jpeg|png)$'), 'Must be a Picture')
         .required('Required'),
-      genres: Yup.array().required('Required'),
-      // genres: Yup.array().min(1, 'Must be one or more genres').required('Required'),
+      genres: Yup.array().min(1, 'Must be one or more genres').required('Required'),
       overview: Yup.string().min(6, 'Must be 6 characters or more'),
       runtime: Yup.number()
         .positive('time must be greater than zero')
@@ -143,7 +144,7 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
                       type="text"
                       name="id"
                       className="simple_input input_readonly"
-                      value={formik.values?.id}
+                      value={formik.values.id}
                       onChange={formik.handleChange}
                       readonly={true}
                     />
@@ -175,7 +176,7 @@ export default function ModelMoviePopup(props: IProps): JSX.Element {
                     }}
                   />
                 </label>
-                {formik.touched.release_date && formik.errors.release_date && (
+                {formik.errors.release_date && formik.errors.release_date && (
                   <div>{formik.errors.release_date}</div>
                 )}
                 <label>

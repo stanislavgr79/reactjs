@@ -1,5 +1,235 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`NavBar snapshot UPDATE_SORT_ORDER ASC 1`] = `
+<body>
+  <div>
+    <div
+      class="nav-bar container-md"
+    >
+      <div
+        class="side-genre"
+      >
+        <div
+          class="sidebar-list-nav"
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class=""
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
+      </div>
+      <div
+        class="side-sort "
+      >
+        <label>
+          SORT BY
+        </label>
+        <div
+          class="sidebar-select-nav"
+        >
+          <select
+            class="sidebar-select-nav selected-title"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
+        <div
+          class="sort_order"
+        >
+          <button
+            class="btn button btn_arrow arrow_down"
+            id=""
+            title="Change sort order"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`NavBar snapshot UPDATE_SORT_ORDER DESC 1`] = `
+<body>
+  <div>
+    <div
+      class="nav-bar container-md"
+    >
+      <div
+        class="side-genre"
+      >
+        <div
+          class="sidebar-list-nav"
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class=""
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
+      </div>
+      <div
+        class="side-sort "
+      >
+        <label>
+          SORT BY
+        </label>
+        <div
+          class="sidebar-select-nav"
+        >
+          <select
+            class="sidebar-select-nav selected-title"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
+        <div
+          class="sort_order"
+        >
+          <button
+            class="btn button btn_arrow arrow_up"
+            id=""
+            title="Change sort order"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
 exports[`NavBar snapshot renders 1`] = `
 <body>
   <div>
@@ -11,7 +241,47 @@ exports[`NavBar snapshot renders 1`] = `
       >
         <div
           class="sidebar-list-nav"
-        />
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class="selected"
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
       </div>
       <div
         class="side-sort "
@@ -21,7 +291,274 @@ exports[`NavBar snapshot renders 1`] = `
         </label>
         <div
           class="sidebar-select-nav"
-        />
+        >
+          <select
+            class="sidebar-select-nav selected-title"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
+        <div
+          class="sort_order"
+        >
+          <button
+            class="btn button btn_arrow arrow_down"
+            id=""
+            title="Change sort order"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`NavBar snapshot renders button class: arrow_down 1`] = `
+<body>
+  <div>
+    <div
+      class="nav-bar container-md"
+    >
+      <div
+        class="side-genre"
+      >
+        <div
+          class="sidebar-list-nav"
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class=""
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
+      </div>
+      <div
+        class="side-sort "
+      >
+        <label>
+          SORT BY
+        </label>
+        <div
+          class="sidebar-select-nav"
+        >
+          <select
+            class="sidebar-select-nav selected-title"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
+        <div
+          class="sort_order"
+        >
+          <button
+            class="btn button btn_arrow arrow_up"
+            id=""
+            title="Change sort order"
+            type="button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`NavBar snapshot renders button class: arrow_down 2`] = `
+<body>
+  <div>
+    <div
+      class="nav-bar container-md"
+    >
+      <div
+        class="side-genre"
+      >
+        <div
+          class="sidebar-list-nav"
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class=""
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
+      </div>
+      <div
+        class="side-sort "
+      >
+        <label>
+          SORT BY
+        </label>
+        <div
+          class="sidebar-select-nav"
+        >
+          <select
+            class="sidebar-select-nav selected-title"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
         <div
           class="sort_order"
         >
@@ -49,7 +586,47 @@ exports[`NavBar snapshot renders button class: arrow_up 1`] = `
       >
         <div
           class="sidebar-list-nav"
-        />
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class="selected"
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
       </div>
       <div
         class="side-sort "
@@ -59,7 +636,44 @@ exports[`NavBar snapshot renders button class: arrow_up 1`] = `
         </label>
         <div
           class="sidebar-select-nav"
-        />
+        >
+          <select
+            class="sidebar-select-nav selected-vote_average"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
         <div
           class="sort_order"
         >
@@ -87,7 +701,47 @@ exports[`NavBar snapshot renders button class: arrow_up 2`] = `
       >
         <div
           class="sidebar-list-nav"
-        />
+        >
+          <form
+            class="side-genre-list"
+          >
+            <option
+              class="selected"
+              id="-0"
+              value=""
+            >
+              ALL
+            </option>
+            <option
+              class=""
+              id="documentary-1"
+              value="documentary"
+            >
+              DOCUMENTARY
+            </option>
+            <option
+              class=""
+              id="comedy-2"
+              value="comedy"
+            >
+              COMEDY
+            </option>
+            <option
+              class=""
+              id="horror-3"
+              value="horror"
+            >
+              HORROR
+            </option>
+            <option
+              class=""
+              id="crime-4"
+              value="crime"
+            >
+              CRIME
+            </option>
+          </form>
+        </div>
       </div>
       <div
         class="side-sort "
@@ -97,7 +751,44 @@ exports[`NavBar snapshot renders button class: arrow_up 2`] = `
         </label>
         <div
           class="sidebar-select-nav"
-        />
+        >
+          <select
+            class="sidebar-select-nav selected-vote_average"
+          >
+            <option
+              class="c-pointer"
+              id="title-0"
+              role="button"
+              value="title"
+            >
+              TITLE
+            </option>
+            <option
+              class="c-pointer"
+              id="release_date-1"
+              role="button"
+              value="release_date"
+            >
+              RELEASE
+            </option>
+            <option
+              class="c-pointer"
+              id="runtime-2"
+              role="button"
+              value="runtime"
+            >
+              RUNTIME
+            </option>
+            <option
+              class="c-pointer"
+              id="vote_average-3"
+              role="button"
+              value="vote_average"
+            >
+              RATING
+            </option>
+          </select>
+        </div>
         <div
           class="sort_order"
         >

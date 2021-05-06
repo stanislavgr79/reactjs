@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoviesList render data Loading 1`] = `
+<body>
+  <div>
+    <div
+      class="loader"
+    >
+      Loading...
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MoviesList render movies founded 1`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies_finded"
+    >
+      <label>
+        <strong>
+          1
+        </strong>
+         movies found
+      </label>
+    </div>
+    <div
+      class="RenderMoviesFounded"
+    />
+  </div>
+</body>
+`;
+
+exports[`MoviesList render movies not founded 1`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies_finded"
+    >
+      <label>
+        <strong>
+          0
+        </strong>
+         movies found
+      </label>
+    </div>
+    <div
+      class="movies_not_finded"
+    >
+      Movies not finded
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MoviesList render movies not founded 2`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies_finded"
+    >
+      <label>
+        <strong>
+          0
+        </strong>
+         movies found
+      </label>
+    </div>
+    <div
+      class="movies_not_finded"
+    >
+      Movies not finded
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MoviesList render newPage 1`] = `
+<body>
+  <div>
+    <div
+      class="new-page"
+    >
+      <div
+        class="new-page-container"
+      >
+        new page
+        /
+      </div>
+      ;
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MoviesList render redirect to 404  1`] = `
+<body>
+  <div>
+    <div
+      class="NoMatch"
+    />
+  </div>
+</body>
+`;

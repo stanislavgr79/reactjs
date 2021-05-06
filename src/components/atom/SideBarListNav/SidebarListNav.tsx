@@ -26,9 +26,7 @@ export default function SidebarListNav({ defaultValue, updateCurrentGenre }: IPr
   );
 
   useEffect(() => {
-    sideGenre[selectedIndexListNav] !== Genres.ALL
-      ? updateCurrentGenre(sideGenre[selectedIndexListNav])
-      : updateCurrentGenre(Genres.ALL);
+    updateCurrentGenre(sideGenre[selectedIndexListNav]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedIndexListNav]);
 

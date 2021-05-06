@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RenderMoviesFounded render 1`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies-wraper"
+    >
+      <div
+        class="row row-cols-3"
+      >
+        <div
+          class="col movie-unit"
+        >
+          <div
+            class="movie_holder"
+          >
+            <div
+              class="MovieCard"
+            />
+            <img
+              class="sub_menu_icon first"
+              src="[object Object]"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`RenderMoviesFounded render MovieMenuPopup 1`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies-wraper"
+    >
+      <div
+        class="row row-cols-3"
+      >
+        <div
+          class="col movie-unit"
+        >
+          <div
+            class="movie_holder"
+          >
+            <div
+              class="MovieCard"
+            />
+            <div
+              class="MovieMenuPopup"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`RenderMoviesFounded render MovieMenuPopup2 1`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies-wraper"
+    >
+      <div
+        class="row row-cols-3"
+      >
+        <div
+          class="col movie-unit"
+        >
+          <div
+            class="movie_holder"
+          >
+            <div
+              class="MovieCard"
+            />
+            <img
+              class="sub_menu_icon second"
+              src="[object Object]"
+            />
+          </div>
+        </div>
+        <div
+          class="col movie-unit"
+        >
+          <div
+            class="movie_holder"
+          >
+            <div
+              class="MovieCard"
+            />
+            <div
+              class="MovieMenuPopup"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`RenderMoviesFounded render MovieMenuPopup2 2`] = `
+<body>
+  <div>
+    <div
+      class="container-md movies-wraper"
+    >
+      <div
+        class="row row-cols-3"
+      >
+        <div
+          class="col movie-unit"
+        >
+          <div
+            class="movie_holder"
+          >
+            <div
+              class="MovieCard"
+            />
+            <img
+              class="sub_menu_icon first"
+              src="[object Object]"
+            />
+          </div>
+        </div>
+        <div
+          class="col movie-unit"
+        >
+          <div
+            class="movie_holder"
+          >
+            <div
+              class="MovieCard"
+            />
+            <img
+              class="sub_menu_icon first"
+              src="[object Object]"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

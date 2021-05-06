@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailMovieTop resetActiveMovieId function with empty query in search value 1`] = `
+<body>
+  <div>
+    <section
+      class="movie_detail"
+    >
+      <div
+        class="model_content container-md"
+      >
+        <div
+          class="siteName"
+        />
+        <div
+          class="section_icon-close"
+        >
+          <button
+            class="btn button btn_close icon_small"
+            id=""
+            type="button"
+          />
+        </div>
+        <div
+          class="detail_movie-card"
+        >
+          <div
+            class="section_image"
+          >
+            <img
+              alt="film title"
+              class="img-fluid"
+              src="[object Object]"
+            />
+          </div>
+          <div
+            class="section-detail"
+          >
+            <div
+              class="title_reiting"
+            >
+              <div
+                class="movie-title"
+              >
+                film title
+              </div>
+              <div
+                class="vote_average"
+              >
+                5.5
+              </div>
+            </div>
+            <div
+              class="tagline"
+            >
+              0
+            </div>
+            <div
+              class="release_runtime"
+            >
+              <div
+                class="release"
+              >
+                2020
+              </div>
+              <div
+                class="runtime"
+              >
+                66
+                 min
+              </div>
+            </div>
+            <div
+              class="movie_overview"
+            >
+              overview
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+`;
+
+exports[`DetailMovieTop resetActiveMovieId function with query in search value 1`] = `
+<body>
+  <div>
+    <section
+      class="movie_detail"
+    >
+      <div
+        class="model_content container-md"
+      >
+        <div
+          class="siteName"
+        />
+        <div
+          class="section_icon-close"
+        >
+          <button
+            class="btn button btn_close icon_small"
+            id=""
+            type="button"
+          />
+        </div>
+        <div
+          class="detail_movie-card"
+        >
+          <div
+            class="section_image"
+          >
+            <img
+              alt="film title"
+              class="img-fluid"
+              src="[object Object]"
+            />
+          </div>
+          <div
+            class="section-detail"
+          >
+            <div
+              class="title_reiting"
+            >
+              <div
+                class="movie-title"
+              >
+                film title
+              </div>
+              <div
+                class="vote_average"
+              >
+                5.5
+              </div>
+            </div>
+            <div
+              class="tagline"
+            >
+              0
+            </div>
+            <div
+              class="release_runtime"
+            >
+              <div
+                class="release"
+              >
+                2020
+              </div>
+              <div
+                class="runtime"
+              >
+                66
+                 min
+              </div>
+            </div>
+            <div
+              class="movie_overview"
+            >
+              overview
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+`;

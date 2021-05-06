@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorBoundary should render children 1`] = `
+<body>
+  <div>
+    children
+  </div>
+</body>
+`;
+
+exports[`ErrorBoundary should render children 2`] = `
+<div
+  className="error-screen"
+>
+  <h2>
+    An error has occured
+  </h2>
+  <details
+    style={
+      Object {
+        "whiteSpace": "pre-wrap",
+      }
+    }
+  >
+    test error message
+    <br />
+  </details>
+</div>
+`;

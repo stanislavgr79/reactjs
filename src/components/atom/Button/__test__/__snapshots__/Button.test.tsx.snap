@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button render 1`] = `
+<body>
+  <div>
+    <button
+      class="array of classes"
+      data-type="test-sharing"
+      id="test-id"
+      title="test-title"
+      type="submit"
+    >
+      test-label
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button render with out \`className\` 1`] = `
+<body>
+  <div>
+    <button
+      class="array of classes"
+      data-type="test-sharing"
+      id="test-id"
+      title="test-title"
+      type="button"
+    >
+      test-label
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button render with out \`type\`, it must be \`button\` 1`] = `
+<body>
+  <div>
+    <button
+      class="array of classes"
+      data-type="test-sharing"
+      id="test-id"
+      title="test-title"
+      type="button"
+    >
+      test-label
+    </button>
+  </div>
+</body>
+`;

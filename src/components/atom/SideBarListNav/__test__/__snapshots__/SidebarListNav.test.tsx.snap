@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SidebarListNav render 1`] = `
+<body>
+  <div>
+    <div
+      class="sidebar-list-nav"
+    >
+      <form
+        class="side-genre-list"
+      >
+        <option
+          class="selected"
+          id="-0"
+          value=""
+        >
+          ALL
+        </option>
+        <option
+          class=""
+          id="documentary-1"
+          value="documentary"
+        >
+          DOCUMENTARY
+        </option>
+        <option
+          class=""
+          id="comedy-2"
+          value="comedy"
+        >
+          COMEDY
+        </option>
+        <option
+          class=""
+          id="horror-3"
+          value="horror"
+        >
+          HORROR
+        </option>
+        <option
+          class=""
+          id="crime-4"
+          value="crime"
+        >
+          CRIME
+        </option>
+      </form>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`SidebarListNav render Genres.CRIME select 1`] = `
+<body>
+  <div>
+    <div
+      class="sidebar-list-nav"
+    >
+      <form
+        class="side-genre-list"
+      >
+        <option
+          class=""
+          id="-0"
+          value=""
+        >
+          ALL
+        </option>
+        <option
+          class=""
+          id="documentary-1"
+          value="documentary"
+        >
+          DOCUMENTARY
+        </option>
+        <option
+          class=""
+          id="comedy-2"
+          value="comedy"
+        >
+          COMEDY
+        </option>
+        <option
+          class=""
+          id="horror-3"
+          value="horror"
+        >
+          HORROR
+        </option>
+        <option
+          class="selected"
+          id="crime-4"
+          value="crime"
+        >
+          CRIME
+        </option>
+      </form>
+    </div>
+  </div>
+</body>
+`;
