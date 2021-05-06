@@ -1,3 +1,3 @@
-import NoMatch from './NoMatch';
+import NewPage from './NewPage';
 
-export default NoMatch;
+export default NewPage;

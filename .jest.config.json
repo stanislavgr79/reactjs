@@ -5,15 +5,31 @@
         "<rootDir>/src/jest.setup.ts"
     ],
     "clearMocks": true,
-    "collectCoverage": false,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+        "src/**/*.{jsx,ts,tsx}",
+        "!index.*",
+        "!<rootDir>/node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+        "node_modules",
+        "test-config",
+        "interfaces",
+        "jestGlobalMocks.ts",
+        ".module.ts",
+        "index.ts",
+        ".mock.ts"
+    ],
+    "coverageReporters": ["text", "json", "html"],
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
     "preset": "ts-jest",
     "transform": {
         "^.+\\.(ts|tsx)?$": "ts-jest",
-        "^.+\\.(js|jsx)$": "babel-jest"
+        "^.+\\.(js|jsx)$": "babel-jest",
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
     },
     "moduleNameMapper": {
-        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js",
         "\\.(css|less|scss|sass)$": "identity-obj-proxy"
     }
 }

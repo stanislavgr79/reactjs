@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieCard render 1`] = `
+<body>
+  <div>
+    <div
+      class="movie-card"
+    >
+      <div
+        class="movie-image"
+      >
+        <a
+          href="/movies/12345"
+        >
+          <img
+            alt="film title"
+            class="img-fluid"
+            src=""
+          />
+        </a>
+      </div>
+      <div
+        class="movie-props"
+      >
+        <div
+          class="movie-info"
+        >
+          <div
+            class="movie-title"
+          >
+            film title
+          </div>
+          <div
+            class="movie-releaseDate"
+          >
+            2020
+          </div>
+        </div>
+        <div
+          class="movie-genre"
+        >
+          crime
+        </div>
+      </div>
+    </div>
+    ,
+  </div>
+</body>
+`;

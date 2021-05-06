@@ -7,34 +7,27 @@ interface Props {
 interface ErrorState {
   error?: Error;
   errorInfo?: React.ErrorInfo;
+  hasError?: boolean;
 }
 
 class ErrorBoundary extends React.Component<Props, ErrorState> {
   constructor(props: Props) {
     super(props);
-    this.state = { error: undefined, errorInfo: undefined };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    return { error };
+    this.state = { hasError: false, error: undefined, errorInfo: undefined };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     this.setState({
       error: error,
       errorInfo: errorInfo,
+      hasError: true,
     });
-    // You can also log error messages to an error reporting service here
-    // eslint-disable-next-line no-console
-    console.log('error: ' + error);
-    // eslint-disable-next-line no-console
-    console.log('errorInfo: ' + JSON.stringify(errorInfo));
-    // eslint-disable-next-line no-console
-    console.log('componentStack: ' + errorInfo.componentStack);
   }
 
   render() {
-    if (this.state.error) {
+    if (this.state.hasError) {
+      // eslint-disable-next-line no-console
+      console.log(this.state.errorInfo);
       return (
         <div className="error-screen">
           <h2>An error has occured</h2>

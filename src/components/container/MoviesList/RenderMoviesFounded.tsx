@@ -35,13 +35,13 @@ export default function RenderMoviesFounded({ movies }: IProp): JSX.Element {
                 {!showSubMenu ? (
                   <img
                     src={image}
-                    className="sub_menu_icon"
+                    className="sub_menu_icon first"
                     onClick={() => updateShowSubMenuWithId(Number(movie.id))}
                   />
                 ) : activeMovieId == movie.id ? (
                   <MovieMenuPopup movie={movie} closeMenu={updateShowSubMenu} />
                 ) : (
-                  <img src={image} className="sub_menu_icon" onClick={updateShowSubMenu} />
+                  <img src={image} className="sub_menu_icon second" onClick={updateShowSubMenu} />
                 )}
               </div>
             </div>

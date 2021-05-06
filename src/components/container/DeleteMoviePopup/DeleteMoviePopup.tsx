@@ -34,7 +34,12 @@ export default function DeleteMoviePopup({ movieId, closePopup }: IProps): JSX.E
         <div className="container delete_movie">
           <div className="container form">
             <div className="section_icon-close">
-              <Button buttonType="button" className="btn_close" onClick={handleClick} />
+              <Button
+                buttonType="button"
+                id="delete_movie_btn_close"
+                className="btn_close"
+                onClick={handleClick}
+              />
             </div>
             <div className="page_title">DELETE MOVIE</div>
             <div className="page_description">Are you sure want to delete this movie?</div>

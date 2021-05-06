@@ -41,3 +41,5 @@ export const reducerSideBar = (state = initialState, action: SidebarActionTypes)
       return state;
   }
 };
+
+export default reducerSideBar;

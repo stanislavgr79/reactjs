@@ -16,23 +16,17 @@ import {
 import './Header.scoped.less';
 import { useHistory, useLocation } from 'react-router-dom';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export default function Header(): JSX.Element {
   const history = useHistory();
   const dispatch = useDispatch();
-  const search = useQuery().get('search');
-  const [searchValue, setSearchValue] = useState('');
+  const searchParams = useLocation().search;
+  const [searchValue, setSearchValue] = useState(searchParams);
   const [showPopupAdd, setShowPopupAdd] = useState(false);
 
   useEffect(() => {
-    if (search) {
-      setSearchValue(search);
-      dispatch(updateSearchValue(search));
-    }
-  }, [dispatch, search]);
+    dispatch(updateSearchValue(searchValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, searchValue]);
 
   const togglePopup = useCallback(() => {
     setShowPopupAdd(!showPopupAdd);

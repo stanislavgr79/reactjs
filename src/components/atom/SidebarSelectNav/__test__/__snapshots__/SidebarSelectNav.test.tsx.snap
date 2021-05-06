@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SidebarSelectNav render 1`] = `
+<body>
+  <div>
+    <div
+      class="sidebar-select-nav"
+    >
+      <select
+        class="sidebar-select-nav selected-title"
+      >
+        <option
+          class="c-pointer"
+          id="title-0"
+          role="button"
+          value="title"
+        >
+          TITLE
+        </option>
+        <option
+          class="c-pointer"
+          id="release_date-1"
+          role="button"
+          value="release_date"
+        >
+          RELEASE
+        </option>
+        <option
+          class="c-pointer"
+          id="runtime-2"
+          role="button"
+          value="runtime"
+        >
+          RUNTIME
+        </option>
+        <option
+          class="c-pointer"
+          id="vote_average-3"
+          role="button"
+          value="vote_average"
+        >
+          RATING
+        </option>
+      </select>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`SidebarSelectNav render SortBy.RATING select 1`] = `
+<body>
+  <div>
+    <div
+      class="sidebar-select-nav"
+    >
+      <select
+        class="sidebar-select-nav selected-title"
+      >
+        <option
+          class="c-pointer"
+          id="title-0"
+          role="button"
+          value="title"
+        >
+          TITLE
+        </option>
+        <option
+          class="c-pointer"
+          id="release_date-1"
+          role="button"
+          value="release_date"
+        >
+          RELEASE
+        </option>
+        <option
+          class="c-pointer"
+          id="runtime-2"
+          role="button"
+          value="runtime"
+        >
+          RUNTIME
+        </option>
+        <option
+          class="c-pointer"
+          id="vote_average-3"
+          role="button"
+          value="vote_average"
+        >
+          RATING
+        </option>
+      </select>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`SidebarSelectNav render SortBy.RATING select 2`] = `
+<body>
+  <div>
+    <div
+      class="sidebar-select-nav"
+    >
+      <select
+        class="sidebar-select-nav selected-runtime"
+      >
+        <option
+          class="c-pointer"
+          id="title-0"
+          role="button"
+          value="title"
+        >
+          TITLE
+        </option>
+        <option
+          class="c-pointer"
+          id="release_date-1"
+          role="button"
+          value="release_date"
+        >
+          RELEASE
+        </option>
+        <option
+          class="c-pointer"
+          id="runtime-2"
+          role="button"
+          value="runtime"
+        >
+          RUNTIME
+        </option>
+        <option
+          class="c-pointer"
+          id="vote_average-3"
+          role="button"
+          value="vote_average"
+        >
+          RATING
+        </option>
+      </select>
+    </div>
+  </div>
+</body>
+`;

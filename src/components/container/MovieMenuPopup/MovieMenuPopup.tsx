@@ -20,8 +20,7 @@ export default function MovieMenuPopup({ movie, closeMenu }: IProps): JSX.Elemen
   const [showPopupDelete, setShowPopupDelete] = useState(false);
 
   useEffect(() => {
-    dispatch(updateShowPopup(showPopupEdit));
-    dispatch(updateShowPopup(showPopupDelete));
+    dispatch(updateShowPopup(showPopupEdit && showPopupDelete));
   }, [dispatch, showPopupEdit, showPopupDelete]);
 
   const updatePopupEdit = useCallback(() => {

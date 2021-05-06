@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { FormikProps, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
   updateShowPopup,
@@ -16,16 +17,6 @@ import Calendar from '../../atom/Calendar';
 import MultiSelect from '../../atom/MultiSelect';
 import { IMovie } from '../../../helpers/interface';
 import './ModelMoviePopup.scoped.less';
-
-interface FormValues {
-  id?: number;
-  title: string;
-  release_date: string;
-  poster_path: string;
-  genres: string[];
-  overview: string;
-  runtime: number;
-}
 
 const emptyMovieForm: IMovie = {
   id: 0,
@@ -43,7 +34,7 @@ interface IProps {
   role: string;
 }
 
-export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>): JSX.Element {
+export default function ModelMoviePopup(props: IProps): JSX.Element {
   const dispatch = useDispatch();
   const { movie, closePopup, role } = props;
   const isEditForm = role == 'edit' ? true : false;
@@ -62,7 +53,7 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
       dispatch(
         fetchUpdateMovie({
           ...form,
-          tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+          tagline: form.tagline == undefined ? 'Out description' : form.tagline,
         }),
       );
       dispatch(updateShowPopup(false));
@@ -80,7 +71,7 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
         genres: form.genres,
         overview: form.overview,
         runtime: form.runtime,
-        tagline: form.tagline?.length == 0 ? 'Out description' : form.tagline,
+        tagline: 'Out description',
         vote_average: 0,
         vote_count: 0,
         budget: 0,
@@ -103,23 +94,25 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
       genres: form.genres,
       overview: form.overview,
       runtime: form.runtime,
+      tagline: form.tagline,
     },
     validationSchema: Yup.object({
       title: Yup.string()
         .min(2, 'Must be min 2 characters')
         .max(30, 'Must be 30 characters or less')
         .required('Required'),
-      release_date: Yup.string()
-        .matches(new RegExp('^[\\d]{4}-[\\d]{2}-[\\d]{2}$'), 'Not valide date stamp')
-        .required('Required'),
+      release_date: Yup.string().matches(
+        new RegExp('^[\\d]{4}-[\\d]{2}-[\\d]{2}$'),
+        'Not valide date stamp',
+      ),
       poster_path: Yup.string()
         .matches(new RegExp('^.+(\\.)(jpg|jpeg|png)$'), 'Must be a Picture')
         .required('Required'),
       genres: Yup.array().min(1, 'Must be one or more genres').required('Required'),
-      overview: Yup.string().min(6, 'Must be 6 characters or more').required('Required'),
+      overview: Yup.string().min(6, 'Must be 6 characters or more'),
       runtime: Yup.number()
-        .positive('age must be greater than zero')
-        .typeError('age must be a number')
+        .positive('time must be greater than zero')
+        .typeError('time must be a number')
         .required('Required'),
     }),
     onSubmit: (values, { setSubmitting }) => {
@@ -137,7 +130,7 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
       <div className="popup_model">
         <div className="model_content container-md">
           <Sitename />
-          <div className="container edit_movie">
+          <div className={`container ${role}_movie`}>
             <div className="container-sm form">
               <div className="page_close">
                 <Button buttonType="button" className="btn_close" onClick={closeEditPopup} />
@@ -151,90 +144,102 @@ export default function ModelMoviePopup(props: IProps & FormikProps<FormValues>)
                       type="text"
                       name="id"
                       className="simple_input input_readonly"
-                      value={formik.values?.id}
+                      value={formik.values.id}
                       onChange={formik.handleChange}
                       readonly={true}
                     />
                   </>
                 )}
-                <label>TITLE</label>
-                <Input
-                  type="text"
-                  name="title"
-                  className="simple_input"
-                  placeholder="Write Title"
-                  value={formik.values.title}
-                  onChange={(e) => {
-                    formik.setFieldTouched('title');
-                    formik.handleChange(e);
-                  }}
-                />
+                <label>
+                  TITLE
+                  <Input
+                    type="text"
+                    name="title"
+                    className="simple_input"
+                    placeholder="Write Title"
+                    value={formik.values.title}
+                    onChange={(e) => {
+                      formik.setFieldTouched('title');
+                      formik.handleChange(e);
+                    }}
+                  />
+                </label>
                 {formik.touched.title && formik.errors.title && <div>{formik.errors.title}</div>}
-                <label>RELEASE DATE</label>
-                <Calendar
-                  name="release_date"
-                  value={formik.values.release_date}
-                  onChange={(name, val) => {
-                    formik.setFieldTouched('release_date');
-                    formik.setFieldValue(name, val, true);
-                  }}
-                />
-                {formik.touched.release_date && formik.errors.release_date && (
+                <label>
+                  RELEASE DATE
+                  <Calendar
+                    name="release_date"
+                    value={formik.values.release_date}
+                    onChange={(name, val) => {
+                      formik.setFieldTouched('release_date');
+                      formik.setFieldValue(name, val, true);
+                    }}
+                  />
+                </label>
+                {formik.errors.release_date && formik.errors.release_date && (
                   <div>{formik.errors.release_date}</div>
                 )}
-                <label>POSTER URL</label>
-                <Input
-                  type="text"
-                  name="poster_path"
-                  className="simple_input"
-                  placeholder="Poster URL here"
-                  value={formik.values.poster_path}
-                  onChange={(e) => {
-                    formik.setFieldTouched('poster_path');
-                    formik.handleChange(e);
-                  }}
-                />
+                <label>
+                  POSTER URL
+                  <Input
+                    type="text"
+                    name="poster_path"
+                    className="simple_input"
+                    placeholder="Poster URL here"
+                    value={formik.values.poster_path}
+                    onChange={(e) => {
+                      formik.setFieldTouched('poster_path');
+                      formik.handleChange(e);
+                    }}
+                  />
+                </label>
                 {formik.touched.poster_path && formik.errors.poster_path && (
                   <div>{formik.errors.poster_path}</div>
                 )}
-                <label>GENRE</label>
-                <MultiSelect
-                  name="genres"
-                  value={formik.values.genres}
-                  onChange={(name: string, val: string[]) => {
-                    formik.setFieldTouched('genres');
-                    formik.setFieldValue(name, val, true);
-                  }}
-                />
+                <label>
+                  GENRE
+                  <MultiSelect
+                    name="genres"
+                    value={formik.values.genres}
+                    onChange={(name: string, val: string[]) => {
+                      formik.setFieldTouched('genres');
+                      formik.setFieldValue(name, val, true);
+                    }}
+                  />
+                </label>
                 {formik.touched.genres && formik.errors.genres && <div>{formik.errors.genres}</div>}
-                <label>OVERVIEW</label>
-                <Input
-                  type="text"
-                  name="overview"
-                  className="simple_input"
-                  placeholder="Overview here"
-                  value={formik.values.overview}
-                  onChange={(e) => {
-                    formik.setFieldTouched('overview');
-                    formik.handleChange(e);
-                  }}
-                />
+                <label>
+                  OVERVIEW
+                  <Input
+                    type="text"
+                    name="overview"
+                    className="simple_input"
+                    placeholder="Overview here"
+                    value={formik.values.overview}
+                    onChange={(e) => {
+                      formik.setFieldTouched('overview');
+                      formik.handleChange(e);
+                    }}
+                  />
+                </label>
                 {formik.touched.overview && formik.errors.overview && (
                   <div>{formik.errors.overview}</div>
                 )}
-                <label>RUNTIME</label>
-                <Input
-                  type="number"
-                  name="runtime"
-                  className="simple_input"
-                  placeholder="Runtime here"
-                  value={formik.values.runtime == 0 ? '' : formik.values.runtime}
-                  min={'0'}
-                  onChange={(e) => {
-                    formik.setFieldTouched('runtime');
-                    formik.handleChange(e);
-                  }}
-                />
+                <label>
+                  RUNTIME
+                  <Input
+                    type="number"
+                    name="runtime"
+                    className="simple_input"
+                    placeholder="Runtime here"
+                    value={formik.values.runtime == 0 ? '' : formik.values.runtime}
+                    min={'0'}
+                    onChange={(e) => {
+                      formik.setFieldTouched('runtime');
+                      formik.handleChange(e);
+                    }}
+                  />
+                </label>
                 {formik.touched.runtime && formik.errors.runtime && (
                   <div>{formik.errors.runtime}</div>
                 )}

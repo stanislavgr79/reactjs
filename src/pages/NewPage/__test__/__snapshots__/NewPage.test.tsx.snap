@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewPage snapshot renders 1`] = `
+<body>
+  <div>
+    <div
+      class="new-page"
+    >
+      <div
+        class="new-page-container"
+      >
+        new page
+        /movies
+      </div>
+      ;
+    </div>
+  </div>
+</body>
+`;

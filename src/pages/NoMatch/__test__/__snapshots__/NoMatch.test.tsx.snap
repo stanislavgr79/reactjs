@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoMatch snapshot renders location is 123456 1`] = `
+<body>
+  <div>
+    <div
+      class="nomatch-page"
+    >
+      <div
+        class="header"
+      />
+      <div
+        class="nomatch-page-panel"
+      >
+        <div
+          id="nomatch-header"
+        >
+          <div
+            class="pagetitle"
+            id="title-heading"
+          >
+            <h1
+              id="title-text"
+            >
+              Page Not Found
+            </h1>
+          </div>
+        </div>
+        <div
+          id="sidebar-container"
+        />
+        <p>
+          We can't find that page. This could be because:
+        </p>
+        <ul>
+          <li>
+            The page 
+            123456
+             doesn't exist.
+          </li>
+          <li>
+            The page exists, but you don't have view permission for that space.
+          </li>
+        </ul>
+        <div
+          id="action-messages"
+        >
+          <h3>
+            Go to
+          </h3>
+          <ul>
+            <li>
+              <a
+                href="/movies"
+              >
+                Site Homepage
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="footer"
+      />
+    </div>
+  </div>
+</body>
+`;
+
+exports[`NoMatch snapshot renders location is empty 1`] = `
+<body>
+  <div>
+    <div
+      class="nomatch-page"
+    >
+      <div
+        class="header"
+      />
+      <div
+        class="nomatch-page-panel"
+      >
+        <div
+          id="nomatch-header"
+        >
+          <div
+            class="pagetitle"
+            id="title-heading"
+          >
+            <h1
+              id="title-text"
+            >
+              Page Not Found
+            </h1>
+          </div>
+        </div>
+        <div
+          id="sidebar-container"
+        />
+        <p>
+          We can't find that page. This could be because:
+        </p>
+        <ul>
+          <li>
+            The page 
+            /movies
+             doesn't exist.
+          </li>
+          <li>
+            The page exists, but you don't have view permission for that space.
+          </li>
+        </ul>
+        <div
+          id="action-messages"
+        >
+          <h3>
+            Go to
+          </h3>
+          <ul>
+            <li>
+              <a
+                href="/movies"
+              >
+                Site Homepage
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="footer"
+      />
+    </div>
+  </div>
+</body>
+`;

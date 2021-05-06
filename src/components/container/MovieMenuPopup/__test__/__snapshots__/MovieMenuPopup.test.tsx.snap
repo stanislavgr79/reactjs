@@ -1,0 +1,497 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieMenuPopup render 1`] = `
+<body>
+  <div>
+    <div
+      class="movie_sub_menu"
+    >
+      <div
+        class="page_close"
+      >
+        <button
+          class="btn button btn_close icon_small"
+          id=""
+          type="button"
+        />
+      </div>
+      <div
+        class="menu_list"
+      >
+        <div
+          class="edit_point menu_item"
+        >
+          Edit
+        </div>
+        <div
+          class="delete_point menu_item"
+        >
+          Delete
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MovieMenuPopup render click Delete 1`] = `
+<body>
+  <div>
+    <div
+      class="movie_sub_menu"
+    >
+      <div
+        class="page_close"
+      >
+        <button
+          class="btn button btn_close icon_small"
+          id=""
+          type="button"
+        />
+      </div>
+      <div
+        class="menu_list"
+      >
+        <div
+          class="edit_point menu_item"
+        >
+          Edit
+        </div>
+        <div
+          class="delete_point menu_item"
+        >
+          Delete
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MovieMenuPopup render click Delete 2`] = `
+<body>
+  <div>
+    <div
+      class="movie_sub_menu"
+    >
+      <div
+        class="page_close"
+      >
+        <button
+          class="btn button btn_close icon_small"
+          id=""
+          type="button"
+        />
+      </div>
+      <div
+        class="menu_list"
+      >
+        <div
+          class="edit_point menu_item"
+        >
+          Edit
+        </div>
+        <div
+          class="delete_point menu_item"
+        >
+          Delete
+        </div>
+        <div
+          class="popup_model"
+        >
+          <div
+            class="model_content container-md"
+          >
+            <p
+              class="site_name"
+            >
+              <strong>
+                netflix
+              </strong>
+              roulette
+            </p>
+            <div
+              class="container delete_movie"
+            >
+              <div
+                class="container form"
+              >
+                <div
+                  class="section_icon-close"
+                >
+                  <button
+                    class="btn button btn_close"
+                    id="delete_movie_btn_close"
+                    type="button"
+                  />
+                </div>
+                <div
+                  class="page_title"
+                >
+                  DELETE MOVIE
+                </div>
+                <div
+                  class="page_description"
+                >
+                  Are you sure want to delete this movie?
+                </div>
+                <div
+                  class="button_section"
+                >
+                  <button
+                    class="btn button btn_submit"
+                    id="delete_movie_btn_submit"
+                    type="submit"
+                  >
+                    CONFIRM
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="footer"
+            >
+              <p
+                class="site_name"
+              >
+                <strong>
+                  netflix
+                </strong>
+                roulette
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MovieMenuPopup render click Edit 1`] = `
+<body>
+  <div>
+    <div
+      class="movie_sub_menu"
+    >
+      <div
+        class="page_close"
+      >
+        <button
+          class="btn button btn_close icon_small"
+          id=""
+          type="button"
+        />
+      </div>
+      <div
+        class="menu_list"
+      >
+        <div
+          class="edit_point menu_item"
+        >
+          Edit
+        </div>
+        <div
+          class="delete_point menu_item"
+        >
+          Delete
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`MovieMenuPopup render click Edit 2`] = `
+<body>
+  <div>
+    <div
+      class="movie_sub_menu"
+    >
+      <div
+        class="page_close"
+      >
+        <button
+          class="btn button btn_close icon_small"
+          id=""
+          type="button"
+        />
+      </div>
+      <div
+        class="menu_list"
+      >
+        <div
+          class="edit_point menu_item"
+        >
+          Edit
+        </div>
+        <div
+          class="popup_model"
+        >
+          <div
+            class="model_content container-md"
+          >
+            <p
+              class="site_name"
+            >
+              <strong>
+                netflix
+              </strong>
+              roulette
+            </p>
+            <div
+              class="container edit_movie"
+            >
+              <div
+                class="container-sm form"
+              >
+                <div
+                  class="page_close"
+                >
+                  <button
+                    class="btn button btn_close"
+                    id=""
+                    type="button"
+                  />
+                </div>
+                <div
+                  class="page_title"
+                >
+                  EDIT MOVIE
+                </div>
+                <form
+                  class="movie_form"
+                >
+                  <label>
+                    MOVIE ID
+                  </label>
+                  <input
+                    class="input simple_input input_readonly"
+                    name="id"
+                    readonly=""
+                    type="text"
+                    value="12345"
+                  />
+                  <label>
+                    TITLE
+                    <input
+                      class="input simple_input"
+                      name="title"
+                      placeholder="Write Title"
+                      type="text"
+                      value="film title"
+                    />
+                  </label>
+                  <label>
+                    RELEASE DATE
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="simple_input"
+                          name="release_date"
+                          placeholder="Select Date"
+                          readonly=""
+                          value="2020-01-02"
+                        />
+                        <img
+                          alt=""
+                          class="image_calendar"
+                          src="[object Object]"
+                        />
+                      </div>
+                    </div>
+                  </label>
+                  <label>
+                    POSTER URL
+                    <input
+                      class="input simple_input"
+                      name="poster_path"
+                      placeholder="Poster URL here"
+                      type="text"
+                      value="https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg"
+                    />
+                  </label>
+                  <label>
+                    GENRE
+                    <div
+                      class="select_genres css-2b097c-container"
+                    >
+                      <div
+                        class=" css-yk16xz-control"
+                      >
+                        <div
+                          class=" css-g1d714-ValueContainer"
+                        >
+                          <div
+                            class="css-1rhbuit-multiValue"
+                          >
+                            <div
+                              class="css-12jo7m5"
+                            >
+                              <span>
+                                crime
+                              </span>
+                            </div>
+                            <div
+                              class="css-xb97g8"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="css-tj5bde-Svg"
+                                focusable="false"
+                                height="14"
+                                viewBox="0 0 20 20"
+                                width="14"
+                              >
+                                <path
+                                  d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                          <div
+                            class="css-b8ldur-Input"
+                          >
+                            <div
+                              class=""
+                              style="display: inline-block;"
+                            >
+                              <input
+                                aria-autocomplete="list"
+                                autocapitalize="none"
+                                autocomplete="off"
+                                autocorrect="off"
+                                id="react-select-2-input"
+                                spellcheck="false"
+                                style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
+                                tabindex="0"
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: -webkit-small-control; letter-spacing: normal; text-transform: none;"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class=" css-1hb7zxy-IndicatorsContainer"
+                        >
+                          <div
+                            aria-hidden="true"
+                            class=" css-tlfecz-indicatorContainer"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="css-tj5bde-Svg"
+                              focusable="false"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              width="20"
+                            >
+                              <path
+                                d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            class=" css-1okebmr-indicatorSeparator"
+                          />
+                          <div
+                            aria-hidden="true"
+                            class=" css-tlfecz-indicatorContainer"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="css-tj5bde-Svg"
+                              focusable="false"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              width="20"
+                            >
+                              <path
+                                d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <input
+                          name="genres"
+                          type="hidden"
+                          value="crime"
+                        />
+                      </div>
+                    </div>
+                  </label>
+                  <label>
+                    OVERVIEW
+                    <input
+                      class="input simple_input"
+                      name="overview"
+                      placeholder="Overview here"
+                      type="text"
+                      value="overview"
+                    />
+                  </label>
+                  <label>
+                    RUNTIME
+                    <input
+                      class="input simple_input"
+                      min="0"
+                      name="runtime"
+                      placeholder="Runtime here"
+                      type="number"
+                      value="66"
+                    />
+                  </label>
+                  <div
+                    class="button_section"
+                  >
+                    <button
+                      class="btn button btn_submit"
+                      id="add_movie_btn_submit"
+                      type="submit"
+                    >
+                      SAVE
+                    </button>
+                    <button
+                      class="btn button btn_reset"
+                      id="add_movie_btn_reset"
+                      type="reset"
+                    >
+                      RESET
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div
+              class="footer"
+            >
+              <p
+                class="site_name"
+              >
+                <strong>
+                  netflix
+                </strong>
+                roulette
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="delete_point menu_item"
+        >
+          Delete
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

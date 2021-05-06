@@ -26,7 +26,11 @@ export default function SidebarSelectNav({
 
   return (
     <div className="sidebar-select-nav">
-      <select className="side-sort-select" onChange={(e) => handleChange(e)} value={selectedValue}>
+      <select
+        className={`sidebar-select-nav selected-${selectedValue}`}
+        onChange={(e) => handleChange(e)}
+        value={selectedValue}
+      >
         {sideSortBy.map(([key, value], index: number) => (
           <option
             id={`${value}-${index}`}

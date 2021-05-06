@@ -7,8 +7,8 @@ import {
   FETCH_DATA_SUCCESS,
   FETCH_DATA_FAILURE,
   FETCH_ADD_MOVIE_SUCCESS,
-  DELETE_MOVIE,
-  UPDATE_MOVIE,
+  DELETE_MOVIE_SUCCESS,
+  UPDATE_MOVIE_SUCCESS,
   UPDATE_STATUS_MOVIE_POPUP,
   UPDATE_SELECTED_MOVIE_ID,
   FETCH_GET_MOVIE_SUCCESS,
@@ -52,7 +52,7 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
         movies: initialState.movies,
       };
 
-    case DELETE_MOVIE:
+    case DELETE_MOVIE_SUCCESS:
       const newMoviesForDelete: IData = state.movies;
       newMoviesForDelete.totalAmount = state.movies.totalAmount - 1;
       return {
@@ -89,7 +89,7 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
         movies: newMoviesAfterAdd,
       };
 
-    case UPDATE_MOVIE:
+    case UPDATE_MOVIE_SUCCESS:
       const newMoviesForEdit: IMovie[] = state.movies.data;
       const index: number = newMoviesForEdit.findIndex(
         (movie: IMovie) => movie.id == action.payload.id,
@@ -127,3 +127,5 @@ export const reducerMovies = (state = initialState, action: MoviesActionTypes): 
       return state;
   }
 };
+
+export default reducerMovies;

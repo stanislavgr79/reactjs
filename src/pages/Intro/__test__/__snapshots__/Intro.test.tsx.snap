@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Intro snapshot renders expected DetailMovieTop 1`] = `
+<div
+  className="intro_page show_movie_popup"
+>
+  <DetailMovieTop />
+  <div
+    className="content content-intro"
+  >
+    <NavBar />
+    <MoviesList />
+  </div>
+  <Footer />
+</div>
+`;
+
+exports[`Intro snapshot renders expected Header 1`] = `
+<div
+  className="intro_page "
+>
+  <Header />
+  Loading ...
+  <Footer />
+</div>
+`;
+
+exports[`Intro snapshot renders expected redirect to 404 page 1`] = `<NoMatch />`;
