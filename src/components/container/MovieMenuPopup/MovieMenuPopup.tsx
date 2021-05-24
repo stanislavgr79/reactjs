@@ -7,7 +7,7 @@ import DeleteMoviePopup from '../DeleteMoviePopup';
 import ModelMoviePopup from '../ModelMoviePopup';
 import { IMovie } from '../../../helpers/interface';
 
-import './MovieMenuPopup.scoped.less';
+import './MovieMenuPopup.scoped.scss';
 
 interface IProps {
   movie: IMovie;

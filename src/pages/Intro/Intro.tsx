@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../redux/redux-store';
 
@@ -42,9 +42,7 @@ export default function Intro(): JSX.Element {
     content = (
       <div className={`intro_page ${!showPopup ? '' : 'show_movie_popup'}`}>
         {id && showPopup ? <DetailMovieTop /> : <Header />}
-        <Suspense fallback="Loading ...">
-          <ContentIntro />
-        </Suspense>
+        <ContentIntro />
         <Footer />
       </div>
     );

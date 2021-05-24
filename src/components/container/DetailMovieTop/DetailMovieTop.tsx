@@ -6,8 +6,8 @@ import { updateSelectedMovieId } from '../../../redux/actions/movies-actions';
 import Button from '../../atom/Button';
 import Sitename from '../../atom/SiteName';
 
-import noneImage from '@resources/images/nofoto.png';
-import './DetailMovieTop.scoped.less';
+import noneImage from '../../../resources/images/nofoto.png';
+import './DetailMovieTop.scoped.scss';
 import { useHistory } from 'react-router-dom';
 
 export default function DetailMovieTop(): JSX.Element {

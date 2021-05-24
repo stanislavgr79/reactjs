@@ -13,7 +13,7 @@ import {
   updateSelectedIndexListNav,
 } from '../../../redux/actions/sidebar-actions';
 
-import './Header.scoped.less';
+import './Header.scoped.scss';
 import { useHistory, useLocation } from 'react-router-dom';
 
 export default function Header(): JSX.Element {

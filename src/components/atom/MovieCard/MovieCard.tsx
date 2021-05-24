@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IMovie } from '../../../helpers/interface';
 
-import noneImage from '@resources/images/nofoto.png';
+import noneImage from '../../../resources/images/nofoto.png';
 import './MovieCard.scoped.scss';
 import { Link } from 'react-router-dom';
 
