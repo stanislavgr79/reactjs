@@ -4,7 +4,7 @@ import MovieCard from '../../atom/MovieCard';
 import MovieMenuPopup from '../MovieMenuPopup';
 import { IMovie } from '../../../helpers/interface';
 
-import image from '@resources/images/menu-icon.png';
+import image from '../../../resources/images/menu-icon.png';
 import './RenderMoviesFounded.scoped.scss';
 
 interface IProp {

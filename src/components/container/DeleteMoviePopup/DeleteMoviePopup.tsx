@@ -6,7 +6,7 @@ import Sitename from '../../atom/SiteName';
 import Button from '../../atom/Button';
 import Footer from '../../structure/Footer';
 
-import './DeleteMoviePopup.scoped.less';
+import './DeleteMoviePopup.scoped.scss';
 
 interface IProps {
   movieId?: number;

@@ -1,5 +1,5 @@
 import React from 'react';
-import './WithLoading.scoped.less';
+import './WithLoading.scoped.scss';
 
 interface WithLoadingProps {
   isLoading: boolean;

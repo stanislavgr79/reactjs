@@ -16,7 +16,7 @@ import Button from '../../atom/Button';
 import Calendar from '../../atom/Calendar';
 import MultiSelect from '../../atom/MultiSelect';
 import { IMovie } from '../../../helpers/interface';
-import './ModelMoviePopup.scoped.less';
+import './ModelMoviePopup.scoped.scss';
 
 const emptyMovieForm: IMovie = {
   id: 0,

@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-import calendar from '@resources/images/calendar.png';
+import calendar from '../../../resources/images/calendar.png';
 
 interface IPropInput {
   date: Date | [Date, Date] | null | string;
